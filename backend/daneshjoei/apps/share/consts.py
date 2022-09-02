@@ -8,3 +8,10 @@ DEGREE_CHOICES = (
     (MASTER_DEGREE, 'ارشد'),
     (DOCTORATE_DEGREE, 'دکترا'),
 )
+
+MALE = 'Male'
+Female = 'Female'
+SEX_TYPE_CHOICES = (
+    (MALE, 'آقا'),
+    (Female, 'خانم')
+)
