@@ -33,3 +33,6 @@ static/rest_framework
 # accounting exctra
 apps/accounting/extra/*
 !apps/accounting/extra/ttms.mdb
+
+# Pycharm
+.idea/

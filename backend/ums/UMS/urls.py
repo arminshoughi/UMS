@@ -1,4 +1,4 @@
-"""daneshjoei URL Configuration
+"""UMS URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -25,11 +25,11 @@ from django.urls import path, include, re_path
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
+        title="UMS API",
         default_version='v1',
-        description="Test description",
+        description="University Management System",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@snippets.local"),
+        contact=openapi.Contact(email="arminshoughi@gmail.com"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
