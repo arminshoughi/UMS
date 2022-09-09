@@ -23,28 +23,28 @@ class UserManagement(BaseUserManager):
 
 class UserModel(AbstractBaseUser, BaseModel):
     username = models.CharField(
-        verbose_name='نام کاربری', max_length=150, validators=[UsernameValidator()], unique=True,
-        error_messages={'unique': 'این نام کاربری پیش از این ثبت شده است.'}
+        verbose_name='Username', max_length=150, validators=[UsernameValidator()], unique=True,
+        error_messages={'unique': 'Sorry, this username already token.'}
     )
-    first_name = models.CharField(verbose_name='نام', max_length=128, null=False, blank=False)
-    last_name = models.CharField(verbose_name='نام خانوادگی', max_length=256, null=False, blank=False)
+    first_name = models.CharField(verbose_name='First name', max_length=128, null=False, blank=False)
+    last_name = models.CharField(verbose_name='Last name', max_length=256, null=False, blank=False)
     national_code = models.CharField(
-        verbose_name='کد ملی', max_length=10, validators=[NationalCodeValidator()], null=True, blank=True
+        verbose_name='National code', max_length=10, validators=[NationalCodeValidator()], null=True, blank=True
     )
-    birthday = models.DateField(verbose_name='تاریخ تولد', null=True, blank=True)
-    sex = models.CharField(verbose_name='جنسیت', choices=consts.SEX_TYPE_CHOICES, default=consts.MALE, max_length=6)
-    is_superuser = models.BooleanField(verbose_name='کاربرارشد', default=False)
-    is_active = models.BooleanField(verbose_name='فعال', default=False)
-    last_login = models.DateTimeField(verbose_name='آخرین ورود', null=True, blank=True)
-    updated_at = models.DateTimeField(verbose_name='آخرین بروزرسانی', null=True, blank=True)
-    created_at = models.DateTimeField(verbose_name='تاریخ ایجاد', auto_now_add=True)
+    birthday = models.DateField(verbose_name='Birthday', null=True, blank=True)
+    sex = models.CharField(verbose_name='Sex', choices=consts.SEX_TYPE_CHOICES, default=consts.MALE, max_length=6)
+    is_superuser = models.BooleanField(verbose_name='Superuser', default=False)
+    is_active = models.BooleanField(verbose_name='Active', default=False)
+    last_login = models.DateTimeField(verbose_name='Last login', null=True, blank=True)
+    updated_at = models.DateTimeField(verbose_name='Last update', null=True, blank=True)
+    created_at = models.DateTimeField(verbose_name='Created at', auto_now_add=True)
 
     object = UserManagement()
     USERNAME_FIELD = 'username'
 
     class Meta:
-        verbose_name = 'کاربر'
-        verbose_name_plural = 'کاربران'
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
 
     def display_name(self):
         return f'{self.first_name} {self.last_name}'
@@ -67,24 +67,24 @@ class UserModel(AbstractBaseUser, BaseModel):
 
 
 class UserPhoneModel(BaseModel):
-    user = models.ForeignKey(verbose_name='کاربر', to=UserModel, related_name='phones', on_delete=models.CASCADE)
+    user = models.ForeignKey(verbose_name='User', to=UserModel, related_name='phones', on_delete=models.CASCADE)
     phone = models.CharField(verbose_name='تلفن ثالت', max_length=11, validators=[PhoneValidator()])
-    is_default = models.BooleanField(verbose_name='پیش‌فرض', default=False)
+    is_default = models.BooleanField(verbose_name='Default', default=False)
 
 
 class UserMobileModel(BaseModel):
-    user = models.ForeignKey(verbose_name='کاربر', to=UserModel, related_name='mobiles', on_delete=models.CASCADE)
-    mobile = models.CharField(verbose_name='تلفن همراه', max_length=11, validators=[PhoneValidator()])
-    is_default = models.BooleanField(verbose_name='پیش‌فرض', default=False)
+    user = models.ForeignKey(verbose_name='User', to=UserModel, related_name='mobiles', on_delete=models.CASCADE)
+    mobile = models.CharField(verbose_name='Mobile', max_length=11, validators=[PhoneValidator()])
+    is_default = models.BooleanField(verbose_name='Default', default=False)
 
 
 class UserAddressModel(BaseModel):
-    user = models.ForeignKey(verbose_name='کاربر', to=UserModel, related_name='addresses', on_delete=models.CASCADE)
-    address = models.TextField(verbose_name='آدرس', null=False, blank=False)
-    is_default = models.BooleanField(verbose_name='پیش‌فرض', default=False)
+    user = models.ForeignKey(verbose_name='User', to=UserModel, related_name='addresses', on_delete=models.CASCADE)
+    address = models.TextField(verbose_name='Address', null=False, blank=False)
+    is_default = models.BooleanField(verbose_name='Default', default=False)
 
 
 class UserEmailModel(BaseModel):
-    user = models.ForeignKey(verbose_name='کاربر', to=UserModel, related_name='emails', on_delete=models.CASCADE)
-    email = models.TextField(verbose_name='پست الکترونیکی', null=False, blank=False)
-    is_default = models.BooleanField(verbose_name='پیش‌فرض', default=False)
+    user = models.ForeignKey(verbose_name='User', to=UserModel, related_name='emails', on_delete=models.CASCADE)
+    email = models.TextField(verbose_name='Email', null=False, blank=False)
+    is_default = models.BooleanField(verbose_name='Default', default=False)
