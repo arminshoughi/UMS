@@ -64,13 +64,13 @@ class CourseModelSerializer(DynamicFieldsModelSerializer):
     master_id = serializers.IntegerField(write_only=True)
     master = MasterModelBaseSerializer(read_only=True)
 
-    documents = CourseDocumentModelSerializer()
-    schedule = CourseWeaklyScheduleModelSerializer()
+    documents = CourseDocumentModelSerializer(many=True, required=False)
+    schedules = CourseWeaklyScheduleModelSerializer(many=True, required=True)
 
     class Meta:
         model = models.CourseModel
         service = services.CourseService
         fields = [
             'major', 'major_id', 'semester', 'semester_id', 'name', 'details', 'unit', 'master_id', 'master',
-            'documents', 'schedules'
+            'documents', 'schedules', 'midterm_exam_date', 'final_exam_date'
         ]

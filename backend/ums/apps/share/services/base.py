@@ -20,13 +20,15 @@ class SemesterService(BaseService):
 class CourseService(BaseService):
     model = CourseModel
 
-    @transaction.atomic
-    def create(self, **kwargs):
-        documents = kwargs.pop('documents')
+    @classmethod
+    def create(cls, **kwargs):
+        documents = kwargs.pop('documents', [])
         schedules = kwargs.pop('schedules')
         course = super().create(**kwargs)
         for document in documents:
             CourseDocumentModel.objects.create(course=course, **document)
         for schedule in schedules:
             CourseWeaklyScheduleModel.objects.create(course=course, **schedule)
+
+        course.save()
         return course

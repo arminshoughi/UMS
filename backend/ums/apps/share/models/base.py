@@ -55,7 +55,7 @@ class CourseModel(BaseModel):
     )
     name = models.CharField(verbose_name='Course name', max_length=256, null=True, blank=True)
     details = models.TextField(verbose_name='Course details')
-    unit = models.CharField(verbose_name='Course units', validators=[validators.CourseUnitValidator()], max_length=1)
+    unit = models.CharField(verbose_name='Course unit', validators=[validators.CourseUnitValidator()], max_length=1)
     midterm_exam_date = models.DateField(verbose_name='midterm exam date', null=False, blank=False)
     final_exam_date = models.DateField(verbose_name='midterm exam date', null=False, blank=False)
 
