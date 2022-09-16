@@ -1,1 +1,1 @@
-default_app_config = 'apps.share.app.config.ApplicationConfig'
+default_app_config = 'apps.master.app.config.ApplicationConfig'

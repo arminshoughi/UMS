@@ -1,17 +1,21 @@
 from rest_framework import serializers
 
-from .. import models
+from utils.serializers import DynamicFieldsModelSerializer
+from .. import models, services
+from ...master.serializers import MasterModelBaseSerializer
 
 
-class CollageModelSerializer(serializers.ModelSerializer):
+class CollageModelSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = models.CollageModel
+        service = services.CollageService
         exclude = ['created_at', 'updated_at', 'deleted_at', 'is_deleted']
 
 
-class MajorModelBaseSerializer(serializers.ModelSerializer):
+class MajorModelBaseSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = models.MajorModel
+        service = services.MajorService
         fields = ['name', 'degree']
 
 
@@ -23,9 +27,10 @@ class MajorModelSerializer(MajorModelBaseSerializer):
         fields = ['collage', 'collage_id', 'degree', 'name']
 
 
-class SemesterModelBaseSerializer(serializers.ModelSerializer):
+class SemesterModelBaseSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = models.SemesterModel
+        service = services.SemesterService
         fields = ['name', 'start_date', 'end_date']
 
 
@@ -37,13 +42,35 @@ class SemesterModelSerializer(SemesterModelBaseSerializer):
         fields = ['name', 'major', 'major_id', 'start_date', 'end_date']
 
 
-class CourseModelSerializer(serializers.ModelSerializer):
+class CourseDocumentModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CourseDocumentModel
+        fields = ['document']
+
+
+class CourseWeaklyScheduleModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CourseWeaklyScheduleModel
+        fields = ['day', 'time']
+
+
+class CourseModelSerializer(DynamicFieldsModelSerializer):
     major = MajorModelBaseSerializer(read_only=True)
     major_id = serializers.IntegerField(write_only=True)
 
     semester = SemesterModelBaseSerializer(read_only=True)
     semester_id = serializers.IntegerField(write_only=True)
 
+    master_id = serializers.IntegerField(write_only=True)
+    master = MasterModelBaseSerializer(read_only=True)
+
+    documents = CourseDocumentModelSerializer()
+    schedule = CourseWeaklyScheduleModelSerializer()
+
     class Meta:
         model = models.CourseModel
-        fields = ['major', 'major_id', 'semester', 'semester_id', 'name', 'details', 'unit']
+        service = services.CourseService
+        fields = [
+            'major', 'major_id', 'semester', 'semester_id', 'name', 'details', 'unit', 'master_id', 'master',
+            'documents', 'schedules'
+        ]

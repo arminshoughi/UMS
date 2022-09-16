@@ -50,9 +50,14 @@ class CourseModel(BaseModel):
     semester = models.ForeignKey(
         verbose_name='Semester', to=SemesterModel, related_name='course', on_delete=models.PROTECT
     )
+    master = models.ForeignKey(
+        verbose_name='master', to='master.MasterModel', related_name='courses', on_delete=models.PROTECT
+    )
     name = models.CharField(verbose_name='Course name', max_length=256, null=True, blank=True)
     details = models.TextField(verbose_name='Course details')
     unit = models.CharField(verbose_name='Course units', validators=[validators.CourseUnitValidator()], max_length=1)
+    midterm_exam_date = models.DateField(verbose_name='midterm exam date', null=False, blank=False)
+    final_exam_date = models.DateField(verbose_name='midterm exam date', null=False, blank=False)
 
     class Meta:
         verbose_name = 'course'
@@ -60,3 +65,24 @@ class CourseModel(BaseModel):
 
     def __str__(self):
         return f'{self.major.name} - {self.name} - {self.unit}'
+
+
+class CourseWeaklyScheduleModel(BaseModel):
+    course = models.ForeignKey(
+        verbose_name='course', to=CourseModel, on_delete=models.CASCADE, null=False, blank=False,
+        related_name='schedules'
+    )
+    day = models.CharField(
+        verbose_name='class day', choices=consts.CLASS_DATE_CHOICES, null=False, blank=False, max_length=10
+    )
+    time = models.CharField(
+        verbose_name='class time', choices=consts.CLASS_TIME_CHOICES, null=False, blank=False, max_length=13
+    )
+
+
+class CourseDocumentModel(BaseModel):
+    course = models.ForeignKey(
+        verbose_name='course', to=CourseModel, on_delete=models.CASCADE, null=False, blank=False,
+        related_name='documents'
+    )
+    document = models.FileField(upload_to='courses', null=False, blank=False)

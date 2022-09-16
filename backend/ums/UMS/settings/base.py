@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     # Local app
     'apps.share',
+    'apps.student',
+    'apps.master',
 ]
 
 MIDDLEWARE = [
