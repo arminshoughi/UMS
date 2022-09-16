@@ -28,6 +28,7 @@ class MasterDefaultEmailAdminInline(admin.TabularInline):
 
 @admin.register(models.MasterModel)
 class MasterModelAdmin(BaseModelAdmin):
+    list_per_page = 20
     search_fields = ('first_name', 'last_name', 'username')
     list_display = ('username', 'display_name', 'collage', 'major', 'default_mobile', 'default_emails')
     list_filter = ('collage', 'major')

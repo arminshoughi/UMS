@@ -17,3 +17,7 @@ class MasterModel(UserModel):
         related_name='masters'
     )
     typ = shared_consts.MASTER_USER_TYPE
+
+    class Meta:
+        verbose_name = 'Master'
+        verbose_name_plural = 'Masters'

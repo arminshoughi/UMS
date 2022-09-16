@@ -7,12 +7,14 @@ from .. import models
 
 @admin.register(models.CollageModel)
 class CollageModelAdmin(BaseModelAdmin):
+    list_per_page = 20
     search_fields = ['name']
     list_display = ['name', 'created_at']
 
 
 @admin.register(models.MajorModel)
 class MajorModelAdmin(BaseModelAdmin):
+    list_per_page = 20
     list_display = ['collage', 'name', 'degree']
     search_fields = ['name']
     list_filter = ['collage', 'degree']
@@ -20,12 +22,14 @@ class MajorModelAdmin(BaseModelAdmin):
 
 @admin.register(models.SemesterModel)
 class SemesterModelAdmin(BaseModelAdmin):
+    list_per_page = 20
     list_display = ['major', 'start_date', 'end_date']
     search_fields = ['major__name']
 
 
 @admin.register(models.CourseModel)
 class CourseModelAdmin(BaseModelAdmin):
+    list_per_page = 20
     list_display = ['name', 'major', 'semester', 'unit', 'details']
     search_fields = ['name']
     list_filter = ['major', 'unit', 'semester']
