@@ -39,7 +39,7 @@ class UserModel(AbstractBaseUser, BaseModel):
     updated_at = models.DateTimeField(verbose_name='Last update', null=True, blank=True)
     created_at = models.DateTimeField(verbose_name='Created at', auto_now_add=True)
 
-    object = UserManagement()
+    objects = UserManagement()
     USERNAME_FIELD = 'username'
 
     class Meta:

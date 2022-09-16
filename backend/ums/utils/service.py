@@ -12,26 +12,26 @@ class BaseService:
         self.model = model
 
     @classmethod
-    def get_by_id(cls, id):
-        try:
-            return cls.model.objects.get(id=id)
-        except (cls.model.DoesNotExists, ValueError):
-            raise ObjectNotFound(cls.model)
-
-    @classmethod
     def get(cls, **kwargs):
         try:
-            return cls.model.objects.get(**kwargs)
+            return cls.model.objects.get(is_deleted=False, **kwargs)
         except (cls.model.DoesNotExists, ValueError):
             raise ObjectNotFound(cls.model)
 
     @classmethod
-    def all(cls):
-        return cls.model.objects.all().order_by('-created_at')
+    def get_by_id(cls, id):
+        try:
+            return cls.get(id=id)
+        except (cls.model.DoesNotExists, ValueError):
+            raise ObjectNotFound(cls.model)
 
     @classmethod
     def filter(cls, **kwargs):
-        return cls.model.objects.filter(**kwargs)
+        return cls.model.objects.filter(is_deleted=False, **kwargs)
+
+    @classmethod
+    def all(cls):
+        return cls.filter().order_by('-created_at')
 
     @classmethod
     def first(cls, **kwargs):
@@ -76,7 +76,9 @@ class BaseService:
     @classmethod
     def delete(cls, obj):
         try:
-            obj.delete()
+            obj.is_deleted = True
+            obj.deleted_at = timezone.now()
+            obj.save()
         except ProtectedError:
             raise ObjectDeleteProtected
         except:
