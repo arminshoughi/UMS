@@ -1,10 +1,9 @@
-from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import BaseUserManager
 from django.db import models
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 from utils.models import BaseModel
-from .. import consts
 
+from .. import consts
 from ..validators import UsernameValidator, NationalCodeValidator, PhoneValidator
 
 
@@ -34,7 +33,8 @@ class UserModel(AbstractBaseUser, BaseModel):
     birthday = models.DateField(verbose_name='Birthday', null=True, blank=True)
     sex = models.CharField(verbose_name='Sex', choices=consts.SEX_TYPE_CHOICES, default=consts.MALE, max_length=6)
     is_superuser = models.BooleanField(verbose_name='Superuser', default=False)
-    is_active = models.BooleanField(verbose_name='Active', default=False)
+    is_staff = models.BooleanField(verbose_name='Staff', default=False)
+    is_active = models.BooleanField(verbose_name='Active', default=True)
     last_login = models.DateTimeField(verbose_name='Last login', null=True, blank=True)
     updated_at = models.DateTimeField(verbose_name='Last update', null=True, blank=True)
     created_at = models.DateTimeField(verbose_name='Created at', auto_now_add=True)
@@ -48,6 +48,16 @@ class UserModel(AbstractBaseUser, BaseModel):
 
     def display_name(self):
         return f'{self.first_name} {self.last_name}'
+
+    @property
+    def is_staff(self):
+        return self.is_superuser
+
+    def has_perm(self, perm, obj=None):
+        return self.is_superuser
+
+    def has_module_perms(self, app_label):
+        return self.is_superuser
 
     @property
     def default_phone(self):

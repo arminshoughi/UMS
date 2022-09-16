@@ -12,6 +12,9 @@ class CollageModel(BaseModel):
         verbose_name = 'collage'
         verbose_name_plural = 'collages'
 
+    def __str__(self):
+        return self.name
+
 
 class MajorModel(BaseModel):
     collage = models.ForeignKey(verbose_name='Collage', to=CollageModel, related_name='major', on_delete=models.PROTECT)
@@ -24,17 +27,25 @@ class MajorModel(BaseModel):
         verbose_name = 'major'
         verbose_name_plural = 'majors'
 
+    def __str__(self):
+        return f'{self.name} - {self.degree}'
+
 
 class SemesterModel(BaseModel):
     major = models.ForeignKey(verbose_name='Major', to=MajorModel, related_name='semester', on_delete=models.PROTECT)
+    start_date = models.DateField(verbose_name='start date', null=False, blank=False)
+    end_date = models.DateField(verbose_name='end date', null=False, blank=False)
 
     class Meta:
         verbose_name = 'semester'
         verbose_name_plural = 'semesters'
 
+    def __str__(self):
+        return f'{self.major.name} - {self.start_date} - {self.end_date}'
+
 
 class CourseModel(BaseModel):
-    major = models.ForeignKey(verbose_name='Collage', to=MajorModel, related_name='course', on_delete=models.PROTECT)
+    major = models.ForeignKey(verbose_name='major', to=MajorModel, related_name='course', on_delete=models.PROTECT)
     semester = models.ForeignKey(
         verbose_name='Semester', to=SemesterModel, related_name='course', on_delete=models.PROTECT
     )
@@ -45,3 +56,6 @@ class CourseModel(BaseModel):
     class Meta:
         verbose_name = 'course'
         verbose_name_plural = 'courses'
+
+    def __str__(self):
+        return f'{self.major.name} - {self.name} - {self.unit}'
