@@ -28,7 +28,7 @@ class MajorModel(BaseModel):
         verbose_name_plural = 'majors'
 
     def __str__(self):
-        return f'{self.name} - {self.degree}'
+        return f'{self.collage.name} - {self.name} - {self.degree}'
 
 
 class SemesterModel(BaseModel):

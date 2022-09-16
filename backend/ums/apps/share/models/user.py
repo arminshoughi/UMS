@@ -61,19 +61,19 @@ class UserModel(AbstractBaseUser, BaseModel):
 
     @property
     def default_phone(self):
-        self.phones.filter(is_default=True).first()
+        return self.phones.filter(is_default=True).first()
 
     @property
     def default_mobile(self):
-        self.mobiles.filter(is_default=True).first()
+        return self.mobiles.filter(is_default=True).first()
 
     @property
     def default_address(self):
-        self.addresses.filter(is_default=True)
+        return self.addresses.filter(is_default=True).first()
 
     @property
     def default_emails(self):
-        self.emails.filter(is_default=True)
+        return self.emails.filter(is_default=True).first()
 
 
 class UserPhoneModel(BaseModel):
@@ -81,20 +81,29 @@ class UserPhoneModel(BaseModel):
     phone = models.CharField(verbose_name='تلفن ثالت', max_length=11, validators=[PhoneValidator()])
     is_default = models.BooleanField(verbose_name='Default', default=False)
 
+    def __str__(self):
+        return self.phone
 
 class UserMobileModel(BaseModel):
     user = models.ForeignKey(verbose_name='User', to=UserModel, related_name='mobiles', on_delete=models.CASCADE)
     mobile = models.CharField(verbose_name='Mobile', max_length=11, validators=[PhoneValidator()])
     is_default = models.BooleanField(verbose_name='Default', default=False)
 
+    def __str__(self):
+        return self.mobile
 
 class UserAddressModel(BaseModel):
     user = models.ForeignKey(verbose_name='User', to=UserModel, related_name='addresses', on_delete=models.CASCADE)
     address = models.TextField(verbose_name='Address', null=False, blank=False)
     is_default = models.BooleanField(verbose_name='Default', default=False)
 
+    def __str__(self):
+        return self.address[:50]
 
 class UserEmailModel(BaseModel):
     user = models.ForeignKey(verbose_name='User', to=UserModel, related_name='emails', on_delete=models.CASCADE)
-    email = models.TextField(verbose_name='Email', null=False, blank=False)
+    email = models.EmailField(verbose_name='Email', null=False, blank=False)
     is_default = models.BooleanField(verbose_name='Default', default=False)
+
+    def __str__(self):
+        return self.email

@@ -35,6 +35,9 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=[permissions.AllowAny],
 )
+admin.site.site_header = "University Management System"
+admin.site.site_title = "UMS Admin Portal"
+admin.site.index_title = "Welcome To University Management System Admin Portal"
 
 urlpatterns = [
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
