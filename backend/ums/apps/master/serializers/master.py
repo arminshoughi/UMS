@@ -15,7 +15,7 @@ class MasterModelBaseSerializer(DynamicFieldsModelSerializer):
 class MasterModelSerializer(MasterModelBaseSerializer):
     class Meta(MasterModelBaseSerializer.Meta):
         fields = [
-            'first_name', 'last_name', 'collage', 'major', 'national_code', 'sex', 'birthday',
+            'first_name', 'last_name', 'collage', 'major', 'national_code', 'sex', 'birthday', 'typ'
         ]
 
 
