@@ -1,1 +1,0 @@
-# UMS: University Management System

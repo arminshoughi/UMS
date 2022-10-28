@@ -1,30 +1,51 @@
-import React, { useId } from "react";
-import { HiOutlineUserCircle, HiUser } from "react-icons/hi";
+import React, { useEffect, useState } from "react";
+import { HiOutlineUserCircle } from "react-icons/hi";
 import "./Navbar.css";
-import { useTranslation } from "react-i18next";
-import { UNIT } from "../constants/unit";
-import { FormLabeledListbox, FormListbox } from "./Form";
-import {
-  Listbox,
-  ListboxInput,
-  ListboxButton,
-  ListboxPopover,
-  ListboxList,
-  ListboxOption,
-} from "@reach/listbox";
 import "@reach/listbox/styles.css";
+import axios from "axios";
 
 const Login = () => {
-  const { t } = useTranslation();
+  const [status, setStatus] = useState();
+  const [userName, setUserName] = useState();
+  const [password, setPassword] = useState();
 
-  const submitForm = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-    console.log(data);
+
+    axios
+      .post(
+        "//127.0.0.1:8000/api/share/auth/token/",
+        {
+          username: userName,
+
+          password: password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY2NDIzNDgxLCJqdGkiOiJlYTA5YTI2ODgzYWM0MzU4YmMyOGYzNzFiMTQ1ODMzMiIsInVzZXJfaWQiOjF9.o_629F8KzenKf8y8Z67jvEqAkxau0iEu-PP4EcVtHRA`,
+
+            "X-CSRFToken":
+              "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
+          },
+        }
+      )
+      .then((result) => {
+        setStatus(result.status.toString());
+      })
+      .catch((error) => {
+        alert("نام کاربری و یا رمز عبور اشتباه است لطفا مجدد تلاش کنید.");
+      });
   };
-  let labelId = `taco-label--${useId()}`;
-  let [value, setValue] = React.useState("pollo");
+
+  console.log("status", status);
+
+  useEffect(() => {
+    if (status === "200") {
+      window.open("/", "_self");
+    }
+  }, [status]);
   return (
     <div className="Login ">
       <div className=" align-center p-4 w-[30%]  ml-[35%]  ">
@@ -33,7 +54,7 @@ const Login = () => {
             <HiOutlineUserCircle className="w-40 h-40 ml-[32%]" />
             <div className="card-body">
               <h1>Login</h1>
-              <form onSubmit={submitForm}>
+              <form onSubmit={handleSubmit}>
                 <div className="form-group mt-5">
                   <label htmlFor="username">Username</label>
                   <input
@@ -41,6 +62,7 @@ const Login = () => {
                     name="username"
                     className="form-control"
                     id="username"
+                    onChange={(e) => setUserName(e.target.value)}
                   />
                 </div>
                 <div className="form-group mt-4">
@@ -50,6 +72,7 @@ const Login = () => {
                     name="password"
                     className="form-control"
                     id="password"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import ctl from "@netlify/classnames-template-literals";
 import { useTranslation } from "react-i18next";
@@ -16,6 +16,7 @@ import "./Navbar.css";
 import { SidebarData } from "./SidbarData";
 import { useLocation } from "react-router-dom";
 import Login from "./Login";
+import Profile from "./Profile";
 
 function Navbar() {
   const [search, setSearch] = useState("");
@@ -28,24 +29,32 @@ function Navbar() {
   console.log(location.pathname, "nargess");
 
   const searchboxContainerCN = ctl(`
-  flex items-center justify-start transition duration-200
-  bg-white border px-2 shadow rounded-md w-56 ml-3 ml-3
+  flex items-center 
+  bg-white border px-2  shadow rounded-md w-52 
   focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-1
 `);
-  return location.pathname !== "/login" ? (
+
+  return location.pathname === "/login" ? (
+    <Login />
+  ) : location.pathname === "/profile" ? (
+    <Profile />
+  ) : (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
         <div className="navbar">
           <Link to="#" className="menu-bars">
             <HiOutlineMenu onClick={showSidebar} />
           </Link>
-          <button className=" transition duration-200 py-1.5 px-3 text-sm rounded-sm flex   border-4 border-solid     ml-[80rem] ">
+          <button
+            onClick={() => window.open("profile", "_self")}
+            className=" transition duration-200 py-1.5 px-3 text-sm rounded-sm flex   border-4 border-solid     ml-[80rem] "
+          >
             <div className="text-gray-300 mr-10">پروفایل</div>
             <HiUser className="w-6 h-6" />
           </button>
         </div>
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
-          <ul className="w-[100%] ">
+          <ul className="">
             <li className="navbar-toggle">
               <Link to="#" className="menu-bars">
                 <HiOutlineX onClick={showSidebar} />
@@ -76,8 +85,6 @@ function Navbar() {
         </nav>
       </IconContext.Provider>
     </>
-  ) : (
-    <Login />
   );
 }
 
