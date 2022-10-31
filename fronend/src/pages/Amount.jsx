@@ -1,14 +1,9 @@
 import React from "react";
-// import Error from "../components/Error";
-// import Loading from "../components/Error";
 import Card from "react-credit-cards";
-
 import "react-credit-cards/es/styles-compiled.css";
 import {
   formatCreditCardNumber,
-  formatCVC,
   formatExpirationDate,
-  formatFormData,
 } from "./util";
 
 export default class Amount extends React.Component {
