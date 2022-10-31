@@ -72,5 +72,12 @@ class CourseModelSerializer(DynamicFieldsModelSerializer):
         service = services.CourseService
         fields = [
             'major', 'major_id', 'semester', 'semester_id', 'name', 'details', 'unit', 'master_id', 'master',
-            'documents', 'schedules', 'midterm_exam_date', 'final_exam_date'
+            'documents', 'schedules', 'midterm_exam_date', 'final_exam_date', 'price'
         ]
+
+
+class UserModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserModel
+        service = services.UserService
+        fields = '__all__'

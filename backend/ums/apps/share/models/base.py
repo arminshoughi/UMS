@@ -58,6 +58,7 @@ class CourseModel(BaseModel):
     unit = models.CharField(verbose_name='Course unit', validators=[validators.CourseUnitValidator()], max_length=1)
     midterm_exam_date = models.DateField(verbose_name='midterm exam date', null=False, blank=False)
     final_exam_date = models.DateField(verbose_name='midterm exam date', null=False, blank=False)
+    price = models.BigIntegerField(verbose_name='course price', null=True, blank=True)
 
     class Meta:
         verbose_name = 'course'
