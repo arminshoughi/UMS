@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from apps.share.models import CourseModel, SemesterModel
+from apps.share.serializers import CourseModelSerializer
 from apps.student.models import StudentModel, StudentSemesterModel, StudentSemesterCourseModel
 from apps.student.services import StudentService
 from utils.serializers import DynamicFieldsModelSerializer
@@ -71,7 +72,8 @@ class StudentTakeSemesterSerializer(serializers.Serializer):
 
 class StudentTakeCourseSerializer(serializers.Serializer):
     student_semester_id = serializers.IntegerField()
-    course_id = serializers.IntegerField()
+    course_id = serializers.IntegerField(write_only=True)
+    course = CourseModelSerializer(read_only=True)
 
     def validate_student_semester_id(self, value):
         student_semester = StudentSemesterModel.objects.filter(id=value)
@@ -105,3 +107,7 @@ class StudentTakeCourseSerializer(serializers.Serializer):
         if self.instance:
             rep.update({'id': instance.id})
         return rep
+
+
+class IdSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
