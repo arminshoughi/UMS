@@ -5,13 +5,17 @@ import "@reach/listbox/styles.css";
 import axios from "axios";
 import { useCollageTable } from "../hook/collage";
 import { useMajorTable } from "../hook/major";
+import { useCurrentUserTable } from "../hook/currentUser";
 
 const Profile = () => {
   const { data } = useCollageTable();
   const { data: major } = useMajorTable();
+  const { data: currentUser } = useCurrentUserTable();
+  console.log(currentUser, "currentUser");
 
   const [, setData] = useState([]);
-  const [name, setName] = useState();
+  const [name, setName] = React.useState(currentUser.first_name);
+  console.log(name, currentUser.first_name, "currentUser.first_name");
   const [family, setFamily] = useState();
   const [nationalCode, setNationalCode] = useState();
   const [birthday, setBierthday] = useState();
@@ -41,10 +45,7 @@ const Profile = () => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(
-    major?.map((i) => i.name),
-    "asdsad"
-  );
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -54,8 +55,8 @@ const Profile = () => {
         {
           first_name: name,
           last_name: family,
-          collage: 0,
-          major: 0,
+          collage: 1,
+          major: 1,
           national_code: nationalCode,
           sex: sex,
           birthday: birthday,
@@ -96,7 +97,7 @@ const Profile = () => {
                       name="name"
                       className="form-control !w-48"
                       id="name"
-                      defaultValue={"name"}
+                      defaultValue={currentUser.first_name}
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
@@ -107,6 +108,7 @@ const Profile = () => {
                       name="family"
                       className="form-control"
                       id="family"
+                      defaultValue={currentUser.last_name}
                       onChange={(e) => setFamily(e.target.value)}
                     />
                   </div>
@@ -118,15 +120,21 @@ const Profile = () => {
                     name="national_code"
                     className="form-control"
                     id="national_code"
+                    defaultValue={currentUser.national_code}
                     onChange={(e) => setNationalCode(e.target.value)}
                   />
                 </div>
                 <select
+                  defaultValue={currentUser.collage}
                   className="form-select form-select-lg mt-4 h-10"
                   aria-label=".form-select-lg example"
                 >
                   {data?.map((i, b) => (
-                    <option>{i?.name}</option>
+                    <option
+                      defaultValue={i.id === currentUser.collage ? i.name : ""}
+                    >
+                      {i?.name}
+                    </option>
                   ))}
                 </select>
                 <select
@@ -143,6 +151,7 @@ const Profile = () => {
                     type="date"
                     id="birthday"
                     name="birthday"
+                    defaultValue={currentUser.birthday}
                     className="ml-10"
                     onChange={(e) => setBierthday(e.target.value)}
                   />
@@ -157,20 +166,21 @@ const Profile = () => {
                         type="radio"
                         id="sex"
                         name="sex"
-                        value="Famele"
                         className="mr-10 ml-2"
+                        defaultChecked={currentUser.sex !== "Famele"}
                         onChange={(e) => setSex(e.target.value)}
                       />
                     </label>
 
                     <label>
-                      Mel
+                      Male
                       <input
                         type="radio"
                         id="sex"
                         name="sex"
                         value="Mel"
                         className="mr-10 ml-2"
+                        defaultChecked={currentUser.sex !== "Male"}
                         onChange={(e) => setSex(e.target.value)}
                       />
                     </label>

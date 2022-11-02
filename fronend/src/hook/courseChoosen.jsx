@@ -2,20 +2,19 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export function useCollageTable() {
+export function useGetCourseTable() {
   const { t } = useTranslation();
-  // const { data: collages, ...rest } = useCollage();
+  // const { data: courses, ...rest } = useCollage();
 
-  const [collages, setData] = useState([]);
-  console.log(collages, "collages");
+  const [courses, setData] = useState([]);
 
   const getData = () => {
     axios
-      .get("http://127.0.0.1:8000/api/share/collages/", {
+      .get("http://127.0.0.1:8000/api/student/student/get_courses/", {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NDc3NTMxLCJqdGkiOiIzMWNkMzkxODY3ZmI0ODg3OGQ4YjkxN2E4OTNhOTYwNSIsInVzZXJfaWQiOjF9.mPMQU18-EhtI_8ZVzOHd6ebCNK0AeeBSIYmVWaWBS7Q`,
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NDY3NDYyLCJqdGkiOiJlYzAyZjY3N2MwMjI0ZGJiYjc3MWU1NzA2YTA1M2RmNCIsInVzZXJfaWQiOjN9.GyqCz71qu3AxXydIBCtIciW_xRHsBHudI8dzqrfbum8`,
 
           "X-CSRFToken":
             "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -39,7 +38,7 @@ export function useCollageTable() {
     getData();
   }, []);
 
-  const data = React.useMemo(() => collages, [collages]);
+  const data = React.useMemo(() => courses, [courses]);
 
   return {
     data,

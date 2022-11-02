@@ -3,12 +3,15 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import "./Navbar.css";
 import "@reach/listbox/styles.css";
 import axios from "axios";
+import { useStudentTable } from "../hook/student";
+import { useLocation } from "react-router-dom";
 
 const Login = () => {
   const [status, setStatus] = useState();
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
-
+  const { data } = useStudentTable();
+  console.log(data, "data");
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -17,7 +20,6 @@ const Login = () => {
         "//127.0.0.1:8000/api/share/auth/token/",
         {
           username: userName,
-
           password: password,
         },
         {
@@ -38,12 +40,18 @@ const Login = () => {
         alert("نام کاربری و یا رمز عبور اشتباه است لطفا مجدد تلاش کنید.");
       });
   };
+  const location = useLocation();
 
-  console.log("status", status);
+  console.log("status", userName);
+  console.log(location.pathname, "nargess");
 
   useEffect(() => {
-    if (status === "200") {
+    if (status === "200" && location.pathname === "/login") {
       window.open("/", "_self");
+    } else {
+      if (status === "200" && location.pathname === "/masterlogin") {
+        window.open("/master", "_self");
+      }
     }
   }, [status]);
   return (

@@ -15,7 +15,7 @@ export function useCourseTable() {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3MjMxNjYxLCJqdGkiOiIzYmQ4YzUxODgwZmE0NDI0YjBhNDY2M2IzNzMxZTFlMSIsInVzZXJfaWQiOjF9.kNvtW0izZ58tl7EdgmJDckzZ4-ZfRYojJTTu6j1wIZg`,
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NDY3NDYyLCJqdGkiOiJlYzAyZjY3N2MwMjI0ZGJiYjc3MWU1NzA2YTA1M2RmNCIsInVzZXJfaWQiOjN9.GyqCz71qu3AxXydIBCtIciW_xRHsBHudI8dzqrfbum8`,
 
           "X-CSRFToken":
             "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",

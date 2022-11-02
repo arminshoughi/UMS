@@ -2,16 +2,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export function useCollageTable() {
+export function useSemesterTable() {
   const { t } = useTranslation();
-  // const { data: collages, ...rest } = useCollage();
+  // const { data: majors, ...rest } = useCollage();
 
-  const [collages, setData] = useState([]);
-  console.log(collages, "collages");
+  const [majors, setData] = useState([]);
+  console.log(majors, "majors");
 
   const getData = () => {
     axios
-      .get("http://127.0.0.1:8000/api/share/collages/", {
+      .get("http://127.0.0.1:8000/api/share/semesters/", {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
@@ -39,7 +39,7 @@ export function useCollageTable() {
     getData();
   }, []);
 
-  const data = React.useMemo(() => collages, [collages]);
+  const data = React.useMemo(() => majors, [majors]);
 
   return {
     data,

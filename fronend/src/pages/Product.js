@@ -2,77 +2,67 @@ import React from "react";
 // import Error from "../components/Error";
 // import Loading from "../components/Error";
 import { useCollageTable } from "../hook/collage";
+import { useGetCourseTable } from "../hook/getCource";
 function Product() {
-  const { data, columns } = useCollageTable();
+  const { data } = useGetCourseTable();
   console.log(
-    data?.map((i) => i.name),
-    "data"
+    data
+      .map((i) => i.course)
+      .map((i) => i.unit)
+      .map(function (elt) {
+        return /^\d+$/.test(elt) ? parseInt(elt) : 0;
+      })
+      .reduce(function (a, b) {
+        return a + b;
+      }),
+    "asdsad"
   );
+  const sumUnit = data
+    .map((i) => i.course)
+    .map((i) => i.unit)
+    .map(function (elt) {
+      return /^\d+$/.test(elt) ? parseInt(elt) : 0;
+    })
+    .reduce(function (a, b) {
+      return a + b;
+    });
   return (
     <>
       <table className="ml-[30%] mt-10  ">
         <thead>
           <tr>
-            <td colspan="3">درس </td>
-            <td rowspan="2"> نیمسال </td>
-            <td rowspan="2"> واحد </td>
-            <td colspan="2"> نمره </td>
-          </tr>
-          <tr>
-            <td>کد </td>
-            <td colspan="2"> نام </td>
-            <td> </td>
+            <td colspan="2">درس </td>
+            <td> نیمسال </td>
+            <td> واحد </td>
+            <td> نمره </td>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>CS 225 </td>
-            <td colspan="2">Data Structures </td>
-            <td> Fall 2015</td>
-            <td> 3.0 </td>
-            <td> 12.0 </td>
-          </tr>
-          <tr>
-            <td>PHIL 105 </td>
-            <td colspan="2">Ethics </td>
-            <td> Fall 2015</td>
-            <td> 3.0 </td>
-            <td> 10.98 </td>
-          </tr>
-          <tr>
-            <td>ECE 310 </td>
-            <td colspan="2">Digital Signal Processing </td>
-            <td> Fall 2015</td>
-            <td> 3.0 </td>
-            <td> 12 </td>
-          </tr>
-          <tr>
-            <td>CS 373 </td>
-            <td colspan="2">Combinatorial Algorithms </td>
-            <td> Fall 2015</td>
-            <td> 3.0 </td>
-            <td> 9.99</td>
-          </tr>
-          <tr>
-            <td>MATH 225 </td>
-            <td colspan="2">Multi-Variable Calculus </td>
-            <td> Fall 2015</td>
-            <td> 3.0 </td>
-            <td> 10.98 </td>
-          </tr>
+          {data
+            .map((i) => i.course)
+            .map((i) => (
+              <>
+                <tr>
+                  <td colspan="2">{i.name} </td>
+                  <td>{i.semester.name}</td>
+                  <td>{i.unit}</td>
+                  <td> 12.0 </td>
+                </tr>
+              </>
+            ))}
         </tbody>
         <tr>
           <td colspan="4" class="footer">
             جمع واحد ها و نمرات اخذ شده
           </td>
-          <td> 15.0 </td>
+          <td>{sumUnit}</td>
           <td colspan="2">55.95 </td>
         </tr>
         <tr>
           <td colspan="4" class="footer">
             معدل نیمسال
           </td>
-          <td colspan="3">3.73 / 4.0 </td>
+          <td colspan="3"> </td>
         </tr>
       </table>
     </>

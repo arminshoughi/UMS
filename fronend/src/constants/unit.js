@@ -4,3 +4,8 @@ export const UNIT = {
   BARGH: "bargh",
   OTHER: "other",
 };
+export const SAMESTER = {
+  mehr: "mehr",
+  bahman: "bahman",
+  tabestan: "tabestan",
+};
