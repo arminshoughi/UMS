@@ -34,7 +34,7 @@ class StudentModelViewSet(ModelViewSet):
         url_path='take_semester', serializer_class=StudentTakeSemesterSerializer
     )
     def take_semester(self, request, *args, **kwargs):
-        if not hasattr(self.request.user,'studentmodel'):
+        if not hasattr(self.request.user, 'studentmodel'):
             return Response(data={'خظا': 'دسترسی دانشجویی فعال نمی باشد'}, status=status.HTTP_400_BAD_REQUEST)
         student_term = self.serializer_class(data=self.request.data)
         student_term.is_valid(raise_exception=True)
@@ -48,7 +48,7 @@ class StudentModelViewSet(ModelViewSet):
         url_path='get_courses', serializer_class=StudentTakeCourseSerializer
     )
     def get_courses(self, request, *args, **kwargs):
-        if not hasattr(self.request.user,'studentmodel'):
+        if not hasattr(self.request.user, 'studentmodel') and self.request.user.studentmodel != None:
             return Response(data={'خظا': 'دسترسی دانشجویی فعال نمی باشد'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(
             data=self.serializer_class(
@@ -63,7 +63,7 @@ class StudentModelViewSet(ModelViewSet):
         url_path='take_course', serializer_class=StudentTakeCourseSerializer
     )
     def take_course(self, request, *args, **kwargs):
-        if not hasattr(self.request.user,'studentmodel'):
+        if not hasattr(self.request.user, 'studentmodel') and self.request.user.studentmodel != None:
             return Response(data={'خظا': 'دسترسی دانشجویی فعال نمی باشد'}, status=status.HTTP_400_BAD_REQUEST)
         student_term_course = self.serializer_class(data=self.request.data)
         student_term_course.is_valid(raise_exception=True)
@@ -81,7 +81,7 @@ class StudentModelViewSet(ModelViewSet):
         serializer = self.serializer_class(data=self.request.data)
         serializer.is_valid(raise_exception=True)
         obj = get_object_or_404(StudentSemesterCourseModel, id=serializer.validated_data['id'])
-        if not hasattr(self.request.user,'studentmodel'):
+        if not hasattr(self.request.user, 'studentmodel') and  self.request.user.studentmodel != None:
             return Response(data={'خظا': 'دسترسی دانشجویی فعال نمی باشد'}, status=status.HTTP_400_BAD_REQUEST)
         if self.request.user.studentmodel != obj.student_semester.student:
             return Response(data={'خظا': 'دسترسی غیر مجاز'}, status=status.HTTP_400_BAD_REQUEST)
