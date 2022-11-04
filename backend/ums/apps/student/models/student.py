@@ -38,5 +38,5 @@ class StudentSemesterCourseModel(BaseModel):
         verbose_name='course', to=shared_models.CourseModel, on_delete=models.PROTECT, null=False, blank=False,
         related_name='courses'
     )
-    midterm_exam_grade = models.FloatField(verbose_name='midterm exam grade', null=True, blank=True)
-    final_exam_grade = models.FloatField(verbose_name='final exam grade', null=True, blank=True)
+    midterm_exam_grade = models.FloatField(verbose_name='midterm exam grade', null=True, blank=True, default=0)
+    final_exam_grade = models.FloatField(verbose_name='final exam grade', null=True, blank=True, default=0)
