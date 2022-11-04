@@ -32,26 +32,27 @@ function CourseChoose() {
 
     axios
       .post(
-        "//127.0.0.1:8000/api/student/student/remove_course/",
-        {
-          id: id,
-        },
+        "http://127.0.0.1:8000/api/student/student/remove_course/",
         {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY2NDIzNDgxLCJqdGkiOiJlYTA5YTI2ODgzYWM0MzU4YmMyOGYzNzFiMTQ1ODMzMiIsInVzZXJfaWQiOjF9.o_629F8KzenKf8y8Z67jvEqAkxau0iEu-PP4EcVtHRA`,
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NjQxMzExLCJqdGkiOiJkYzVlMWFmODYzMzc0Y2EzYjYzZWI2ZDVkZmRlZmRkYiIsInVzZXJfaWQiOjN9.VxqDZUlDGF1JrIuQ71XSi4PcoJ4wdQDcUIO3DXX_Oh0`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
           },
+        },
+
+        {
+          id: 5,
         }
       )
       .then((result) => {
-        alert("با موفقیت حذف شد");
+        alert(result.status.toString());
       })
       .catch((error) => {
-        alert("واحد انتخابی حذف نشد");
+        alert(error);
       });
   };
 
@@ -84,7 +85,7 @@ function CourseChoose() {
               <tr className="">
                 <td class="  !text-right  !w-1 !pr-2">
                   <button
-                    onClick={() => handleSubmit1}
+                    onClick={(e) => handleSubmit1(e)}
                     type="button"
                     class="btn !w-28 btn-primary"
                   >

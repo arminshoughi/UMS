@@ -15,7 +15,7 @@ export function useCurrentUserTable() {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NDc3NTMxLCJqdGkiOiIzMWNkMzkxODY3ZmI0ODg3OGQ4YjkxN2E4OTNhOTYwNSIsInVzZXJfaWQiOjF9.mPMQU18-EhtI_8ZVzOHd6ebCNK0AeeBSIYmVWaWBS7Q`,
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NjQxMzExLCJqdGkiOiJkYzVlMWFmODYzMzc0Y2EzYjYzZWI2ZDVkZmRlZmRkYiIsInVzZXJfaWQiOjN9.VxqDZUlDGF1JrIuQ71XSi4PcoJ4wdQDcUIO3DXX_Oh0`,
 
           "X-CSRFToken":
             "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",

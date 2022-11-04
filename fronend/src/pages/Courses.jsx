@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -5,12 +6,14 @@ import Modal from "../components/modal";
 import { useCourseTable } from "../hook/course";
 import { useCurrentUserTable } from "../hook/currentUser";
 import { useMajorTable } from "../hook/major";
+import { useMasters } from "../hook/masters";
 import { useSemesterTable } from "../hook/semester";
 
 function Courses() {
   const { data } = useCourseTable();
-  const { data: major } = useMajorTable();
-  const { data: semester } = useSemesterTable();
+  const { data: masters } = useMasters();
+  const { data: majors } = useMajorTable();
+  const { data: semesters } = useSemesterTable();
 
   const { data: currentUser } = useCurrentUserTable();
   console.log(currentUser, "currentUser");
@@ -21,11 +24,69 @@ function Courses() {
     modalInputName: "",
   });
 
+  const [values, setValus] = useState({
+    major: "",
+    className: "",
+    masterName: "",
+    unitCount: "",
+    details: "",
+    period: "",
+    term: "",
+    classStart: "",
+    classEnd: "",
+    classToday: "",
+    classClock: "",
+    minTerm: "",
+    endTerm: "",
+    price: "",
+  });
+
+  console.log("val", values);
   const location = useLocation();
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     setState({ name: state.modalInputName });
     modalClose();
+    axios
+      .post(
+        "http://127.0.0.1:8000/api/share/courses/",
+        {
+          major_id: Number(values.major),
+
+          semester_id: Number(values.term),
+          name: values.className,
+          details: values.details,
+          unit: values.unitCount,
+          master_id: Number(values.masterName),
+
+          schedules: [
+            {
+              day: values.classToday,
+              time: values.classClock,
+            },
+          ],
+          midterm_exam_date: values.minTerm,
+          final_exam_date: values.endTerm,
+          price: values.price,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NjQxMzExLCJqdGkiOiJkYzVlMWFmODYzMzc0Y2EzYjYzZWI2ZDVkZmRlZmRkYiIsInVzZXJfaWQiOjN9.VxqDZUlDGF1JrIuQ71XSi4PcoJ4wdQDcUIO3DXX_Oh0`,
+
+            "X-CSRFToken":
+              "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
+          },
+        }
+      )
+      .then((result) => {
+        alert(result.status.toString());
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   const modalOpen = () => {
@@ -39,18 +100,23 @@ function Courses() {
     });
   };
   console.log(
-    semester.map((i) => i.start_date),
+    semesters.map((i) => i.start_date),
     "semester.start_date"
   );
   return (
     <>
-      <button
-        type="button"
-        class="btn !w-full !h-12   btn-primary"
-        onClick={(e) => modalOpen(e)}
-      >
-        <i class="">اظافه کردن درس</i>
-      </button>
+      {" "}
+      {location.pathname === "/master" ? (
+        <button
+          type="button"
+          class="btn !w-full !h-12   btn-primary"
+          onClick={(e) => modalOpen(e)}
+        >
+          <i class="">اضافه کردن درس</i>
+        </button>
+      ) : (
+        ""
+      )}
       <Modal show={state.modal} handleClose={(e) => modalClose(e)}>
         <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10">
           {" "}
@@ -63,8 +129,11 @@ function Courses() {
               defaultValue={currentUser.collage}
               className="form-select form-select-lg  h-10"
               aria-label=".form-select-lg example"
+              onChange={(e) => setValus({ ...values, major: e.target.value })}
             >
-              {major?.map((i, b) => (
+              <option>انتخاب</option>
+
+              {majors?.map((i, b) => (
                 <option
                   defaultValue={i.id === currentUser.collage ? i.name : ""}
                 >
@@ -80,15 +149,44 @@ function Courses() {
               value={state.modalInputName}
               name="modalInputName"
               className="form-control  "
+              onChange={(e) =>
+                setValus({ ...values, className: e.target.value })
+              }
             />
           </div>
           <div>
             <label>نام استاد</label>
+            <select
+              // defaultValue={currentUser.collage}
+              className="form-select form-select-lg  h-10"
+              aria-label=".form-select-lg example"
+              onChange={(e) => {
+                console.log("eee", e);
+                setValus({ ...values, masterName: e.target.value });
+              }}
+            >
+              <option>انتخاب</option>
+              {masters?.map((i, b) => (
+                <option
+                  defaultValue={
+                    i.id === currentUser.collage ? i.first_name : ""
+                  }
+                  value={i.id}
+                >
+                  {i?.first_name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label>جزئیات</label>
+
             <input
               type="text"
               value={state.modalInputName}
               name="modalInputName"
               className="form-control "
+              onChange={(e) => setValus({ ...values, details: e.target.value })}
             />
           </div>
           <div>
@@ -98,6 +196,9 @@ function Courses() {
               value={state.modalInputName}
               name="modalInputName"
               className="form-control "
+              onChange={(e) =>
+                setValus({ ...values, unitCount: e.target.value })
+              }
             />
           </div>
           <div>
@@ -107,6 +208,7 @@ function Courses() {
               value={state.modalInputName}
               name="modalInputName"
               className="form-control "
+              onChange={(e) => setValus({ ...values, period: e.target.value })}
             />
           </div>
           <div>
@@ -114,8 +216,9 @@ function Courses() {
             <select
               className="form-select form-select-lg  h-10"
               aria-label=".form-select-lg example"
+              onChange={(e) => setValus({ ...values, term: e.target.value })}
             >
-              {semester?.map((i, b) => (
+              {semesters?.map((i, b) => (
                 <option
                   defaultValue={i.id === currentUser.collage ? i.name : ""}
                 >
@@ -127,19 +230,25 @@ function Courses() {
           <div>
             <label>شروع کلاس</label>
             <input
-              type="text"
-              value={semester.start_date}
+              type="date"
+              value={semesters.start_date}
               name="modalInputName"
               className="form-control "
+              onChange={(e) =>
+                setValus({ ...values, classStart: e.target.value })
+              }
             />
           </div>
           <div>
             <label>اتمام کلاس</label>
             <input
-              type="text"
+              type="date"
               value={state.modalInputName}
               name="modalInputName"
               className="form-control "
+              onChange={(e) =>
+                setValus({ ...values, classEnd: e.target.value })
+              }
             />
           </div>
           <div>
@@ -149,6 +258,9 @@ function Courses() {
               value={state.modalInputName}
               name="modalInputName"
               className="form-control "
+              onChange={(e) =>
+                setValus({ ...values, classToday: e.target.value })
+              }
             />
           </div>
           <div>
@@ -158,33 +270,39 @@ function Courses() {
               value={state.modalInputName}
               name="modalInputName"
               className="form-control "
+              onChange={(e) =>
+                setValus({ ...values, classClock: e.target.value })
+              }
             />
           </div>
           <div>
             <label>امتحان میانترم</label>
             <input
-              type="text"
+              type="date"
               value={state.modalInputName}
               name="modalInputName"
               className="form-control "
+              onChange={(e) => setValus({ ...values, minTerm: e.target.value })}
             />
           </div>
           <div>
             <label>امتحان پایانترم</label>
             <input
-              type="text"
+              type="date"
               value={state.modalInputName}
               name="modalInputName"
               className="form-control "
+              onChange={(e) => setValus({ ...values, endTerm: e.target.value })}
             />
           </div>
           <div>
             <label>قیمت</label>
             <input
-              type="text"
+              type="number"
               value={state.modalInputName}
               name="modalInputName"
               className="form-control "
+              onChange={(e) => setValus({ ...values, price: e.target.value })}
             />
           </div>
         </div>

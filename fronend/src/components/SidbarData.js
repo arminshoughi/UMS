@@ -8,32 +8,38 @@ import {
 export const SidebarData = [
   {
     title: "انتخاب واحد",
-    path: "/",
+    path: "/Course",
     icon: <HiOutlineDocumentText />,
-    cName: "mt-5 nav-text ml-3 px-14",
+    cName: "mt-5 nav-text ml-3 pl-[4.3rem]",
+  },
+  {
+    title: "مشاهده دروس انتخاب شده ",
+    path: "/courseChoose",
+    icon: <HiOutlineDocumentText />,
+    cName: "m nav-text pr-14 ",
   },
   {
     title: "مشاهده دروس ارایه شده",
-    path: "/reports",
+    path: "/AllCourses",
     icon: <HiOutlineIdentification />,
-    cName: "nav-text ",
+    cName: "nav-text pl-[0.7rem] ",
   },
   {
     title: "پرداخت شهریه",
     path: "/Amount",
     icon: <HiCurrencyDollar />,
-    cName: "nav-text px-14",
+    cName: "nav-text pl-[4rem]",
   },
   {
     title: "مشاهده کارنامه",
     path: "/Products",
     icon: <HiArchive />,
-    cName: "nav-text px-14  ",
+    cName: "nav-text pl-[4rem]  ",
   },
   {
     title: "خروج",
     path: "/login",
     icon: <HiArchive />,
-    cName: "nav-text ml-12 px-[60px]",
+    cName: "nav-text ml-12 pl-[4.2rem]",
   },
 ];

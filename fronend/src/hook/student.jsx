@@ -15,7 +15,7 @@ export function useStudentTable() {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3MzE2MDQ5LCJqdGkiOiI1MGM0NWJhZDkxZWI0YjY4YThmYTRhMTQ3OTc1MWJkMSIsInVzZXJfaWQiOjF9.2QNopStjy_DnsUTUD_v2kNlWBYY079g3G8CfuXVazkU`,
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NjQxMzExLCJqdGkiOiJkYzVlMWFmODYzMzc0Y2EzYjYzZWI2ZDVkZmRlZmRkYiIsInVzZXJfaWQiOjN9.VxqDZUlDGF1JrIuQ71XSi4PcoJ4wdQDcUIO3DXX_Oh0`,
 
           "X-CSRFToken":
             "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
