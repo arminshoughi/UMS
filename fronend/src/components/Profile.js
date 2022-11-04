@@ -31,7 +31,7 @@ const Profile = () => {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY2NDIzNDgxLCJqdGkiOiJlYTA5YTI2ODgzYWM0MzU4YmMyOGYzNzFiMTQ1ODMzMiIsInVzZXJfaWQiOjF9.o_629F8KzenKf8y8Z67jvEqAkxau0iEu-PP4EcVtHRA`,
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NjQxMzExLCJqdGkiOiJkYzVlMWFmODYzMzc0Y2EzYjYzZWI2ZDVkZmRlZmRkYiIsInVzZXJfaWQiOjN9.VxqDZUlDGF1JrIuQ71XSi4PcoJ4wdQDcUIO3DXX_Oh0`,
 
           "X-CSRFToken":
             "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -65,7 +65,7 @@ const Profile = () => {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY2NDIzNDgxLCJqdGkiOiJlYTA5YTI2ODgzYWM0MzU4YmMyOGYzNzFiMTQ1ODMzMiIsInVzZXJfaWQiOjF9.o_629F8KzenKf8y8Z67jvEqAkxau0iEu-PP4EcVtHRA`,
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NjQxMzExLCJqdGkiOiJkYzVlMWFmODYzMzc0Y2EzYjYzZWI2ZDVkZmRlZmRkYiIsInVzZXJfaWQiOjN9.VxqDZUlDGF1JrIuQ71XSi4PcoJ4wdQDcUIO3DXX_Oh0`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",

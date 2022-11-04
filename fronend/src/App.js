@@ -15,6 +15,7 @@ import GetCourses from "./pages/GetCources";
 import Test from "./pages/test";
 import CourseChoose from "./pages/CoursesChoose";
 import Login from "./components/Login";
+import AllCourses from "./pages/AllCourses";
 
 function App() {
   return (
@@ -32,8 +33,8 @@ function App() {
           <Route path="/Amount" element={<Amount />} />
           <Route path="/GetCourse" element={<GetCourses />} />
           <Route path="/CourseChoose" element={<CourseChoose />} />
+          <Route path="/AllCourses" element={<AllCourses />} />
           <Route path="/master" element={<Courses />} />
-
           <Route path="/Course" element={<Courses />} />
           <Route path="/Products" element={<Product />} />
         </Routes>

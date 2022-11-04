@@ -2,15 +2,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export function useGetCourseTable() {
+export function useMasters() {
   const { t } = useTranslation();
   // const { data: courses, ...rest } = useCollage();
 
-  const [courses, setData] = useState([]);
+  const [masters, setMasters] = useState([]);
+  console.log(masters, "courses");
 
   const getData = () => {
     axios
-      .get("http://127.0.0.1:8000/api/student/student/get_courses/", {
+      .get("http://127.0.0.1:8000/api/master/master", {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
@@ -21,7 +22,7 @@ export function useGetCourseTable() {
         },
       })
       .then(function (res) {
-        setData(res.data);
+        setMasters(res.data);
       })
       .catch(function (err) {
         if (err.response) {
@@ -38,7 +39,7 @@ export function useGetCourseTable() {
     getData();
   }, []);
 
-  const data = React.useMemo(() => courses, [courses]);
+  const data = React.useMemo(() => masters, [masters]);
 
   return {
     data,

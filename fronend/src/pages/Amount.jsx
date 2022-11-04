@@ -29,11 +29,11 @@ function Amount() {
   const handleInputChange = ({ target }) => {
     if (target.name === "number") {
       target.value = formatCreditCardNumber(target.value);
+      setState({ [target.name]: target.value });
     } else if (target.name === "expiry") {
       target.value = formatExpirationDate(target.value);
     }
-
-    setState({ [target.name]: target.value });
+    console.log(target.name, "dsadsad");
   };
 
   const handleSubmit = (e) => {
@@ -71,7 +71,7 @@ function Amount() {
           focused={focused}
           callback={handleCallback}
         />
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="grid grid-cols-2">
             <div>
               <div className="form-group">
@@ -87,9 +87,9 @@ function Amount() {
               </div>
               <div className="form-group mt-2 !w-96 !mx-96">
                 <input
-                  type="number"
+                  type="tel"
                   name="name"
-                  className="form-control "
+                  className="form-control"
                   placeholder="cvv2"
                   required
                   onChange={handleInputChange}
@@ -105,7 +105,6 @@ function Amount() {
                     pattern="\d\d/\d\d"
                     required
                     onChange={handleInputChange}
-                    onFocus={handleInputFocus}
                   />
                 </div>
               </div>
