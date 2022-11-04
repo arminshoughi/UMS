@@ -106,6 +106,8 @@ class StudentTakeCourseSerializer(serializers.Serializer):
         rep = super().to_representation(instance)
         if self.instance:
             rep.update({'id': instance.id})
+            rep.update({'midterm_exam_grade': instance.midterm_exam_grade})
+            rep.update({'final_exam_grade': instance.final_exam_grade})
         return rep
 
 
