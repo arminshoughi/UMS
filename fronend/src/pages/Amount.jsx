@@ -54,13 +54,7 @@ function Amount() {
     .map((i) => i.course)
     .map((i) => i.price)
     .reduce((partialSum, a) => partialSum + a, 0);
-  console.log(
-    data
-      .map((i) => i.course)
-      .map((i) => i.price)
-      .reduce((partialSum, a) => partialSum + a, 0),
-    "Asdsad"
-  );
+  console.log(data, "Asdsad");
   return (
     <div key="Payment">
       <div className="App-payment mt-9">

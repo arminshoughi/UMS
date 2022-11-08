@@ -14,6 +14,7 @@ function Courses() {
   const { data: masters } = useMasters();
   const { data: majors } = useMajorTable();
   const { data: semesters } = useSemesterTable();
+  console.log(semesters, "sddffg");
 
   const { data: currentUser } = useCurrentUserTable();
   console.log(currentUser, "currentUser");
@@ -30,7 +31,6 @@ function Courses() {
     masterName: "",
     unitCount: "",
     details: "",
-    period: "",
     term: "",
     classStart: "",
     classEnd: "",
@@ -40,8 +40,37 @@ function Courses() {
     endTerm: "",
     price: "",
   });
+  const handleSubmit1 = (e) => {
+    e.preventDefault();
 
-  console.log("val", values);
+    axios
+      .post(
+        "http://127.0.0.1:8000/api/student/student/take_course/",
+        {
+          student_semester_id: 1,
+          course_id: id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+
+            "X-CSRFToken":
+              "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
+          },
+        }
+      )
+      .then((result) => {
+        alert(result.status.toString());
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+  const [id, setsetId] = useState();
+
+  console.log("val", id);
   const location = useLocation();
 
   const handleSubmit = (e) => {
@@ -58,8 +87,9 @@ function Courses() {
           name: values.className,
           details: values.details,
           unit: values.unitCount,
-          master_id: Number(values.masterName),
+          master_id: 2,
 
+          documents: [],
           schedules: [
             {
               day: values.classToday,
@@ -74,7 +104,7 @@ function Courses() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NjQxMzExLCJqdGkiOiJkYzVlMWFmODYzMzc0Y2EzYjYzZWI2ZDVkZmRlZmRkYiIsInVzZXJfaWQiOjN9.VxqDZUlDGF1JrIuQ71XSi4PcoJ4wdQDcUIO3DXX_Oh0`,
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -82,10 +112,10 @@ function Courses() {
         }
       )
       .then((result) => {
-        alert(result.status.toString());
+        alert("درس اتخاب شد");
       })
       .catch((error) => {
-        alert(error);
+        alert("درس انتخاب شده به دلایل نامشخص حذف نشد دوباره تکرار کنید");
       });
   };
 
@@ -99,10 +129,7 @@ function Courses() {
       modal: false,
     });
   };
-  console.log(
-    semesters.map((i) => i.start_date),
-    "semester.start_date"
-  );
+  console.log();
   return (
     <>
       {" "}
@@ -110,7 +137,9 @@ function Courses() {
         <button
           type="button"
           class="btn !w-full !h-12   btn-primary"
-          onClick={(e) => modalOpen(e)}
+          onClick={(e) => {
+            modalOpen(e);
+          }}
         >
           <i class="">اضافه کردن درس</i>
         </button>
@@ -132,13 +161,8 @@ function Courses() {
               onChange={(e) => setValus({ ...values, major: e.target.value })}
             >
               <option>انتخاب</option>
-
               {majors?.map((i, b) => (
-                <option
-                  defaultValue={i.id === currentUser.collage ? i.name : ""}
-                >
-                  {i?.name}
-                </option>
+                <option value={i.id}>{i?.name}</option>
               ))}
             </select>
           </div>
@@ -161,20 +185,12 @@ function Courses() {
               className="form-select form-select-lg  h-10"
               aria-label=".form-select-lg example"
               onChange={(e) => {
-                console.log("eee", e);
-                setValus({ ...values, masterName: e.target.value });
+                setValus({ ...values, masterName: 1 });
               }}
             >
               <option>انتخاب</option>
               {masters?.map((i, b) => (
-                <option
-                  defaultValue={
-                    i.id === currentUser.collage ? i.first_name : ""
-                  }
-                  value={i.id}
-                >
-                  {i?.first_name}
-                </option>
+                <option value={1}>{i?.first_name}</option>
               ))}
             </select>
           </div>
@@ -201,16 +217,7 @@ function Courses() {
               }
             />
           </div>
-          <div>
-            <label>دوره</label>
-            <input
-              type="text"
-              value={state.modalInputName}
-              name="modalInputName"
-              className="form-control "
-              onChange={(e) => setValus({ ...values, period: e.target.value })}
-            />
-          </div>
+
           <div>
             <label>ترم</label>
             <select
@@ -219,11 +226,7 @@ function Courses() {
               onChange={(e) => setValus({ ...values, term: e.target.value })}
             >
               {semesters?.map((i, b) => (
-                <option
-                  defaultValue={i.id === currentUser.collage ? i.name : ""}
-                >
-                  {i?.name}
-                </option>
+                <option value={i.id}>{i?.name}</option>
               ))}
             </select>
           </div>
@@ -354,7 +357,14 @@ function Courses() {
               <tr>
                 {location.pathname !== "/master" ? (
                   <td class="  !text-right  !w-1 !pr-2">
-                    <button type="button" class="btn !w-28 btn-primary">
+                    <button
+                      onClick={(e) => {
+                        handleSubmit1(e);
+                        setsetId(row.id);
+                      }}
+                      type="button"
+                      class="btn !w-28 btn-primary"
+                    >
                       <i class="">انتخاب واحد</i>
                     </button>
                   </td>

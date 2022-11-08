@@ -1,7 +1,6 @@
 import React from "react";
 // import Error from "../components/Error";
 // import Loading from "../components/Error";
-import { useCollageTable } from "../hook/collage";
 import { useGetCourseTable } from "../hook/getCource";
 function Product() {
   const { data } = useGetCourseTable();
@@ -12,9 +11,9 @@ function Product() {
     .map(function (elt) {
       return /^\d+$/.test(elt) ? parseInt(elt) : 0;
     })
-    .reduce(function (a, b) {
-      return a + b;
-    });
+    .reduce((accumulator, value) => {
+      return accumulator + value;
+    }, 0);
   return (
     <>
       <table className="ml-[30%] mt-10 !w-[45%] ">

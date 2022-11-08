@@ -5,18 +5,21 @@ import { useLocation } from "react-router-dom";
 import Modal from "../components/modal";
 import { useCourseTable } from "../hook/course";
 import { useCurrentUserTable } from "../hook/currentUser";
+import { useGetCourseTable } from "../hook/getCource";
 import { useMajorTable } from "../hook/major";
 import { useMasters } from "../hook/masters";
 import { useSemesterTable } from "../hook/semester";
 
-function AllCourses() {
+function MasterCourse() {
   const { data } = useCourseTable();
+  const { data: nomre } = useGetCourseTable();
+
   const { data: masters } = useMasters();
   const { data: majors } = useMajorTable();
   const { data: semesters } = useSemesterTable();
-
+  console.log(nomre.final_exam_grade, "nomre");
   const { data: currentUser } = useCurrentUserTable();
-  console.log(currentUser, "currentUser");
+  console.log(data, "currentUser");
 
   const [state, setState] = useState({
     modal: false,
@@ -108,18 +111,26 @@ function AllCourses() {
       <table class="table !text-right  table-striped table-dark mt-3">
         <thead>
           <tr>
-            <th class="col  !text-right !w-20 ">{" قیمت"}</th>
-            <th class="col !text-right !w-20">{"    امتحان پایان ترم"}</th>
-            <th class="col !text-right !w-20">{"    امتحان میانترم"}</th>
-            <th class="col !text-right !w-20">{"   ساعت کلاس"}</th>
-            <th class="col !text-right !w-24">{"   روز کلاس"}</th>
-            <th class="col !text-right !w-20 ">{"   اتمام کلاس"}</th>
-            <th class="col !text-right !w-20">{"   شروع کلاس"}</th>
-            <th class="col !text-right !w-14">{"   ترم"}</th>
-            <th class="col !text-right !w-24">{"   دوره"}</th>
-            <th class="col !text-right  !w-20">{"  تعداد واحد"}</th>
-            <th class="col !text-right  !w-16">{" نام استاد"}</th>
-            <th class="col  !text-right !pr-8 !w-20">{" نام کلاس"}</th>
+            <td>
+              <button onClick={(e) => {}} type="button" class=" !w-28">
+                <i class=""></i>
+              </button>
+            </td>
+            <td>
+              <button onClick={(e) => {}} type="button" class="!w-28 ">
+                <i class=""></i>
+              </button>
+            </td>
+            <th class="col !text-right !pl-10">{"نمره پایان ترم"}</th>
+            <th class="col !text-right !pl-10 ">{"نمره میانترم"}</th>
+            <th class="col !text-right !pl-10">{"امتحان پایان ترم"}</th>
+            <th class="col !text-right !pr-12">{"امتحان میانترم"}</th>
+            <th class="col !text-right !pr-14">{"ساعت کلاس"}</th>
+            <th class="col !text-right !pr-24">{"روز کلاس"}</th>
+            <th class="col !text-right !pr-20 ">{"اتمام کلاس"}</th>
+            <th class="col !text-right ">{"شروع کلاس"}</th>
+            <th class="col !text-right !pr-8 ">{"نام دانشجو"}</th>
+            <th class="col  !text-right !pr-8 ">{"نام کلاس"}</th>
           </tr>
         </thead>
       </table>
@@ -128,28 +139,40 @@ function AllCourses() {
           {data.map((row, i) => (
             <>
               <tr>
-                {location.pathname !== "/master" ? "" : ""}
-
-                <td class="  !text-right   !w-20">{row.price}</td>
-                <td class="  !text-right !w-24 !pr-5">{row.final_exam_date}</td>
-                <td class="  !text-right !w-20 !pr-4">
-                  {row.midterm_exam_date}
+                <td>
+                  <div className="!text-right  !w-60 gap-3  flex">
+                    <button
+                      onClick={(e) => {}}
+                      type="button"
+                      class="btn !w-28 btn-primary"
+                    >
+                      <i class="">نمره پایانترم</i>
+                    </button>
+                    <button
+                      onClick={(e) => {}}
+                      type="button"
+                      class="btn !w-28  btn-primary"
+                    >
+                      <i class="">نمره میانترم</i>
+                    </button>
+                  </div>
                 </td>
-                <td class="  !text-right !w-20">
+
+                <td class="  !text-right   !pl-10 ">20</td>
+                <td class="  !text-right  !pl-10 ">20</td>
+
+                <td class="  !text-right !pl-10">{row.final_exam_date}</td>
+                <td class="  !text-right !pl-10 ">{row.midterm_exam_date}</td>
+                <td class="  !text-right !pl-10">
                   {row.schedules.map((i, k) => i.time)}
                 </td>
-                <td class="  !text-right !w-24  !pr-8">
+                <td class="  !text-right !pl-10">
                   {row.schedules.map((i, k) => i.day)}
                 </td>
-                <td class="  !text-right !w-20 !pr-5">
-                  {row.semester.end_date}
-                </td>
-                <td class="  !text-right !w-20">{row.semester.start_date}</td>
-                <td class="  !text-right  !w-14">{row.semester.name}</td>
-                <td class="  !text-right !pr-5 !w-20">{row.major.degree}</td>
-                <td class="  !text-right  !w-16">{row.unit}</td>
-                <td class="  !text-right !w-16">{row.master.first_name}</td>
-                <td class="  !text-right !pr-8 !w-20">{row.name}</td>
+                <td class="  !text-right !pl-10">{row.semester.end_date}</td>
+                <td class="  !text-right !pl-8">{row.semester.start_date}</td>
+                <td class="  !text-right ">{row.master.first_name}</td>
+                <td class="  !text-right !pr-8 ">{row.name}</td>
               </tr>
             </>
           ))}
@@ -159,4 +182,4 @@ function AllCourses() {
   );
 }
 
-export default AllCourses;
+export default MasterCourse;
