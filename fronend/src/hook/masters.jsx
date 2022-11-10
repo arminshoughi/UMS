@@ -1,13 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 export function useMasters() {
-  const { t } = useTranslation();
-  // const { data: courses, ...rest } = useCollage();
-
   const [masters, setMasters] = useState([]);
-  console.log(masters, "courses");
 
   const getData = () => {
     axios
@@ -43,6 +38,5 @@ export function useMasters() {
 
   return {
     data,
-    // ...rest,
   };
 }

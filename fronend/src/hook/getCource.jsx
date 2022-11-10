@@ -1,10 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 
-export function useGetCourseTable() {
-  // const { data: current-users, ...rest } = useCollage();
-
+export function useGetCourse(refresh) {
   const [getCourses, setData] = useState([]);
 
   const getData = () => {
@@ -35,11 +32,10 @@ export function useGetCourseTable() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [refresh]);
 
   const data = React.useMemo(() => getCourses, [getCourses]);
   return {
     data,
-    // ...rest,
   };
 }

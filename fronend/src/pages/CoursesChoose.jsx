@@ -1,40 +1,23 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useGetCourseTable } from "../hook/getCource";
+import { useGetCourse } from "../hook/getCource";
 
 function CourseChoose() {
-  const { data } = useGetCourseTable();
-  const [state, setState] = useState({
-    modal: false,
-    name: "",
-    modalInputName: "",
-  });
-  const handleSubmit = (e) => {
-    setState({ name: state.modalInputName });
-    modalClose();
-  };
+  const [refresh, setRefresh] = useState();
+  const [rowId, setRowId] = useState();
 
-  const modalOpen = () => {
-    setState({ modal: true });
-  };
+  const { data } = useGetCourse(refresh);
 
-  const modalClose = () => {
-    setState({
-      modalInputName: "",
-      modal: false,
-    });
-  };
-  const [id, setsetId] = useState();
-  const handleSubmit1 = (e) => {
+  const handleSubmitRemove = (e) => {
     e.preventDefault();
 
     axios
       .post(
         "http://127.0.0.1:8000/api/student/student/remove_course/",
         {
-          id: id,
+          id: rowId,
         },
         {
           headers: {
@@ -49,6 +32,7 @@ function CourseChoose() {
       )
       .then((result) => {
         alert("درس با موفقیت حذف شد");
+        setRefresh(!refresh);
       })
       .catch((error) => {
         alert("درس انتخاب شده به دلایل نامشخص حذف نشد دوباره تکرار کنید");
@@ -58,8 +42,8 @@ function CourseChoose() {
 
   return (
     <>
-      <table class="table !text-right  table-striped table-dark mt-3">
-        <thead>
+      <table class="table !text-right  mt-3">
+        <thead className="bg-slate-500">
           <tr>
             {location.pathname !== "/master" ? (
               <th class="col !text-right !w-28" scope="col"></th>
@@ -87,14 +71,14 @@ function CourseChoose() {
           {data.map((row, i) => (
             <>
               <tr className="">
-                <td class="  !text-right  !w-1 !pr-2">
+                <td class="  !text-right  !w-1 !pr-2 ">
                   <button
                     onClick={(e) => {
-                      setsetId(row.id);
-                      handleSubmit1(e);
+                      setRowId(row.id);
+                      handleSubmitRemove(e);
                     }}
                     type="button"
-                    class="btn !w-28 btn-primary"
+                    class="btn !w-28 !bg-slate-400 border  text-slate-900"
                   >
                     <i class="">حذف واحد</i>
                   </button>

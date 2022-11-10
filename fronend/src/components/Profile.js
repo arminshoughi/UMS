@@ -3,14 +3,14 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import "./Navbar.css";
 import "@reach/listbox/styles.css";
 import axios from "axios";
-import { useCollageTable } from "../hook/collage";
-import { useMajorTable } from "../hook/major";
-import { useCurrentUserTable } from "../hook/currentUser";
+import { useCollage } from "../hook/collage";
+import { useMajors } from "../hook/major";
+import { useCurrentUser } from "../hook/currentUser";
 
 const Profile = () => {
-  const { data } = useCollageTable();
-  const { data: major } = useMajorTable();
-  const { data: currentUser } = useCurrentUserTable();
+  const { data } = useCollage();
+  const { data: major } = useMajors();
+  const { data: currentUser } = useCurrentUser();
   console.log(currentUser, "currentUser");
 
   const [, setData] = useState([]);
@@ -87,11 +87,11 @@ const Profile = () => {
           <div className="card ">
             <HiOutlineUserCircle className="w-40 h-40 ml-[32%]" />
             <div className="card-body">
-              <h1>Profile</h1>
-              <form onSubmit={handleSubmit}>
+              <h1 className="text-center text-3xl">پروفایل</h1>
+              <form onSubmit={handleSubmit} dir="rtl">
                 <div className="grid grid-cols-2">
                   <div className="form-group ">
-                    <label htmlFor="name">name</label>
+                    <label htmlFor="name">نام</label>
                     <input
                       type="text"
                       name="name"
@@ -102,7 +102,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className="form-group !ml-5 !w-48 ">
-                    <label htmlFor="family">family</label>
+                    <label htmlFor="family">فامیل</label>
                     <input
                       type="text"
                       name="family"
@@ -114,7 +114,7 @@ const Profile = () => {
                   </div>
                 </div>
                 <div className="form-group mt-4">
-                  <label htmlFor="national_code">national_code</label>
+                  <label htmlFor="national_code">کد ملی</label>
                   <input
                     type="text"
                     name="national_code"
@@ -146,7 +146,7 @@ const Profile = () => {
                   ))}
                 </select>
                 <div className="form-group mt-4">
-                  <label htmlFor="birthday	">birthday </label>
+                  <label htmlFor="birthday	">تاریخ تولد </label>
                   <input
                     type="date"
                     id="birthday"
@@ -158,10 +158,10 @@ const Profile = () => {
                 </div>
 
                 <div className="form-group mt-4">
-                  <label htmlFor="sex">sex</label>
-                  <div className="ml-10">
+                  <label htmlFor="sex">سن</label>
+                  <div className="ml-10" dir="ltr">
                     <label>
-                      Famele
+                      زن
                       <input
                         type="radio"
                         id="sex"
@@ -173,7 +173,7 @@ const Profile = () => {
                     </label>
 
                     <label>
-                      Male
+                      مرد
                       <input
                         type="radio"
                         id="sex"
@@ -188,10 +188,10 @@ const Profile = () => {
                 </div>
 
                 <button
-                  type="submit"
-                  className="btn mt-5 btn-primary rounded-full !h-9"
+                  type="submit "
+                  className="btn mt-5 !bg-slate-800 text-white w-20 rounded-full float-left "
                 >
-                  ok
+                  ثبت
                 </button>
               </form>
             </div>

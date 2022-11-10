@@ -1,13 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 
-export function useMajorTable() {
-  const { t } = useTranslation();
-  // const { data: majors, ...rest } = useCollage();
-
+export function useMajors() {
   const [majors, setData] = useState([]);
-  console.log(majors, "majors");
 
   const getData = () => {
     axios
@@ -43,6 +38,5 @@ export function useMajorTable() {
 
   return {
     data,
-    // ...rest,
   };
 }

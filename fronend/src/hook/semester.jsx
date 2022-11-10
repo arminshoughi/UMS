@@ -1,13 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 
-export function useSemesterTable() {
-  const { t } = useTranslation();
-  // const { data: majors, ...rest } = useCollage();
-
-  const [majors, setData] = useState([]);
-  console.log(majors, "majors");
+export function useSemesters() {
+  const [majors, setMajorData] = useState([]);
 
   const getData = () => {
     axios
@@ -22,7 +17,7 @@ export function useSemesterTable() {
         },
       })
       .then(function (res) {
-        setData(res.data);
+        setMajorData(res.data);
       })
       .catch(function (err) {
         if (err.response) {
@@ -43,6 +38,5 @@ export function useSemesterTable() {
 
   return {
     data,
-    // ...rest,
   };
 }

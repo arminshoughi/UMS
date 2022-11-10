@@ -2,24 +2,15 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import Modal from "../components/modal";
-import { useCourseTable } from "../hook/course";
-import { useCurrentUserTable } from "../hook/currentUser";
-import { useGetCourseTable } from "../hook/getCource";
-import { useMajorTable } from "../hook/major";
-import { useMasters } from "../hook/masters";
-import { useSemesterTable } from "../hook/semester";
+import { useCourses } from "../hook/course";
+import { useGetCourse } from "../hook/getCource";
+import { useSemesters } from "../hook/semester";
 
 function MasterCourse() {
-  const { data } = useCourseTable();
-  const { data: nomre } = useGetCourseTable();
+  const { data } = useCourses();
+  const { data: nomre } = useGetCourse();
 
-  const { data: masters } = useMasters();
-  const { data: majors } = useMajorTable();
-  const { data: semesters } = useSemesterTable();
-  console.log(nomre.final_exam_grade, "nomre");
-  const { data: currentUser } = useCurrentUserTable();
-  console.log(data, "currentUser");
+  const { data: semesters } = useSemesters();
 
   const [state, setState] = useState({
     modal: false,

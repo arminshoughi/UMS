@@ -1,22 +1,23 @@
 import axios from "axios";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Modal from "../components/modal";
-import { useCourseTable } from "../hook/course";
-import { useCurrentUserTable } from "../hook/currentUser";
-import { useMajorTable } from "../hook/major";
+import { useCourses } from "../hook/course";
+import { useCurrentUser } from "../hook/currentUser";
+import { useMajors } from "../hook/major";
 import { useMasters } from "../hook/masters";
-import { useSemesterTable } from "../hook/semester";
+import { useSemesters } from "../hook/semester";
 
 function Courses() {
-  const { data } = useCourseTable();
+  const [refresh, setRefresh] = useState();
+  const { data } = useCourses(refresh);
   const { data: masters } = useMasters();
-  const { data: majors } = useMajorTable();
-  const { data: semesters } = useSemesterTable();
-  console.log(semesters, "sddffg");
+  const { data: majors } = useMajors();
+  const { data: semesters } = useSemesters();
 
-  const { data: currentUser } = useCurrentUserTable();
+  const { data: currentUser } = useCurrentUser();
   console.log(currentUser, "currentUser");
 
   const [state, setState] = useState({
@@ -112,10 +113,11 @@ function Courses() {
         }
       )
       .then((result) => {
+        setRefresh(!refresh);
         alert("درس اتخاب شد");
       })
       .catch((error) => {
-        alert("درس انتخاب شده به دلایل نامشخص حذف نشد دوباره تکرار کنید");
+        alert(error);
       });
   };
 
@@ -129,14 +131,14 @@ function Courses() {
       modal: false,
     });
   };
-  console.log();
+
   return (
     <>
-      {" "}
       {location.pathname === "/master" ? (
         <button
           type="button"
-          class="btn !w-full !h-12   btn-primary"
+          
+          class="btn !w-40 !h-12   !bg-slate-300  float-right m-2"
           onClick={(e) => {
             modalOpen(e);
           }}
@@ -147,8 +149,7 @@ function Courses() {
         ""
       )}
       <Modal show={state.modal} handleClose={(e) => modalClose(e)}>
-        <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10">
-          {" "}
+        <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10 ">
           اضافه کردن درس
         </div>
         <div className=" ml-5 mr-5 grid grid-cols-3 gap-10 ">
@@ -326,8 +327,8 @@ function Courses() {
           </button>
         </div>
       </Modal>
-      <table class="table !text-right  table-striped table-dark mt-3">
-        <thead>
+      <table class="table !text-right   mt-3">
+        <thead className="bg-slate-500">
           <tr>
             {location.pathname !== "/master" ? (
               <th class="col !text-right !w-28" scope="col"></th>
@@ -363,7 +364,7 @@ function Courses() {
                         setsetId(row.id);
                       }}
                       type="button"
-                      class="btn !w-28 btn-primary"
+                      class="btn !w-28 !bg-slate-400 border  text-slate-900"
                     >
                       <i class="">انتخاب واحد</i>
                     </button>
