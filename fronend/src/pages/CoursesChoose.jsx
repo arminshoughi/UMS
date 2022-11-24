@@ -9,6 +9,7 @@ function CourseChoose() {
   const [rowId, setRowId] = useState();
 
   const { data } = useGetCourse(refresh);
+  const access = localStorage.getItem("flag");
 
   const handleSubmitRemove = (e) => {
     e.preventDefault();
@@ -40,7 +41,7 @@ function CourseChoose() {
   };
   const location = useLocation();
 
-  return (
+  return access === "true" ? (
     <>
       <table class="table !text-right  mt-3">
         <thead className="bg-slate-500">
@@ -51,18 +52,18 @@ function CourseChoose() {
               ""
             )}
 
-            <th class="col  !text-right !w-20 ">{" قیمت"}</th>
-            <th class="col !text-right !w-20">{"    امتحان پایان ترم"}</th>
-            <th class="col !text-right !w-20">{"    امتحان میانترم"}</th>
-            <th class="col !text-right !w-20">{"   ساعت کلاس"}</th>
-            <th class="col !text-right !w-24">{"   روز کلاس"}</th>
-            <th class="col !text-right !w-20 ">{"   اتمام کلاس"}</th>
-            <th class="col !text-right !w-20">{"   شروع کلاس"}</th>
-            <th class="col !text-right !w-14">{"   ترم"}</th>
-            <th class="col !text-right !w-24">{"   دوره"}</th>
-            <th class="col !text-right  !w-20">{"  تعداد واحد"}</th>
-            <th class="col !text-right  !w-16">{" نام استاد"}</th>
-            <th class="col  !text-right !pr-8 !w-20">{" نام کلاس"}</th>
+            <th class="col  !text-right !w-20 ">{"قیمت"}</th>
+            <th class="col !text-right !w-20">{"امتحان پایان ترم"}</th>
+            <th class="col !text-right !w-20">{"امتحان میانترم"}</th>
+            <th class="col !text-right !w-20">{"ساعت کلاس"}</th>
+            <th class="col !text-right !w-24">{"روز کلاس"}</th>
+            <th class="col !text-right !w-20 ">{"اتمام کلاس"}</th>
+            <th class="col !text-right !w-20">{"شروع کلاس"}</th>
+            <th class="col !text-right !w-14">{"ترم"}</th>
+            <th class="col !text-right !w-24">{"دوره"}</th>
+            <th class="col !text-right  !w-20">{"تعداد واحد"}</th>
+            <th class="col !text-right  !w-16">{"نام استاد"}</th>
+            <th class="col  !text-right !pr-8 !w-20">{"نام کلاس"}</th>
           </tr>
         </thead>
       </table>
@@ -117,6 +118,8 @@ function CourseChoose() {
         </tbody>
       </table>
     </>
+  ) : (
+    <div>لطفا لاگ ین کنید اول</div>
   );
 }
 

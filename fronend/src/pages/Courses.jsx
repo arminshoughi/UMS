@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Modal from "../components/modal";
+import { TIME, WEAK } from "../constants/unit";
 import { useCourses } from "../hook/course";
 import { useCurrentUser } from "../hook/currentUser";
 import { useMajors } from "../hook/major";
@@ -11,12 +12,14 @@ import { useMasters } from "../hook/masters";
 import { useSemesters } from "../hook/semester";
 
 function Courses() {
+  const access = localStorage.getItem("flag");
+
   const [refresh, setRefresh] = useState();
   const { data } = useCourses(refresh);
   const { data: masters } = useMasters();
   const { data: majors } = useMajors();
   const { data: semesters } = useSemesters();
-
+  console.log(semesters, "sasadsad");
   const { data: currentUser } = useCurrentUser();
   console.log(currentUser, "currentUser");
 
@@ -63,10 +66,10 @@ function Courses() {
         }
       )
       .then((result) => {
-        alert(result.status.toString());
+        alert("درس با موفقیت انتخاب شد");
       })
       .catch((error) => {
-        alert(error);
+        alert("به مشکل برخوردیم");
       });
   };
   const [id, setsetId] = useState();
@@ -120,7 +123,10 @@ function Courses() {
         alert(error);
       });
   };
-
+  console.log(
+    Object.entries(WEAK).map(([i, v]) => i),
+    "WEAK"
+  );
   const modalOpen = () => {
     setState({ modal: true });
   };
@@ -132,12 +138,11 @@ function Courses() {
     });
   };
 
-  return (
+  return access === "true" ? (
     <>
       {location.pathname === "/master" ? (
         <button
           type="button"
-          
           class="btn !w-40 !h-12   !bg-slate-300  float-right m-2"
           onClick={(e) => {
             modalOpen(e);
@@ -257,27 +262,31 @@ function Courses() {
           </div>
           <div>
             <label>روز کلاس</label>
-            <input
-              type="text"
-              value={state.modalInputName}
-              name="modalInputName"
-              className="form-control "
+            <select
+              className="form-select form-select-lg  h-10"
+              aria-label=".form-select-lg example"
               onChange={(e) =>
                 setValus({ ...values, classToday: e.target.value })
               }
-            />
+            >
+              {Object.entries(WEAK).map(([i, v]) => (
+                <option value={i}>{v}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label>ساعت کلاس</label>
-            <input
-              type="text"
-              value={state.modalInputName}
-              name="modalInputName"
-              className="form-control "
+            <select
+              className="form-select form-select-lg  h-10"
+              aria-label=".form-select-lg example"
               onChange={(e) =>
                 setValus({ ...values, classClock: e.target.value })
               }
-            />
+            >
+              {Object.entries(TIME).map(([i, v]) => (
+                <option value={i}>{v}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label>امتحان میانترم</label>
@@ -399,6 +408,8 @@ function Courses() {
         </tbody>
       </table>
     </>
+  ) : (
+    <div>لطفا لاگ ین کنید اول</div>
   );
 }
 

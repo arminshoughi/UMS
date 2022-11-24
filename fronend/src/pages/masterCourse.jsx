@@ -37,6 +37,7 @@ function MasterCourse() {
 
   console.log("val", values);
   const location = useLocation();
+  const access = localStorage.getItem("flag");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -97,7 +98,7 @@ function MasterCourse() {
     semesters.map((i) => i.start_date),
     "semester.start_date"
   );
-  return (
+  return access === "true" ? (
     <>
       <table class="table !text-right  table-striped table-dark mt-3">
         <thead>
@@ -170,6 +171,8 @@ function MasterCourse() {
         </tbody>
       </table>
     </>
+  ) : (
+    <div>لطفا لاگ ین کنید اول</div>
   );
 }
 

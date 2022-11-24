@@ -12,11 +12,12 @@ import Product from "./pages/Product";
 import Amount from "./pages/Amount";
 import Courses from "./pages/Courses";
 import GetCourses from "./pages/GetCources";
-import Test from "./pages/test";
 import CourseChoose from "./pages/CoursesChoose";
 import Login from "./components/Login";
 import AllCourses from "./pages/AllCourses";
 import MasterCourse from "./pages/masterCourse";
+import Welcome from "./pages/Welcome";
+import Callender from "./pages/Home";
 
 function App() {
   return (
@@ -24,10 +25,12 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" />
+          <Route path="/" element={<Callender />} />
           <Route path="/login" />
-          <Route path="/masterLogin" element={<Login />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/welcomemaster" element={<Welcome />} />
 
+          <Route path="/masterLogin" element={<Login />} />
           <Route path="/units" element={<Units />} />
           <Route path="/collages" element={<Collages />} />
           <Route path="/profile" />
@@ -35,7 +38,6 @@ function App() {
           <Route path="/GetCourse" element={<GetCourses />} />
           <Route path="/CourseChoose" element={<CourseChoose />} />
           <Route path="/masterCourse" element={<MasterCourse />} />
-
           <Route path="/AllCourses" element={<AllCourses />} />
           <Route path="/master" element={<Courses />} />
           <Route path="/Course" element={<Courses />} />

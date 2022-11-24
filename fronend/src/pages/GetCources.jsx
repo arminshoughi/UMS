@@ -3,11 +3,12 @@ import { useGetCourse } from "../hook/getCource";
 
 function GetCourses() {
   const { data } = useGetCourse();
+  const access = localStorage.getItem("flag");
 
-  return (
+  return access === "true" ? (
     <>
       <table class="table !text-right   mt-3">
-      <thead className="!bg-slate-500">
+        <thead className="!bg-slate-500">
           <tr>
             <th class="col !text-right   !pr-8">{" نام دانشگاه"}</th>
           </tr>
@@ -25,6 +26,8 @@ function GetCourses() {
         </tbody>
       </table>
     </>
+  ) : (
+    <div>لطفا لاگ ین کنید اول</div>
   );
 }
 

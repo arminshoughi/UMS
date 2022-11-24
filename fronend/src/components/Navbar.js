@@ -13,7 +13,7 @@ import {
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import { SidebarData } from "./SidbarData";
+import { SidebarData, SidebarDataMaster } from "./SidbarData";
 import { useLocation } from "react-router-dom";
 import Login from "./Login";
 import Profile from "./Profile";
@@ -26,19 +26,18 @@ function Navbar() {
   const { t } = useTranslation();
   const location = useLocation();
 
-  console.log(location.pathname, "nargess");
-
   const searchboxContainerCN = ctl(`
   flex items-center 
   bg-white border px-2  shadow rounded-md w-52 
   focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-1
 `);
+  const access = localStorage.getItem("flag");
 
   return location.pathname === "/login" ? (
     <Login />
   ) : location.pathname === "/profile" ? (
     <Profile />
-  ) : (
+  ) : access === "true" ? (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
         <div className="navbar">
@@ -69,22 +68,37 @@ function Navbar() {
                 placeholder={t("find")}
               />
             </div>
-            {SidebarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    <div className="flex ">
-                      <div className="mr-5">{item.title}</div>
-                      <div className="">{item.icon}</div>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
+            {location.pathname.includes("master")
+              ? SidebarDataMaster.map((item, index) => {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        <div className="flex ">
+                          <div className="mr-5">{item.title}</div>
+                          <div className="">{item.icon}</div>
+                        </div>
+                      </Link>
+                    </li>
+                  );
+                })
+              : SidebarData.map((item, index) => {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        <div className="flex ">
+                          <div className="mr-5">{item.title}</div>
+                          <div className="">{item.icon}</div>
+                        </div>
+                      </Link>
+                    </li>
+                  );
+                })}
           </ul>
         </nav>
       </IconContext.Provider>
     </>
+  ) : (
+    ""
   );
 }
 

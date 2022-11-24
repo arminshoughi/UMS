@@ -11,19 +11,13 @@ const Profile = () => {
   const { data } = useCollage();
   const { data: major } = useMajors();
   const { data: currentUser } = useCurrentUser();
-  console.log(currentUser, "currentUser");
-
   const [, setData] = useState([]);
   const [name, setName] = React.useState(currentUser.first_name);
-  console.log(name, currentUser.first_name, "currentUser.first_name");
   const [family, setFamily] = useState();
   const [nationalCode, setNationalCode] = useState();
   const [birthday, setBierthday] = useState();
   const [sex, setSex] = useState();
-  console.log(
-    major?.map((i) => i.name),
-    "asdas"
-  );
+ 
 
   const getData = () => {
     axios

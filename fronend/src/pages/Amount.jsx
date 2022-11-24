@@ -20,7 +20,6 @@ function Amount() {
     }
   };
 
-
   const handleInputChange = ({ target }) => {
     if (target.name === "number") {
       target.value = formatCreditCardNumber(target.value);
@@ -30,15 +29,15 @@ function Amount() {
     }
   };
 
-
   const { name, number, expiry, focused, issuer } = state;
   const { data } = useGetCourse();
   const sumPrice = data
     .map((i) => i.course)
     .map((i) => i.price)
     .reduce((partialSum, a) => partialSum + a, 0);
+  const access = localStorage.getItem("flag");
 
-    return (
+  return access === "true" ? (
     <div key="Payment">
       <div className="App-payment mt-9">
         <Card
@@ -107,12 +106,16 @@ function Amount() {
           </div>
           <input type="hidden" name="issuer" value={issuer} />
           <div className="form-actions">
-            <button className="btn text-white !bg-zinc-600 mt-3 w-20 btn-block ml-96">ثبت</button>
+            <button className="btn text-white !bg-zinc-600 mt-3 w-20 btn-block ml-96">
+              ثبت
+            </button>
           </div>
         </form>
       </div>
       <div></div>
     </div>
+  ) : (
+    <div>لطفا لاگ ین کنید اول</div>
   );
 }
 export default Amount;
