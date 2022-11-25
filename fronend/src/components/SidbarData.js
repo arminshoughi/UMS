@@ -43,3 +43,17 @@ export const SidebarData = [
     cName: "nav-text ml-12 pl-[4.2rem]",
   },
 ];
+export const SidebarDataMaster = [
+  {
+    title: "اضافه کردن درس",
+    path: "/master",
+    icon: <HiOutlineDocumentText />,
+    cName: "mt-5 nav-text ml-3 pl-[4.3rem]",
+  },
+  {
+    title: "نمره دهی",
+    path: "/masterCourse",
+    icon: <HiOutlineDocumentText />,
+    cName: " nav-text ml-3 pl-[7.5rem] ",
+  },
+];

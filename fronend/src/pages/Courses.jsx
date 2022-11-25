@@ -1,21 +1,26 @@
 import axios from "axios";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Modal from "../components/modal";
-import { useCourseTable } from "../hook/course";
-import { useCurrentUserTable } from "../hook/currentUser";
-import { useMajorTable } from "../hook/major";
+import { TIME, WEAK } from "../constants/unit";
+import { useCourses } from "../hook/course";
+import { useCurrentUser } from "../hook/currentUser";
+import { useMajors } from "../hook/major";
 import { useMasters } from "../hook/masters";
-import { useSemesterTable } from "../hook/semester";
+import { useSemesters } from "../hook/semester";
 
 function Courses() {
-  const { data } = useCourseTable();
-  const { data: masters } = useMasters();
-  const { data: majors } = useMajorTable();
-  const { data: semesters } = useSemesterTable();
+  const access = localStorage.getItem("flag");
 
-  const { data: currentUser } = useCurrentUserTable();
+  const [refresh, setRefresh] = useState();
+  const { data } = useCourses(refresh);
+  const { data: masters } = useMasters();
+  const { data: majors } = useMajors();
+  const { data: semesters } = useSemesters();
+  console.log(semesters, "sasadsad");
+  const { data: currentUser } = useCurrentUser();
   console.log(currentUser, "currentUser");
 
   const [state, setState] = useState({
@@ -30,7 +35,6 @@ function Courses() {
     masterName: "",
     unitCount: "",
     details: "",
-    period: "",
     term: "",
     classStart: "",
     classEnd: "",
@@ -40,8 +44,37 @@ function Courses() {
     endTerm: "",
     price: "",
   });
+  const handleSubmit1 = (e) => {
+    e.preventDefault();
 
-  console.log("val", values);
+    axios
+      .post(
+        "http://127.0.0.1:8000/api/student/student/take_course/",
+        {
+          student_semester_id: 1,
+          course_id: id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+
+            "X-CSRFToken":
+              "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
+          },
+        }
+      )
+      .then((result) => {
+        alert("درس با موفقیت انتخاب شد");
+      })
+      .catch((error) => {
+        alert("به مشکل برخوردیم");
+      });
+  };
+  const [id, setsetId] = useState();
+
+  console.log("val", id);
   const location = useLocation();
 
   const handleSubmit = (e) => {
@@ -58,8 +91,9 @@ function Courses() {
           name: values.className,
           details: values.details,
           unit: values.unitCount,
-          master_id: Number(values.masterName),
+          master_id: 2,
 
+          documents: [],
           schedules: [
             {
               day: values.classToday,
@@ -74,7 +108,7 @@ function Courses() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NjQxMzExLCJqdGkiOiJkYzVlMWFmODYzMzc0Y2EzYjYzZWI2ZDVkZmRlZmRkYiIsInVzZXJfaWQiOjN9.VxqDZUlDGF1JrIuQ71XSi4PcoJ4wdQDcUIO3DXX_Oh0`,
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -82,13 +116,17 @@ function Courses() {
         }
       )
       .then((result) => {
-        alert(result.status.toString());
+        setRefresh(!refresh);
+        alert("درس اتخاب شد");
       })
       .catch((error) => {
         alert(error);
       });
   };
-
+  console.log(
+    Object.entries(WEAK).map(([i, v]) => i),
+    "WEAK"
+  );
   const modalOpen = () => {
     setState({ modal: true });
   };
@@ -99,18 +137,16 @@ function Courses() {
       modal: false,
     });
   };
-  console.log(
-    semesters.map((i) => i.start_date),
-    "semester.start_date"
-  );
-  return (
+
+  return access === "true" ? (
     <>
-      {" "}
       {location.pathname === "/master" ? (
         <button
           type="button"
-          class="btn !w-full !h-12   btn-primary"
-          onClick={(e) => modalOpen(e)}
+          class="btn !w-40 !h-12   !bg-slate-300  float-right m-2"
+          onClick={(e) => {
+            modalOpen(e);
+          }}
         >
           <i class="">اضافه کردن درس</i>
         </button>
@@ -118,8 +154,7 @@ function Courses() {
         ""
       )}
       <Modal show={state.modal} handleClose={(e) => modalClose(e)}>
-        <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10">
-          {" "}
+        <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10 ">
           اضافه کردن درس
         </div>
         <div className=" ml-5 mr-5 grid grid-cols-3 gap-10 ">
@@ -132,13 +167,8 @@ function Courses() {
               onChange={(e) => setValus({ ...values, major: e.target.value })}
             >
               <option>انتخاب</option>
-
               {majors?.map((i, b) => (
-                <option
-                  defaultValue={i.id === currentUser.collage ? i.name : ""}
-                >
-                  {i?.name}
-                </option>
+                <option value={i.id}>{i?.name}</option>
               ))}
             </select>
           </div>
@@ -161,20 +191,12 @@ function Courses() {
               className="form-select form-select-lg  h-10"
               aria-label=".form-select-lg example"
               onChange={(e) => {
-                console.log("eee", e);
-                setValus({ ...values, masterName: e.target.value });
+                setValus({ ...values, masterName: 1 });
               }}
             >
               <option>انتخاب</option>
               {masters?.map((i, b) => (
-                <option
-                  defaultValue={
-                    i.id === currentUser.collage ? i.first_name : ""
-                  }
-                  value={i.id}
-                >
-                  {i?.first_name}
-                </option>
+                <option value={1}>{i?.first_name}</option>
               ))}
             </select>
           </div>
@@ -201,16 +223,7 @@ function Courses() {
               }
             />
           </div>
-          <div>
-            <label>دوره</label>
-            <input
-              type="text"
-              value={state.modalInputName}
-              name="modalInputName"
-              className="form-control "
-              onChange={(e) => setValus({ ...values, period: e.target.value })}
-            />
-          </div>
+
           <div>
             <label>ترم</label>
             <select
@@ -219,11 +232,7 @@ function Courses() {
               onChange={(e) => setValus({ ...values, term: e.target.value })}
             >
               {semesters?.map((i, b) => (
-                <option
-                  defaultValue={i.id === currentUser.collage ? i.name : ""}
-                >
-                  {i?.name}
-                </option>
+                <option value={i.id}>{i?.name}</option>
               ))}
             </select>
           </div>
@@ -253,27 +262,31 @@ function Courses() {
           </div>
           <div>
             <label>روز کلاس</label>
-            <input
-              type="text"
-              value={state.modalInputName}
-              name="modalInputName"
-              className="form-control "
+            <select
+              className="form-select form-select-lg  h-10"
+              aria-label=".form-select-lg example"
               onChange={(e) =>
                 setValus({ ...values, classToday: e.target.value })
               }
-            />
+            >
+              {Object.entries(WEAK).map(([i, v]) => (
+                <option value={i}>{v}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label>ساعت کلاس</label>
-            <input
-              type="text"
-              value={state.modalInputName}
-              name="modalInputName"
-              className="form-control "
+            <select
+              className="form-select form-select-lg  h-10"
+              aria-label=".form-select-lg example"
               onChange={(e) =>
                 setValus({ ...values, classClock: e.target.value })
               }
-            />
+            >
+              {Object.entries(TIME).map(([i, v]) => (
+                <option value={i}>{v}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label>امتحان میانترم</label>
@@ -323,8 +336,8 @@ function Courses() {
           </button>
         </div>
       </Modal>
-      <table class="table !text-right  table-striped table-dark mt-3">
-        <thead>
+      <table class="table !text-right   mt-3">
+        <thead className="bg-slate-500">
           <tr>
             {location.pathname !== "/master" ? (
               <th class="col !text-right !w-28" scope="col"></th>
@@ -354,7 +367,14 @@ function Courses() {
               <tr>
                 {location.pathname !== "/master" ? (
                   <td class="  !text-right  !w-1 !pr-2">
-                    <button type="button" class="btn !w-28 btn-primary">
+                    <button
+                      onClick={(e) => {
+                        handleSubmit1(e);
+                        setsetId(row.id);
+                      }}
+                      type="button"
+                      class="btn !w-28 !bg-slate-400 border  text-slate-900"
+                    >
                       <i class="">انتخاب واحد</i>
                     </button>
                   </td>
@@ -388,6 +408,8 @@ function Courses() {
         </tbody>
       </table>
     </>
+  ) : (
+    <div>لطفا لاگ ین کنید اول</div>
   );
 }
 

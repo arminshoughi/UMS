@@ -2,20 +2,17 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import Modal from "../components/modal";
-import { useCourseTable } from "../hook/course";
-import { useCurrentUserTable } from "../hook/currentUser";
-import { useMajorTable } from "../hook/major";
-import { useMasters } from "../hook/masters";
-import { useSemesterTable } from "../hook/semester";
+import { toJalaali } from "../constants/unit";
+import { useCourses } from "../hook/course";
+import { useCurrentUser } from "../hook/currentUser";
+import { useSemesters } from "../hook/semester";
 
 function AllCourses() {
-  const { data } = useCourseTable();
-  const { data: masters } = useMasters();
-  const { data: majors } = useMajorTable();
-  const { data: semesters } = useSemesterTable();
+  const { data } = useCourses();
 
-  const { data: currentUser } = useCurrentUserTable();
+  const { data: semesters } = useSemesters();
+
+  const { data: currentUser } = useCurrentUser();
   console.log(currentUser, "currentUser");
 
   const [state, setState] = useState({
@@ -23,6 +20,7 @@ function AllCourses() {
     name: "",
     modalInputName: "",
   });
+  const access = localStorage.getItem("flag");
 
   const [values, setValus] = useState({
     major: "",
@@ -41,7 +39,6 @@ function AllCourses() {
     price: "",
   });
 
-  console.log("val", values);
   const location = useLocation();
 
   const handleSubmit = (e) => {
@@ -74,7 +71,7 @@ function AllCourses() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NjQxMzExLCJqdGkiOiJkYzVlMWFmODYzMzc0Y2EzYjYzZWI2ZDVkZmRlZmRkYiIsInVzZXJfaWQiOjN9.VxqDZUlDGF1JrIuQ71XSi4PcoJ4wdQDcUIO3DXX_Oh0`,
+            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -100,13 +97,14 @@ function AllCourses() {
     });
   };
   console.log(
-    semesters.map((i) => i.start_date),
-    "semester.start_date"
+    data.map((row, i) => row.schedules),
+    "sdasdas"
   );
-  return (
+
+  return access === "true" ? (
     <>
-      <table class="table !text-right  table-striped table-dark mt-3">
-        <thead>
+      <table class="table !text-right   mt-3">
+        <thead className="bg-slate-500">
           <tr>
             <th class="col  !text-right !w-20 ">{" قیمت"}</th>
             <th class="col !text-right !w-20">{"    امتحان پایان ترم"}</th>
@@ -130,32 +128,56 @@ function AllCourses() {
               <tr>
                 {location.pathname !== "/master" ? "" : ""}
 
-                <td class="  !text-right   !w-20">{row.price}</td>
-                <td class="  !text-right !w-24 !pr-5">{row.final_exam_date}</td>
-                <td class="  !text-right !w-20 !pr-4">
-                  {row.midterm_exam_date}
+                <td class="  !text-right   !w-20  ">
+                  {row.price.toLocaleString()}
                 </td>
-                <td class="  !text-right !w-20">
+                <td class="  !text-right !w-24 !pr-5 ">
+                  {toJalaali(row.final_exam_date)}
+                </td>
+                <td class="  !text-right !w-20 !pr-4 ">
+                  {toJalaali(row.midterm_exam_date)}
+                </td>
+                <td class="  !text-right !w-20 ">
                   {row.schedules.map((i, k) => i.time)}
                 </td>
-                <td class="  !text-right !w-24  !pr-8">
-                  {row.schedules.map((i, k) => i.day)}
+                <td class="  !text-right !w-24  !pr-8 ">
+                  {row.schedules.map((i, k) =>
+                    i.day === "SUNDAY"
+                      ? "یکشنبه"
+                      : "SARURDAY"
+                      ? "شنبه"
+                      : "MONDAY"
+                      ? "دوشنبه"
+                      : "TUESDAY"
+                      ? "سه شنبه"
+                      : "WEDNESDAY"
+                      ? "چهار شنبه"
+                      : "THURSDAY"
+                      ? "پنج شنبه"
+                      : "جمعه"
+                  )}
                 </td>
-                <td class="  !text-right !w-20 !pr-5">
-                  {row.semester.end_date}
+                <td class="  !text-right !w-20 !pr-5 ">
+                  {toJalaali(row.semester.end_date)}
                 </td>
-                <td class="  !text-right !w-20">{row.semester.start_date}</td>
-                <td class="  !text-right  !w-14">{row.semester.name}</td>
-                <td class="  !text-right !pr-5 !w-20">{row.major.degree}</td>
-                <td class="  !text-right  !w-16">{row.unit}</td>
-                <td class="  !text-right !w-16">{row.master.first_name}</td>
-                <td class="  !text-right !pr-8 !w-20">{row.name}</td>
+                <td class="  !text-right !w-20 ">
+                  {toJalaali(row.semester.start_date)}
+                </td>
+                <td class="  !text-right  !w-14 ">{row.semester.name}</td>
+                <td class="  !text-right !pr-5 !w-20 ">
+                  {row.major.degree === "BACHELOR" ? "لیسانس" : "فوق لیسانی"}
+                </td>
+                <td class="  !text-right  !w-16 ">{row.unit}</td>
+                <td class="  !text-right !w-16 ">{row.master.first_name}</td>
+                <td class="  !text-right !pr-8 !w-20 ">{row.name}</td>
               </tr>
             </>
           ))}
         </tbody>
       </table>
     </>
+  ) : (
+    <div>لطفا لاگ ین کنید اول</div>
   );
 }
 

@@ -3,15 +3,13 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import "./Navbar.css";
 import "@reach/listbox/styles.css";
 import axios from "axios";
-import { useStudentTable } from "../hook/student";
 import { useLocation } from "react-router-dom";
 
 const Login = () => {
   const [status, setStatus] = useState();
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
-  const { data } = useStudentTable();
-  console.log(data, "data");
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -26,7 +24,6 @@ const Login = () => {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY3NjQxMzExLCJqdGkiOiJkYzVlMWFmODYzMzc0Y2EzYjYzZWI2ZDVkZmRlZmRkYiIsInVzZXJfaWQiOjN9.VxqDZUlDGF1JrIuQ71XSi4PcoJ4wdQDcUIO3DXX_Oh0`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -39,21 +36,23 @@ const Login = () => {
       .catch((error) => {
         alert("نام کاربری و یا رمز عبور اشتباه است لطفا مجدد تلاش کنید.");
       });
+    localStorage.setItem("flag", "true");
   };
   const location = useLocation();
-
-  console.log("status", userName);
-  console.log(location.pathname, "nargess");
-
   useEffect(() => {
     if (status === "200" && location.pathname === "/login") {
-      window.open("/", "_self");
+      window.open("/welcome", "_self");
     } else {
       if (status === "200" && location.pathname === "/masterlogin") {
-        window.open("/master", "_self");
+        window.open("/welcomemaster", "_self");
       }
     }
   }, [status]);
+  useEffect(() => {
+    if (location.pathname === "/login") {
+      localStorage.setItem("flag", "false");
+    }
+  }, [location.pathname]);
   return (
     <div className="Login ">
       <div className=" align-center p-4 w-[30%]  ml-[35%]  ">
@@ -61,10 +60,10 @@ const Login = () => {
           <div className="card ">
             <HiOutlineUserCircle className="w-40 h-40 ml-[32%]" />
             <div className="card-body">
-              <h1>Login</h1>
-              <form onSubmit={handleSubmit}>
+              <h1 className="text-3xl text-center">ورود</h1>
+              <form onSubmit={handleSubmit} dir="rtl">
                 <div className="form-group mt-5">
-                  <label htmlFor="username">Username</label>
+                  <label htmlFor="username">نام کاربری</label>
                   <input
                     type="text"
                     name="username"
@@ -74,7 +73,7 @@ const Login = () => {
                   />
                 </div>
                 <div className="form-group mt-4">
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="password">رمز عبور</label>
                   <input
                     type="password"
                     name="password"
@@ -86,9 +85,9 @@ const Login = () => {
 
                 <button
                   type="submit"
-                  className="btn mt-5 btn-primary rounded-full "
+                  className="btn mt-5 !bg-slate-800 text-white w-20 rounded-full float-left "
                 >
-                  Login
+                  ورود
                 </button>
               </form>
             </div>
