@@ -1,6 +1,10 @@
 from utils.service import BaseService
 
-from ..models import StudentModel
+from ..models import StudentModel, StudentSemesterCourseModel
+
+
+class StudentSemesterCourseModelService(BaseService):
+    model = StudentSemesterCourseModel
 
 
 class StudentService(BaseService):
