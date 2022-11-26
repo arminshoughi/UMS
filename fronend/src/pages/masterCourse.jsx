@@ -1,8 +1,9 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { HiX } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
-import Modal from "../components/modal";
+import Modal, { ModalGrade } from "../components/modal";
 import { toFarsiNumber, toJalaali } from "../constants/unit";
 import { useCourses } from "../hook/course";
 import { useGetCourse } from "../hook/getCource";
@@ -103,8 +104,11 @@ function MasterCourse() {
 
   return access === "true" ? (
     <>
-      <Modal show={state.modal} handleClose={(e) => modalClose(e)}>
-        <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10 ">
+      <ModalGrade show={state.modal} handleClose={(e) => modalClose(e)}>
+        <div className="ml-4 -mt-8 fixed ">
+          <HiX onClick={(e) => modalClose(e)} className="w-6 h-6" />
+        </div>
+        <div class=" text-center mt-10 text-indigo-900 border border-indigo-800  mx-3 h-10 ">
           نمره میانترم
         </div>
         <div className=" ml-5 mt-2 mr-5 float-right gap-10 ">
@@ -113,7 +117,7 @@ function MasterCourse() {
             اعشار وارد کنید
           </label>
         </div>
-        <div className="flex ml-40 mt-5">
+        <div className="flex ml-40 mt-16">
           <input
             min="0"
             max="20"
@@ -124,33 +128,36 @@ function MasterCourse() {
           />
           <label className="ml-5 mt-1">:نمره میانترم</label>
         </div>
-        <div className="form-group flex mt-10 !mx-2">
+        <div className="form-group flex mt-7 !mx-2">
           <button
-            className="btn btn-success  mt-3"
+            className="btn btn-success  ml-[8.6rem] w-24 mt-3"
             onClick={(e) => handleSubmit(e)}
             type="button"
           >
             ذخیره
           </button>
           <button
-            className="btn btn-danger ml-2 mt-3 "
+            className="btn btn-danger w-24 ml-2 mt-3 "
             onClick={(e) => modalClose(e)}
           >
             انصراف
           </button>
         </div>
-      </Modal>
-      <Modal show={state.final} handleClose={(e) => modalClose(e)}>
-        <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10 ">
-          نمره پایانترم
+      </ModalGrade>
+      <ModalGrade show={state.final} handleClose={(e) => modalClose(e)}>
+        <div className="ml-4 -mt-8 fixed ">
+          <HiX onClick={(e) => modalClose(e)} className="w-6 h-6" />
+        </div>
+        <div class=" text-center mt-10 text-indigo-900 border border-indigo-800  mx-3 h-10 ">
+          نمره میانترم
         </div>
         <div className=" ml-5 mt-2 mr-5 float-right gap-10 ">
           <label>
-            استاد عزیز جهت وارد کردن نمره پایانترم این خره نمره را با دو رقم
+            استاد عزیز جهت وارد کردن نمره میانترم این خره نمره را با دو رقم
             اعشار وارد کنید
           </label>
         </div>
-        <div className="flex ml-40 mt-5">
+        <div className="flex ml-40 mt-16">
           <input
             min="0"
             max="20"
@@ -159,24 +166,24 @@ function MasterCourse() {
             name="minTerm"
             className="form-control  !w-44 "
           />
-          <label className="ml-5 mt-1">:نمره پایان ترم</label>
+          <label className="ml-5 mt-1">:نمره پایانترم</label>
         </div>
-        <div className="form-group flex mt-10 !mx-2">
+        <div className="form-group flex mt-7 !mx-2">
           <button
-            className="btn btn-success  mt-3"
+            className="btn btn-success  ml-[8.6rem] w-24 mt-3"
             onClick={(e) => handleSubmit(e)}
             type="button"
           >
             ذخیره
           </button>
           <button
-            className="btn btn-danger ml-2 mt-3 "
+            className="btn btn-danger w-24 ml-2 mt-3 "
             onClick={(e) => modalClose(e)}
           >
             انصراف
           </button>
         </div>
-      </Modal>
+      </ModalGrade>
       <table class="table !text-right  table-striped table-dark mt-3">
         <thead>
           <tr>
@@ -278,7 +285,6 @@ function MasterCourse() {
     </>
   ) : (
     <div>{window.open("login", "_self")}</div>
-
   );
 }
 

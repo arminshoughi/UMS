@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { HiOutlineUserCircle } from "react-icons/hi";
+import { HiOutlineUserCircle, HiX } from "react-icons/hi";
 import "./Navbar.css";
 import "@reach/listbox/styles.css";
 import axios from "axios";
@@ -73,11 +73,20 @@ const Profile = () => {
         alert("به مشکل خوردیم");
       });
   };
-  console.log(toJalaali(currentUser.birthday), "currentUser.birthday");
+  console.log(
+    data.filter((i) => i),
+    "currentUser.birthday"
+  );
+  const modalClose = () => {
+    window.open("welcome", "_self");
+  };
   return (
     <div className="Login ">
-      <div className=" align-center p-4 w-[30%]  ml-[35%]  ">
-        <div className="!bg-red-800 ">
+      <div className=" align-center p-4 w-[30%]  ml-[35%]   ">
+        <div className="!bg-red-800 mt-10">
+          <div className="ml-4 mt-2 !z-50 fixed ">
+            <HiX onClick={(e) => modalClose(e)} className="w-6 h-6" />
+          </div>
           <div className="card ">
             <HiOutlineUserCircle className="w-40 h-40 ml-[32%]" />
             <div className="card-body">
@@ -87,6 +96,7 @@ const Profile = () => {
                   <div className="form-group ">
                     <label htmlFor="name">نام</label>
                     <input
+                      disabled
                       type="text"
                       name="name"
                       className="form-control !w-52"
@@ -98,6 +108,7 @@ const Profile = () => {
                   <div className="form-group !ml-5 !w-[13.3rem] ">
                     <label htmlFor="family">فامیل</label>
                     <input
+                      disabled
                       type="text"
                       name="family"
                       className="form-control"
@@ -110,6 +121,7 @@ const Profile = () => {
                 <div className="form-group mt-4">
                   <label htmlFor="national_code">کد ملی</label>
                   <input
+                    disabled
                     type="text"
                     name="national_code"
                     className="form-control"
@@ -118,30 +130,37 @@ const Profile = () => {
                     onChange={(e) => setNationalCode(e.target.value)}
                   />
                 </div>
-                <select
-                  defaultValue={currentUser.collage}
-                  className="form-select form-select-lg mt-4 h-10"
-                  aria-label=".form-select-lg example"
-                >
-                  {data?.map((i, b) => (
-                    <option
-                      defaultValue={i.id === currentUser.collage ? i.name : ""}
-                    >
-                      {i?.name}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  className="form-select form-select-lg mt-4 h-10"
-                  aria-label=".form-select-lg example"
-                >
-                  {major?.map((i, b) => (
-                    <option>{i?.name}</option>
-                  ))}
-                </select>
+                <div className="form-group mt-4">
+                  <label htmlFor="national_code">دانشگاه</label>
+                  <input
+                    disabled
+                    type="text"
+                    name="national_code"
+                    className="form-control"
+                    id="national_code"
+                    defaultValue={data?.map((i, b) =>
+                      i?.id === currentUser.collage ? i.name : ""
+                    )}
+                  />
+                </div>
+
+                <div className="form-group mt-4">
+                  <label htmlFor="national_code">رشته</label>
+                  <input
+                    disabled
+                    type="text"
+                    name="national_code"
+                    className="form-control"
+                    id="national_code"
+                    defaultValue={major?.map((i, b) =>
+                      i?.id === currentUser.major ? i.name : ""
+                    )}
+                  />
+                </div>
                 <div className="form-group mt-4">
                   <label htmlFor="birthday	">تاریخ تولد </label>
                   <input
+                    disabled
                     id="birthday"
                     name="birthday"
                     defaultValue={toJalaali(currentUser.birthday)}
@@ -156,6 +175,7 @@ const Profile = () => {
                     <label>
                       زن
                       <input
+                        disabled
                         type="radio"
                         id="sex"
                         name="sex"
@@ -168,6 +188,7 @@ const Profile = () => {
                     <label>
                       مرد
                       <input
+                        disabled
                         type="radio"
                         id="sex"
                         name="sex"
@@ -179,13 +200,6 @@ const Profile = () => {
                     </label>
                   </div>
                 </div>
-
-                <button
-                  type="submit "
-                  className="btn mt-5 !bg-slate-800 text-white w-20 rounded-full float-left "
-                >
-                  ثبت
-                </button>
               </form>
             </div>
           </div>

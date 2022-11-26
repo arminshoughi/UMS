@@ -10,5 +10,15 @@ const Modal = ({ handleClose, show, children }) => {
     </div>
   );
 };
+export const ModalGrade = ({ handleClose, show, children }) => {
+  const showHideClassName = show
+    ? "modal text-black  !bg-gray-300 !h-[35%] !w-[30%] ml-[35%] mt-[10%] !items-center d-block"
+    : "modal d-none";
+  return (
+    <div className={showHideClassName}>
+      <div className="modal-container">{children}</div>
+    </div>
+  );
+};
 
 export default Modal;
