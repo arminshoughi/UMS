@@ -13,13 +13,12 @@ import {
   WEAK,
 } from "../constants/unit";
 import { useCourses } from "../hook/course";
-import { HiX } from "react-icons/hi";
 import { useCurrentUser } from "../hook/currentUser";
 import { useMajors } from "../hook/major";
 import { useMasters } from "../hook/masters";
 import { useSemesters } from "../hook/semester";
 
-function Courses() {
+function CourseStudent() {
   const access = localStorage.getItem("flag");
 
   const [refresh, setRefresh] = useState();
@@ -193,15 +192,12 @@ function Courses() {
         ""
       )}
       <Modal show={state.modal} handleClose={(e) => modalClose(e)}>
-        <div className="ml-4 -mt-8 fixed ">
-          <HiX onClick={(e) => modalClose(e)} className="w-6 h-6" />
-        </div>
-        <div class=" text-center mt-10  text-indigo-900 border border-indigo-800 pt-2  mx-3 h-10 ">
+        <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10 ">
           اضافه کردن درس
         </div>
-        <div className=" mt-2 ml-5 mr-5 grid grid-cols-3 gap-10 ">
+        <div className=" ml-5 mr-5 grid grid-cols-3 gap-10 ">
           <div>
-            <label className="ml-[12.8rem]">رشته</label>
+            <label>رشته</label>
             <select
               defaultValue={currentUser.collage}
               className="form-select form-select-lg  h-10"
@@ -215,7 +211,7 @@ function Courses() {
             </select>
           </div>
           <div>
-            <label className="ml-[11.5rem]">نام کلاس</label>
+            <label>نام کلاس</label>
             <input
               type="text"
               value={state.modalInputName}
@@ -227,7 +223,7 @@ function Courses() {
             />
           </div>
           <div>
-            <label className="ml-[12rem]">نام استاد</label>
+            <label>نام استاد</label>
             <select
               // defaultValue={currentUser.collage}
               className="form-select form-select-lg  h-10"
@@ -243,7 +239,7 @@ function Courses() {
             </select>
           </div>
           <div>
-            <label className="ml-48">جزئیات</label>
+            <label>جزئیات</label>
 
             <input
               type="text"
@@ -254,7 +250,7 @@ function Courses() {
             />
           </div>
           <div>
-            <label className="ml-[11.1rem]">تعداد واحد</label>
+            <label>تعداد واحد</label>
             <input
               type="number"
               value={state.modalInputName}
@@ -267,7 +263,7 @@ function Courses() {
           </div>
 
           <div>
-            <label className="ml-[13.5rem]">ترم</label>
+            <label>ترم</label>
             <select
               className="form-select form-select-lg  h-10"
               aria-label=".form-select-lg example"
@@ -280,7 +276,7 @@ function Courses() {
           </div>
 
           <div>
-            <label className="ml-44">روز کلاس</label>
+            <label>روز کلاس</label>
             <select
               className="form-select form-select-lg  h-10"
               aria-label=".form-select-lg example"
@@ -294,7 +290,7 @@ function Courses() {
             </select>
           </div>
           <div>
-            <label className="ml-[10.5rem]">ساعت کلاس</label>
+            <label>ساعت کلاس</label>
             <select
               className="form-select form-select-lg  h-10"
               aria-label=".form-select-lg example"
@@ -308,7 +304,7 @@ function Courses() {
             </select>
           </div>
           <div>
-            <label className="ml-40">امتحان میانترم</label>
+            <label>امتحان میانترم</label>
             <input
               type="date"
               value={state.modalInputName}
@@ -318,7 +314,7 @@ function Courses() {
             />
           </div>
           <div>
-            <label className="ml-40">امتحان پایانترم</label>
+            <label>امتحان پایانترم</label>
             <input
               type="date"
               value={state.modalInputName}
@@ -328,7 +324,7 @@ function Courses() {
             />
           </div>
           <div>
-            <label className="ml-52">قیمت</label>
+            <label>قیمت</label>
             <input
               type="number"
               value={state.modalInputName}
@@ -338,9 +334,9 @@ function Courses() {
             />
           </div>
         </div>
-        <div className="form-group !ml-[70%] !mx-2">
+        <div className="form-group !mx-2">
           <button
-            className="btn btn-success  w-24 ml-3 mb-3 mt-3"
+            className="btn btn-success  mr-2 mt-3"
             onClick={(e) => handleSubmit(e)}
             type="button"
           >
@@ -348,7 +344,7 @@ function Courses() {
           </button>
           <button
             href="javascript:"
-            className="btn btn-danger ml-2 w-24 mb-3 mt-3 "
+            className="btn btn-danger ml-2 mt-3 "
             onClick={(e) => modalClose(e)}
           >
             انصراف
@@ -356,15 +352,12 @@ function Courses() {
         </div>
       </Modal>
       <Modal show={state.update} handleClose={(e) => modalClose(e)}>
-        <div className="ml-4 -mt-8 fixed ">
-          <HiX onClick={(e) => modalClose(e)} className="w-6 h-6" />
-        </div>
-        <div class=" text-center mt-10  text-indigo-900 border border-indigo-800 pt-2  mx-3 h-10 ">
+        <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10 ">
           ویرایش کردن درس
         </div>
-        <div className=" mt-2 ml-5 mr-5 grid grid-cols-3 gap-10 ">
+        <div className=" ml-5 mr-5 grid grid-cols-3 gap-10 ">
           <div>
-            <label className="ml-[12.8rem]">رشته</label>
+            <label>رشته</label>
             <select
               value={value}
               className="form-select form-select-lg  h-10"
@@ -378,8 +371,7 @@ function Courses() {
             </select>
           </div>
           <div>
-            <label className="ml-[11.5rem]">نام کلاس</label>
-
+            <label>نام کلاس</label>
             <input
               type="text"
               defaultValue={name?.name}
@@ -391,8 +383,7 @@ function Courses() {
             />
           </div>
           <div>
-            <label className="ml-[12rem]">نام استاد</label>
-
+            <label>نام استاد</label>
             <select
               value={name?.master.first_name.toString()}
               // defaultValue={currentUser.collage}
@@ -409,7 +400,7 @@ function Courses() {
             </select>
           </div>
           <div>
-            <label className="ml-48">جزئیات</label>
+            <label>جزئیات</label>
 
             <input
               defaultValue={name?.details}
@@ -420,7 +411,7 @@ function Courses() {
             />
           </div>
           <div>
-            <label className="ml-[11.1rem]">تعداد واحد</label>
+            <label>تعداد واحد</label>
             <input
               defaultValue={name?.unit}
               type="number"
@@ -433,7 +424,7 @@ function Courses() {
           </div>
 
           <div>
-            <label className="ml-[13.5rem]">ترم</label>
+            <label>ترم</label>
             <select
               value={value}
               className="form-select form-select-lg  h-10"
@@ -449,8 +440,7 @@ function Courses() {
           </div>
 
           <div>
-            <label className="ml-44">روز کلاس</label>
-
+            <label>روز کلاس</label>
             <select
               defaultValue={name?.schedules.map((i) => i.day).toString()}
               className="form-select form-select-lg  h-10"
@@ -465,8 +455,7 @@ function Courses() {
             </select>
           </div>
           <div>
-            <label className="ml-[10.5rem]">ساعت کلاس</label>
-
+            <label>ساعت کلاس</label>
             <select
               className="form-select form-select-lg  h-10"
               aria-label=".form-select-lg example"
@@ -480,8 +469,7 @@ function Courses() {
             </select>
           </div>
           <div>
-            <label className="ml-40">امتحان میانترم</label>
-
+            <label>امتحان میانترم</label>
             <input
               type="date"
               defaultValue={name?.midterm_exam_date}
@@ -491,7 +479,7 @@ function Courses() {
             />
           </div>
           <div>
-            <label className="ml-52">قیمت</label>
+            <label>امتحان پایانترم</label>
             <input
               defaultValue={name?.final_exam_date}
               type="date"
@@ -511,9 +499,9 @@ function Courses() {
             />
           </div>
         </div>
-        <div className="form-group !ml-[70%] !mx-2">
+        <div className="form-group !mx-2">
           <button
-            className="btn btn-success  w-24 ml-3 mb-3 mt-3"
+            className="btn btn-success  mt-3"
             onClick={(e) => handleSubmit(e)}
             type="button"
           >
@@ -521,7 +509,7 @@ function Courses() {
           </button>
           <button
             href="javascript:"
-            className="btn btn-danger ml-2 w-24 mb-3 mt-3 "
+            className="btn btn-danger ml-2 mt-3 "
             onClick={(e) => modalClose(e)}
           >
             انصراف
@@ -532,24 +520,22 @@ function Courses() {
         <thead className="bg-slate-500">
           <tr>
             {location.pathname !== "/master" ? (
-              <th class="col  !text-right !w-28" scope="col"></th>
+              <th class="col !text-right !w-28" scope="col"></th>
             ) : (
               ""
             )}
-            <th class="col   !text-right !pr-8 !w-20"></th>
-            <th class="col  !text-right !pr-8 !w-20"></th>
             <th class="col  !text-right  ">{"قیمت"}</th>
-            <th class="col !text-right !w-[8rem]">{"امتحان پایان ترم"}</th>
-            <th class="col !text-right !w-[8rem]">{"امتحان میانترم"}</th>
-            <th class="col !text-right !w-[7.8rem]">{"ساعت کلاس"}</th>
-            <th class="col !text-right !w-[6.4rem] ">{"روز کلاس"}</th>
-            <th class="col !text-right !w-[8.3rem] ">{"اتمام کلاس"}</th>
-            <th class="col !text-right !w-[8.3rem] ">{"شروع کلاس"}</th>
-            <th class="col !text-right !w-[5rem]">{"ترم"}</th>
-            <th class="col !text-right !w-[5.5rem]">{"دوره"}</th>
-            <th class="col !text-right !w-[6.4rem] ">{"تعداد واحد"}</th>
+            <th class="col !text-right !w-[8.8rem]">{"امتحان پایان ترم"}</th>
+            <th class="col !text-right !w-[8.8em]">{"امتحان میانترم"}</th>
+            <th class="col !text-right !w-[9rem]">{"ساعت کلاس"}</th>
+            <th class="col !text-right !w-[8.5rem] ">{"روز کلاس"}</th>
+            <th class="col !text-right !w-[9rem] ">{"اتمام کلاس"}</th>
+            <th class="col !text-right !w-[8.9rem] ">{"شروع کلاس"}</th>
+            <th class="col !text-right !w-[5.5rem]">{"ترم"}</th>
+            <th class="col !text-right !w-[6.5rem]">{"دوره"}</th>
+            <th class="col !text-right !w-[7.2rem] ">{"تعداد واحد"}</th>
             <th class="col !text-right !w-20  ">{"نام استاد"}</th>
-            <th class="col !pr-8 !w-32 !text-right ">{"نام کلاس"}</th>
+            <th class="col !pr-8 !w-36 !text-right ">{"نام کلاس"}</th>
           </tr>
         </thead>
       </table>
@@ -652,4 +638,4 @@ function Courses() {
   );
 }
 
-export default Courses;
+export default CourseStudent;

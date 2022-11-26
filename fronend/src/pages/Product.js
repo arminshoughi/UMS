@@ -1,4 +1,5 @@
 import React from "react";
+import { toFarsiNumber } from "../constants/unit";
 import { useGetCourse } from "../hook/getCource";
 
 function Product() {
@@ -40,8 +41,13 @@ function Product() {
                   <td className="border-2 bg-gray-300 text-right">
                     {i.semester.name}
                   </td>
-                  <td className="border-2 bg-gray-300 text-right">{i.unit}</td>
-                  <td className="border-2 bg-gray-300 text-right"> 12.0 </td>
+                  <td className="border-2 bg-gray-300 text-right">
+                    {toFarsiNumber(i.unit)}
+                  </td>
+                  <td className="border-2 bg-gray-300 text-right">
+                    {" "}
+                    {toFarsiNumber(12.0)}{" "}
+                  </td>
                 </tr>
               </>
             ))}
@@ -50,8 +56,12 @@ function Product() {
           <td colspan="3" className="border-2 bg-slate-300 text-right">
             جمع واحد ها و نمرات اخذ شده
           </td>
-          <td className="border-2 bg-slate-300 text-right">{sumUnit}</td>
-          <td className=" border-2 bg-slate-300 text-right">55.95 </td>
+          <td className="border-2 bg-slate-300 text-right">
+            {toFarsiNumber(sumUnit)}
+          </td>
+          <td className=" border-2 bg-slate-300 text-right">
+            {toFarsiNumber(55.95)}{" "}
+          </td>
         </tr>
 
         <tr>
@@ -59,13 +69,13 @@ function Product() {
             معدل نیمسال
           </td>
           <td colspan="3" className=" border-2 bg-slate-300 text-right">
-            3.73{" "}
+            {toFarsiNumber(3.73)}
           </td>
         </tr>
       </table>
     </>
   ) : (
-    <div>لطفا لاگ ین کنید اول</div>
+    <div>{window.open("login", "_self")}</div>
   );
 }
 export default Product;

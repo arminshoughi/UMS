@@ -11,8 +11,6 @@ function Collages() {
     modalInputName: "",
   });
 
- 
-
   const handleSubmit = (e) => {
     setState({ name: state.modalInputName });
     modalClose();
@@ -30,27 +28,30 @@ function Collages() {
   };
   return (
     <>
-            <button onClick={(e) => modalOpen(e)} className="w-20 !bg-slate-400 p-1 btn float-right m-2">
-              اضافه کردن دانشگاه
-            </button>
-            <Modal show={state.modal} handleClose={(e) => modalClose(e)}>
-              <div className="form-group ">
-                <label>Enter collage :</label>
-                <input
-                  type="text"
-                  value={state.modalInputName}
-                  name="modalInputName"
-                  className="form-control"
-                />
-              </div>
-              <div className="form-group">
-                <button onClick={(e) => handleSubmit(e)} type="button">
-                  Save
-                </button>
-              </div>
-            </Modal>
+      <button
+        onClick={(e) => modalOpen(e)}
+        className="w-20 !bg-slate-400 p-1 btn float-right m-2"
+      >
+        اضافه کردن دانشگاه
+      </button>
+      <Modal show={state.modal} handleClose={(e) => modalClose(e)}>
+        <div className="form-group ">
+          <label>Enter collage :</label>
+          <input
+            type="text"
+            value={state.modalInputName}
+            name="modalInputName"
+            className="form-control"
+          />
+        </div>
+        <div className="form-group mr-2">
+          <button onClick={(e) => handleSubmit(e)} type="button">
+            ذخیره
+          </button>
+        </div>
+      </Modal>
       <table class="table !text-right   mt-3">
-      <thead className="bg-slate-500">
+        <thead className="bg-slate-500">
           <tr>
             <th class="col !text-right   !pr-8">{" نام دانشگاه"}</th>
           </tr>

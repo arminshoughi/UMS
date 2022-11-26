@@ -37,6 +37,8 @@ function Navbar() {
     <Login />
   ) : location.pathname === "/profile" ? (
     <Profile />
+  ) : location.pathname === "/masterlogin" ? (
+    <Login />
   ) : access === "true" ? (
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
@@ -46,7 +48,7 @@ function Navbar() {
           </Link>
           <button
             onClick={() => window.open("profile", "_self")}
-            className=" transition duration-200 py-1.5 px-3 text-sm rounded-sm flex   border-4 border-solid     ml-[80rem] "
+            className=" transition duration-200 py-1.5 mr-10 px-4 text-sm rounded-sm flex   border-4 border-solid      "
           >
             <div className="text-gray-300 mr-10">پروفایل</div>
             <HiUser className="w-6 h-6" />

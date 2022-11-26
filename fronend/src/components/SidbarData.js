@@ -56,4 +56,10 @@ export const SidebarDataMaster = [
     icon: <HiOutlineDocumentText />,
     cName: " nav-text ml-3 pl-[7.5rem] ",
   },
+  {
+    title: "خروج",
+    path: "/login",
+    icon: <HiArchive />,
+    cName: "nav-text ml-3 pl-[8.5rem] ",
+  },
 ];

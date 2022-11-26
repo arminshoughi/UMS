@@ -88,18 +88,24 @@ function Amount() {
             <div className="mt-10 ">
               <div class="bg-slate-100 p-1 border w-80 h-36">
                 <p className="grid grid-cols-2 mt-2 text-right">
-                  <div className="ml-2">شهریه ثابت</div>{" "}
-                  <span>10000 تومان</span>
+                  <div className="mr-10">شهریه ثابت :</div>{" "}
+                  <span className="mr-10">
+                    {(10000).toLocaleString()} تومان
+                  </span>
                 </p>
                 <p className="grid grid-cols-2 text-right">
-                  <div className="ml-2">شهریه متغیر</div>{" "}
-                  <span>تومان {sumPrice} </span>
+                  <div className="mr-10">شهریه متغیر :</div>{" "}
+                  <span className="mr-10">
+                    تومان {sumPrice.toLocaleString()}{" "}
+                  </span>
                 </p>
 
                 <hr />
                 <p className="ml-8 text-right">
-                  <b>تومان {sumPrice + 10000} </b>
-                  <span className="mr-20">:مجموع</span>
+                  <b className="mr-10">
+                    تومان {(sumPrice + 10000).toLocaleString()}{" "}
+                  </b>
+                  <span className="mr-16">: مجموع</span>
                 </p>
               </div>
             </div>
@@ -115,7 +121,7 @@ function Amount() {
       <div></div>
     </div>
   ) : (
-    <div>لطفا لاگ ین کنید اول</div>
+    <div>{window.open("login", "_self")}</div>
   );
 }
 export default Amount;
