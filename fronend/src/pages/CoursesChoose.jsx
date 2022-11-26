@@ -2,6 +2,8 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import Modal from "../components/modal";
+import { toFarsiNumber, toJalaali } from "../constants/unit";
 import { useGetCourse } from "../hook/getCource";
 
 function CourseChoose() {
@@ -40,6 +42,19 @@ function CourseChoose() {
       });
   };
   const location = useLocation();
+  const [state, setState] = useState({
+    modal: false,
+    update: false,
+    name: "",
+    modalInputName: "",
+  });
+
+  const modalClose = () => {
+    setState({
+      modalInputName: "",
+      modal: false,
+    });
+  };
 
   return access === "true" ? (
     <>
@@ -52,18 +67,18 @@ function CourseChoose() {
               ""
             )}
 
-            <th class="col  !text-right !w-20 ">{"قیمت"}</th>
-            <th class="col !text-right !w-20">{"امتحان پایان ترم"}</th>
-            <th class="col !text-right !w-20">{"امتحان میانترم"}</th>
-            <th class="col !text-right !w-20">{"ساعت کلاس"}</th>
-            <th class="col !text-right !w-24">{"روز کلاس"}</th>
-            <th class="col !text-right !w-20 ">{"اتمام کلاس"}</th>
-            <th class="col !text-right !w-20">{"شروع کلاس"}</th>
-            <th class="col !text-right !w-14">{"ترم"}</th>
-            <th class="col !text-right !w-24">{"دوره"}</th>
-            <th class="col !text-right  !w-20">{"تعداد واحد"}</th>
-            <th class="col !text-right  !w-16">{"نام استاد"}</th>
-            <th class="col  !text-right !pr-8 !w-20">{"نام کلاس"}</th>
+            <th class="col  !text-right ">{"قیمت"}</th>
+            <th class="col !text-right !w-[10rem] ">{"امتحان پایان ترم"}</th>
+            <th class="col !text-right !w-[9rem]">{"امتحان میانترم"}</th>
+            <th class="col !text-right !w-[8rem] ">{"ساعت کلاس"}</th>
+            <th class="col !text-right !w-[7.5rem] ">{"روز کلاس"}</th>
+            <th class="col !text-right !w-[9.5rem] ">{"اتمام کلاس"}</th>
+            <th class="col !text-right !w-[9rem] ">{"شروع کلاس"}</th>
+            <th class="col !text-right !w-[6rem]">{"ترم"}</th>
+            <th class="col !text-right !w-[6.5rem]">{"دوره"}</th>
+            <th class="col !text-right  !w-[8rem]">{"تعداد واحد"}</th>
+            <th class="col !text-right !w-[5rem] ">{"نام استاد"}</th>
+            <th class="col  !text-right !pr-8 !w-[9rem]">{"نام کلاس"}</th>
           </tr>
         </thead>
       </table>
@@ -84,30 +99,50 @@ function CourseChoose() {
                     <i class="">حذف واحد</i>
                   </button>
                 </td>
-                <td class="  !text-right  !w-20">{row.course.price}</td>
+                <td class="  !text-right  !w-20">
+                  {toFarsiNumber(row.course.price.toLocaleString())}
+                </td>
                 <td class="  !text-right !w-24 !pr-5 ">
-                  {row.course.final_exam_date}
+                  {toJalaali(row.course.final_exam_date)}
                 </td>
                 <td class="  !text-right !w-20 !pr-4">
-                  {row.course.midterm_exam_date}
+                  {toJalaali(row.course.midterm_exam_date)}
                 </td>
                 <td class="  !text-right !w-24 !pr-7 ">
-                  {row.course.schedules.map((i, k) => i.time)}
+                  {row.course.schedules.map((i, k) => toFarsiNumber(i.time))}
                 </td>
                 <td class="  !text-right !w-14 !pr-8  ">
-                  {row.course.schedules.map((i, k) => i.day)}
+                  {row.course.schedules.map((i, k) =>
+                    i.day === "SUNDAY"
+                      ? "یکشنبه"
+                      : "SATURDAY"
+                      ? "شنبه"
+                      : "MONDAY"
+                      ? "دوشنبه"
+                      : "TUESDAY"
+                      ? "سه شنبه"
+                      : "WEDNESDAY"
+                      ? "چهار شنبه"
+                      : "THURSDAY"
+                      ? "پنج شنبه"
+                      : "جمعه"
+                  )}
                 </td>
                 <td class="  !text-right !w-20 !pr-5 ">
-                  {row.course.semester.end_date}
+                  {toJalaali(row.course.semester.end_date)}
                 </td>
                 <td class="  !text-right !w-20">
-                  {row.course.semester.start_date}
+                  {toJalaali(row.course.semester.start_date)}
                 </td>
                 <td class="  !text-right !w-14">{row.course.semester.name}</td>
                 <td class="  !text-right !w-20 !pr-5">
-                  {row.course.major.degree}
+                  {row.course.major.degree === "BACHELOR"
+                    ? "لیسانس"
+                    : "فوق لیسانس"}
                 </td>
-                <td class="  !text-right !w-16">{row.course.unit}</td>
+                <td class="  !text-right !w-16">
+                  {toFarsiNumber(row.course.unit)}
+                </td>
                 <td class="  !text-right !w-16">
                   {row.course.master.first_name}
                 </td>
@@ -119,7 +154,7 @@ function CourseChoose() {
       </table>
     </>
   ) : (
-    <div>لطفا لاگ ین کنید اول</div>
+    <div>{window.open("login", "_self")}</div>
   );
 }
 

@@ -18,6 +18,7 @@ import AllCourses from "./pages/AllCourses";
 import MasterCourse from "./pages/masterCourse";
 import Welcome from "./pages/Welcome";
 import Callender from "./pages/Home";
+import CourseStudent from "./pages/CoursesStudent";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/welcomemaster" element={<Welcome />} />
 
-          <Route path="/masterLogin" element={<Login />} />
+          <Route path="/masterLogin" />
           <Route path="/units" element={<Units />} />
           <Route path="/collages" element={<Collages />} />
           <Route path="/profile" />
@@ -40,7 +41,7 @@ function App() {
           <Route path="/masterCourse" element={<MasterCourse />} />
           <Route path="/AllCourses" element={<AllCourses />} />
           <Route path="/master" element={<Courses />} />
-          <Route path="/Course" element={<Courses />} />
+          <Route path="/Course" element={<CourseStudent />} />
           <Route path="/Products" element={<Product />} />
         </Routes>
       </Router>

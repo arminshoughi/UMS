@@ -2,7 +2,12 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { toJalaali } from "../constants/unit";
+import {
+  toFarsiNumber,
+  toGregorianDate,
+  toGregorianDate1,
+  toJalaali,
+} from "../constants/unit";
 import { useCourses } from "../hook/course";
 import { useCurrentUser } from "../hook/currentUser";
 import { useSemesters } from "../hook/semester";
@@ -63,8 +68,8 @@ function AllCourses() {
               time: values.classClock,
             },
           ],
-          midterm_exam_date: values.minTerm,
-          final_exam_date: values.endTerm,
+          midterm_exam_date: toGregorianDate(values.minTerm),
+          final_exam_date: toGregorianDate(values.endTerm),
           price: values.price,
         },
         {
@@ -106,18 +111,18 @@ function AllCourses() {
       <table class="table !text-right   mt-3">
         <thead className="bg-slate-500">
           <tr>
-            <th class="col  !text-right !w-20 ">{" قیمت"}</th>
-            <th class="col !text-right !w-20">{"    امتحان پایان ترم"}</th>
-            <th class="col !text-right !w-20">{"    امتحان میانترم"}</th>
-            <th class="col !text-right !w-20">{"   ساعت کلاس"}</th>
-            <th class="col !text-right !w-24">{"   روز کلاس"}</th>
-            <th class="col !text-right !w-20 ">{"   اتمام کلاس"}</th>
-            <th class="col !text-right !w-20">{"   شروع کلاس"}</th>
-            <th class="col !text-right !w-14">{"   ترم"}</th>
-            <th class="col !text-right !w-24">{"   دوره"}</th>
-            <th class="col !text-right  !w-20">{"  تعداد واحد"}</th>
-            <th class="col !text-right  !w-16">{" نام استاد"}</th>
-            <th class="col  !text-right !pr-8 !w-20">{" نام کلاس"}</th>
+            <th class="col  !text-right  ">{"قیمت"}</th>
+            <th class="col !text-right !w-[10rem]">{"امتحان پایان ترم"}</th>
+            <th class="col !text-right !w-[10.8rem]">{"امتحان میانترم"}</th>
+            <th class="col !text-right !w-[8rem]">{"ساعت کلاس"}</th>
+            <th class="col !text-right !w-[9rem]">{"روز کلاس"}</th>
+            <th class="col !text-right  !w-[11rem]">{"اتمام کلاس"}</th>
+            <th class="col !text-right !w-[10rem]">{"شروع کلاس"}</th>
+            <th class="col !text-right !w-[6.5rem]">{"ترم"}</th>
+            <th class="col !text-right !w-[7rem]">{"دوره"}</th>
+            <th class="col !text-right !w-[9rem] ">{"تعداد واحد"}</th>
+            <th class="col !text-right !w-[5.5rem] ">{"نام استاد"}</th>
+            <th class="col  !text-right !pr-8 !w-[10rem] ">{"نام کلاس"}</th>
           </tr>
         </thead>
       </table>
@@ -129,7 +134,7 @@ function AllCourses() {
                 {location.pathname !== "/master" ? "" : ""}
 
                 <td class="  !text-right   !w-20  ">
-                  {row.price.toLocaleString()}
+                  {toFarsiNumber(row.price.toLocaleString())}
                 </td>
                 <td class="  !text-right !w-24 !pr-5 ">
                   {toJalaali(row.final_exam_date)}
@@ -138,13 +143,13 @@ function AllCourses() {
                   {toJalaali(row.midterm_exam_date)}
                 </td>
                 <td class="  !text-right !w-20 ">
-                  {row.schedules.map((i, k) => i.time)}
+                  {row.schedules.map((i, k) => toFarsiNumber(i.time))}
                 </td>
                 <td class="  !text-right !w-24  !pr-8 ">
                   {row.schedules.map((i, k) =>
                     i.day === "SUNDAY"
                       ? "یکشنبه"
-                      : "SARURDAY"
+                      : "SATURDAY"
                       ? "شنبه"
                       : "MONDAY"
                       ? "دوشنبه"
@@ -165,9 +170,9 @@ function AllCourses() {
                 </td>
                 <td class="  !text-right  !w-14 ">{row.semester.name}</td>
                 <td class="  !text-right !pr-5 !w-20 ">
-                  {row.major.degree === "BACHELOR" ? "لیسانس" : "فوق لیسانی"}
+                  {row.major.degree === "BACHELOR" ? "لیسانس" : "فوق لیسانس"}
                 </td>
-                <td class="  !text-right  !w-16 ">{row.unit}</td>
+                <td class="  !text-right  !w-16 ">{toFarsiNumber(row.unit)}</td>
                 <td class="  !text-right !w-16 ">{row.master.first_name}</td>
                 <td class="  !text-right !pr-8 !w-20 ">{row.name}</td>
               </tr>
@@ -177,7 +182,7 @@ function AllCourses() {
       </table>
     </>
   ) : (
-    <div>لطفا لاگ ین کنید اول</div>
+    <div>{window.open("login", "_self")}</div>
   );
 }
 

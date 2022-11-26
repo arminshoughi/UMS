@@ -27,7 +27,7 @@ function GetCourses() {
       </table>
     </>
   ) : (
-    <div>لطفا لاگ ین کنید اول</div>
+    <div>{window.open("login", "_self")}</div>
   );
 }
 

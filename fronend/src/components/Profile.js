@@ -6,6 +6,7 @@ import axios from "axios";
 import { useCollage } from "../hook/collage";
 import { useMajors } from "../hook/major";
 import { useCurrentUser } from "../hook/currentUser";
+import { toJalaali } from "../constants/unit";
 
 const Profile = () => {
   const { data } = useCollage();
@@ -17,7 +18,6 @@ const Profile = () => {
   const [nationalCode, setNationalCode] = useState();
   const [birthday, setBierthday] = useState();
   const [sex, setSex] = useState();
- 
 
   const getData = () => {
     axios
@@ -44,7 +44,7 @@ const Profile = () => {
     e.preventDefault();
 
     axios
-      .post(
+      .patch(
         "//127.0.0.1:8000/api/share/master/1/",
         {
           first_name: name,
@@ -73,7 +73,7 @@ const Profile = () => {
         alert("به مشکل خوردیم");
       });
   };
-
+  console.log(toJalaali(currentUser.birthday), "currentUser.birthday");
   return (
     <div className="Login ">
       <div className=" align-center p-4 w-[30%]  ml-[35%]  ">
@@ -89,13 +89,13 @@ const Profile = () => {
                     <input
                       type="text"
                       name="name"
-                      className="form-control !w-48"
+                      className="form-control !w-52"
                       id="name"
                       defaultValue={currentUser.first_name}
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
-                  <div className="form-group !ml-5 !w-48 ">
+                  <div className="form-group !ml-5 !w-[13.3rem] ">
                     <label htmlFor="family">فامیل</label>
                     <input
                       type="text"
@@ -142,17 +142,16 @@ const Profile = () => {
                 <div className="form-group mt-4">
                   <label htmlFor="birthday	">تاریخ تولد </label>
                   <input
-                    type="date"
                     id="birthday"
                     name="birthday"
-                    defaultValue={currentUser.birthday}
-                    className="ml-10"
+                    defaultValue={toJalaali(currentUser.birthday)}
+                    className="mr-10"
                     onChange={(e) => setBierthday(e.target.value)}
                   />
                 </div>
 
                 <div className="form-group mt-4">
-                  <label htmlFor="sex">سن</label>
+                  <label htmlFor="sex">جنسیت</label>
                   <div className="ml-10" dir="ltr">
                     <label>
                       زن
