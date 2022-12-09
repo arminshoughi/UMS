@@ -10,6 +10,7 @@ import {
   HiOutlineX,
   HiOutlineSearch,
   HiUser,
+  HiArchive,
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
@@ -17,9 +18,11 @@ import { SidebarData, SidebarDataMaster } from "./SidbarData";
 import { useLocation } from "react-router-dom";
 import Login from "./Login";
 import Profile from "./Profile";
+import { useCurrentUser } from "../hook/currentUser";
 
 function Navbar() {
   const [search, setSearch] = useState("");
+  const { data: currentUser } = useCurrentUser();
 
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
@@ -44,7 +47,16 @@ function Navbar() {
       <IconContext.Provider value={{ color: "#fff" }}>
         <div className="navbar">
           <Link to="#" className="menu-bars">
-            <HiOutlineMenu onClick={showSidebar} />
+            <HiOutlineMenu
+              onClick={
+                (currentUser.typ === "MASTER" &&
+                  !location.pathname.includes("master")) ||
+                (currentUser.typ === "STUDENT" &&
+                  !location.pathname.includes("Student"))
+                  ? ""
+                  : showSidebar
+              }
+            />
           </Link>
           <button
             onClick={() => window.open("profile", "_self")}
@@ -74,7 +86,7 @@ function Navbar() {
               ? SidebarDataMaster.map((item, index) => {
                   return (
                     <li key={index} className={item.cName}>
-                      <Link to={item.path}>
+                      <Link to={item.path} onClick={showSidebar}>
                         <div className="flex ">
                           <div className="mr-5">{item.title}</div>
                           <div className="">{item.icon}</div>
@@ -86,7 +98,7 @@ function Navbar() {
               : SidebarData.map((item, index) => {
                   return (
                     <li key={index} className={item.cName}>
-                      <Link to={item.path}>
+                      <Link to={item.path} onClick={showSidebar}>
                         <div className="flex ">
                           <div className="mr-5">{item.title}</div>
                           <div className="">{item.icon}</div>
@@ -95,6 +107,24 @@ function Navbar() {
                     </li>
                   );
                 })}
+            <li>
+              <div
+                onClick={() => {
+                  localStorage.removeItem("access");
+                  localStorage.removeItem("refresh");
+
+                  window.open(
+                    currentUser.typ === "STUDENT" ? "/login" : "/masterlogin",
+                    "_self"
+                  );
+                }}
+              >
+                <div className="flex cursor-grab  nav-text ml-3 pl-[5.4rem] text-2xl text-red-900 ">
+                  <div className="mr-5 ">{"خروج"}</div>
+                  <div className="">{<HiArchive />}</div>
+                </div>
+              </div>
+            </li>
           </ul>
         </nav>
       </IconContext.Provider>

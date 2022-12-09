@@ -7,13 +7,11 @@ import Modal, { ModalGrade } from "../components/modal";
 import { toFarsiNumber, toJalaali } from "../constants/unit";
 import { useCourses } from "../hook/course";
 import { useGetCourse } from "../hook/getCource";
+import { useMasterCourses } from "../hook/masterCourse";
 import { useSemesters } from "../hook/semester";
 
 function MasterCourse() {
-  const { data } = useCourses();
-  const { data: nomre } = useGetCourse();
-
-  const { data: semesters } = useSemesters();
+  const { data } = useMasterCourses();
 
   const [state, setState] = useState({
     final: false,
@@ -39,8 +37,8 @@ function MasterCourse() {
     price: "",
   });
 
-  console.log("val", values);
   const access = localStorage.getItem("flag");
+  const accesss = localStorage.getItem("access");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,10 +70,38 @@ function MasterCourse() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+            Authorization: `Bearer ${accesss}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
+          },
+        }
+      )
+      .then((result) => {
+        alert(result.status.toString());
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  const HandleGrade = (e) => {
+    e.preventDefault();
+    setState({ name: state.modalInputName });
+    modalClose();
+    axios
+      .put(
+        `http://127.0.0.1:8000/api/master/student-grade/${id}/`,
+        {
+          final_exam_grade: final.className,
+          midterm_exam_grade: min.className,
+          id: id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `Bearer ${accesss}`,
           },
         }
       )
@@ -94,7 +120,13 @@ function MasterCourse() {
     setState({ final: true });
   };
   const [name, setName] = useState();
-  console.log(name, "asd");
+  const [min, setMin] = useState(0);
+  const [final, setFinal] = useState(0);
+
+  const [id, setsetId] = useState();
+  const [course, setCourse] = useState();
+  const [studentSemesterId, setStudentSemesterId] = useState();
+
   const modalClose = () => {
     setState({
       modalInputName: "",
@@ -106,7 +138,12 @@ function MasterCourse() {
     <>
       <ModalGrade show={state.modal} handleClose={(e) => modalClose(e)}>
         <div className="ml-4 -mt-8 fixed ">
-          <HiX onClick={(e) => modalClose(e)} className="w-6 h-6" />
+          <HiX
+            onClick={(e) => {
+              modalClose(e);
+            }}
+            className="w-6 h-6"
+          />
         </div>
         <div class=" text-center mt-10 text-indigo-900 border border-indigo-800  mx-3 h-10 ">
           نمره میانترم
@@ -125,13 +162,14 @@ function MasterCourse() {
             type="number"
             name="minTerm"
             className="form-control  !w-44 "
+            onChange={(e) => setMin({ ...values, className: e.target.value })}
           />
           <label className="ml-5 mt-1">:نمره میانترم</label>
         </div>
         <div className="form-group flex mt-7 !mx-2">
           <button
             className="btn btn-success  ml-[8.6rem] w-24 mt-3"
-            onClick={(e) => handleSubmit(e)}
+            onClick={(e) => HandleGrade(e)}
             type="button"
           >
             ذخیره
@@ -165,13 +203,14 @@ function MasterCourse() {
             type="number"
             name="minTerm"
             className="form-control  !w-44 "
+            onChange={(e) => setFinal({ ...values, className: e.target.value })}
           />
           <label className="ml-5 mt-1">:نمره پایانترم</label>
         </div>
         <div className="form-group flex mt-7 !mx-2">
           <button
             className="btn btn-success  ml-[8.6rem] w-24 mt-3"
-            onClick={(e) => handleSubmit(e)}
+            onClick={(e) => HandleGrade(e)}
             type="button"
           >
             ذخیره
@@ -198,21 +237,17 @@ function MasterCourse() {
               </button>
             </td>
             <th class="col !text-right ">{"نمره پایان ترم"}</th>
-            <th class="col !text-right !w-[5rem] ">{"نمره میانترم"}</th>
-            <th class="col !text-right !w-[10rem] ">{"امتحان پایان ترم"}</th>
-            <th class="col !text-right !w-[10rem] ">{"امتحان میانترم"}</th>
-            <th class="col !text-right !w-[10.6rem]">{"ساعت کلاس"}</th>
-            <th class="col !text-right !w-[8rem]">{"روز کلاس"}</th>
-            <th class="col !text-right  !w-[9rem]">{"اتمام کلاس"}</th>
-            <th class="col !text-right !w-[10rem]">{"شروع کلاس"}</th>
-            <th class="col !text-right  !w-[6rem]">{"نام دانشجو"}</th>
-            <th class="col  !text-right !pr-8 !w-[9rem]">{"نام کلاس"}</th>
+            <th class="col !text-right !w-[11rem] ">{"نمره میانترم"}</th>
+            <th class="col !text-right !w-[13.5rem] ">{"امتحان پایان ترم"}</th>
+            <th class="col !text-right !w-[14rem] ">{"امتحان میانترم"}</th>
+            <th class="col !text-right  !w-[11rem]">{"نام دانشجو"}</th>
+            <th class="col  !text-right !pr-8 !w-[16rem]">{"نام کلاس"}</th>
           </tr>
         </thead>
       </table>
       <table id="myTable" class="table !text-right   table-striped table-dark ">
         <tbody>
-          {data.map((row, i) => (
+          {data.map((i) => (
             <>
               <tr>
                 <td>
@@ -220,17 +255,23 @@ function MasterCourse() {
                     <button
                       onClick={(e) => {
                         finalOpen(e);
-                        setName(row);
+                        modalOpen(e);
+                        setsetId(i.id);
+                        setCourse(data.map(i.course.id));
+                        setStudentSemesterId(i.student_semester.id);
                       }}
                       type="button"
                       class="btn !w-28 btn-primary"
                     >
                       <i class="">نمره پایانترم</i>
                     </button>
+
                     <button
                       onClick={(e) => {
                         modalOpen(e);
-                        setName(row);
+                        setsetId(i.id);
+                        setCourse(data.map(i.course.id));
+                        setStudentSemesterId(i.student_semester.id);
                       }}
                       type="button"
                       class="btn !w-28  btn-primary"
@@ -240,43 +281,34 @@ function MasterCourse() {
                   </div>
                 </td>
 
-                <td class="  !text-right   !pl-10 ">{toFarsiNumber(20)}</td>
-                <td class="  !text-right  !pl-10 ">{toFarsiNumber(20)}</td>
-
-                <td class="  !text-right !pl-10">
-                  {toJalaali(row.final_exam_date)}
-                </td>
-                <td class="  !text-right !pl-10 ">
-                  {toJalaali(row.midterm_exam_date)}
-                </td>
-                <td class="  !text-right !pl-10">
-                  {row.schedules.map((i, k) => toFarsiNumber(i.time))}
-                </td>
-                <td class="  !text-right !pl-10">
-                  {row.schedules.map((i, k) =>
-                    i.day === "SUNDAY"
-                      ? "یکشنبه"
-                      : "SATURDAY"
-                      ? "شنبه"
-                      : "MONDAY"
-                      ? "دوشنبه"
-                      : "TUESDAY"
-                      ? "سه شنبه"
-                      : "WEDNESDAY"
-                      ? "چهار شنبه"
-                      : "THURSDAY"
-                      ? "پنج شنبه"
-                      : "جمعه"
+                <td class="  !text-right   !pl-10 ">
+                  {toFarsiNumber(
+                    i.final_exam_grade === 0 ? "وارد نشده" : i.final_exam_grade
                   )}
                 </td>
+                <td class="  !text-right  !pl-10 ">
+                  {toFarsiNumber(
+                    i.midterm_exam_grade === 0
+                      ? "وارد نشده"
+                      : i.midterm_exam_grade
+                  )}
+                </td>
+
                 <td class="  !text-right !pl-10">
-                  {toJalaali(row.semester.end_date)}
+                  {toJalaali(i.course?.final_exam_date)}
                 </td>
-                <td class="  !text-right !pl-8">
-                  {toJalaali(row.semester.start_date)}
+                <td class="  !text-right !pl-10 ">
+                  {toJalaali(i.course?.midterm_exam_date)}
                 </td>
-                <td class="  !text-right ">{row.master.first_name}</td>
-                <td class="  !text-right !pr-8 ">{row.name}</td>
+
+                <td class="  !text-right !pl-8 ">
+                  {i.student_semester.student.last_name}
+                </td>
+
+                <td class="  !text-right  ">
+                  {i.student_semester.student.first_name}
+                </td>
+                <td class="  !text-right !pr-8 ">{i.course.name}</td>
               </tr>
             </>
           ))}

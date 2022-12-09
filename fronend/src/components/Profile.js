@@ -19,14 +19,14 @@ const Profile = () => {
   const [birthday, setBierthday] = useState();
   const [sex, setSex] = useState();
 
+  const access = localStorage.getItem("access");
   const getData = () => {
     axios
       .get("http://127.0.0.1:8000/api/master/master", {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
-
+          Authorization: `Bearer ${access}`,
           "X-CSRFToken":
             "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
         },
@@ -59,7 +59,7 @@ const Profile = () => {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+            Authorization: `Bearer ${access}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -73,22 +73,21 @@ const Profile = () => {
         alert("به مشکل خوردیم");
       });
   };
-  console.log(
-    data.filter((i) => i),
-    "currentUser.birthday"
-  );
   const modalClose = () => {
-    window.open("welcome", "_self");
+    window.open(
+      currentUser.typ === "STUDENT" ? "welcome" : "welcomemaster",
+      "_self"
+    );
   };
   return (
     <div className="Login ">
       <div className=" align-center p-4 w-[30%]  ml-[35%]   ">
-        <div className="!bg-red-800 mt-10">
+        <div className="!bg-red-800 mt-1">
           <div className="ml-4 mt-2 !z-50 fixed ">
             <HiX onClick={(e) => modalClose(e)} className="w-6 h-6" />
           </div>
           <div className="card ">
-            <HiOutlineUserCircle className="w-40 h-40 ml-[32%]" />
+            <HiOutlineUserCircle className="w-40 h-40 ml-[35%]" />
             <div className="card-body">
               <h1 className="text-center text-3xl">پروفایل</h1>
               <form onSubmit={handleSubmit} dir="rtl">
@@ -99,13 +98,13 @@ const Profile = () => {
                       disabled
                       type="text"
                       name="name"
-                      className="form-control !w-52"
+                      className="form-control !w-60"
                       id="name"
                       defaultValue={currentUser.first_name}
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
-                  <div className="form-group !ml-5 !w-[13.3rem] ">
+                  <div className="form-group !ml-5 !w-[16.5rem] ">
                     <label htmlFor="family">فامیل</label>
                     <input
                       disabled

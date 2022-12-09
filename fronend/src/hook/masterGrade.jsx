@@ -1,17 +1,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-export function useMajors() {
-  const [majors, setData] = useState([]);
+export function useMasterGrade() {
+  const { t } = useTranslation();
+  // const { data: collages, ...rest } = useCollage();
+
+  const [collages, setData] = useState([]);
   const access = localStorage.getItem("access");
 
   const getData = () => {
     axios
-      .get("http://127.0.0.1:8000/api/share/majors/", {
+      .get("http://127.0.0.1:8000/api/master/student-grade/", {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
-          Authorization: `Bearer ${access}`,
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc5MjI4NDAyLCJqdGkiOiJiNTBiNGRmZTIyMWY0Mzc4OThlZTg3ODBiOThhN2JjMSIsInVzZXJfaWQiOjJ9.DZGRkWsChA99MfYMb7f50Q7MlW2Bc88TN4Tz1FtHlDg`,
 
           "X-CSRFToken":
             "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -35,9 +39,10 @@ export function useMajors() {
     getData();
   }, []);
 
-  const data = React.useMemo(() => majors, [majors]);
+  const data = React.useMemo(() => collages, [collages]);
 
   return {
     data,
+    // ...rest,
   };
 }

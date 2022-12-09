@@ -14,16 +14,22 @@ import {
 } from "../constants/unit";
 import { useCourses } from "../hook/course";
 import { useCurrentUser } from "../hook/currentUser";
+import { useGetCourse } from "../hook/getCource";
 import { useMajors } from "../hook/major";
 import { useMasters } from "../hook/masters";
 import { useSemesters } from "../hook/semester";
 
 function CourseStudent() {
   const access = localStorage.getItem("flag");
+  const accesss = localStorage.getItem("access");
 
   const [refresh, setRefresh] = useState();
   const { data } = useCourses(refresh);
+  const { data: getCource } = useGetCourse(refresh);
+
   const { data: masters } = useMasters();
+  const { data: choosen } = useGetCourse(refresh);
+
   const { data: majors } = useMajors();
   const { data: semesters } = useSemesters();
   const { data: currentUser } = useCurrentUser();
@@ -31,7 +37,9 @@ function CourseStudent() {
 
   const handleSubmitRemove = (e) => {
     e.preventDefault();
-
+    if ((sumUnit) => 20) {
+      alert("شما به علت پر شدن 20 واحد خود مجاز به انتخاب واحد نیستید.");
+    }
     axios
       .post(
         "http://127.0.0.1:8000/api/share/courses",
@@ -42,7 +50,7 @@ function CourseStudent() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+            Authorization: `Bearer ${accesss}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -80,6 +88,9 @@ function CourseStudent() {
     endTerm: "",
     price: "",
   });
+  const sumUnit = getCource
+    .map((i) => Number(i.course.unit))
+    .reduce((a, b) => a + b, 0);
   const handleSubmit1 = (e) => {
     e.preventDefault();
 
@@ -94,7 +105,7 @@ function CourseStudent() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+            Authorization: `Bearer ${accesss}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -105,13 +116,12 @@ function CourseStudent() {
         alert("درس با موفقیت انتخاب شد");
       })
       .catch((error) => {
-        alert("به مشکل برخوردیم");
+        alert(error.response.data.non_field_errors);
       });
   };
   const [id, setsetId] = useState();
   const [name, setName] = useState();
   const [value, setValue] = useState(name?.major.id.toString());
-  console.log(name, "namedd");
   const location = useLocation();
 
   const handleSubmit = (e) => {
@@ -145,7 +155,7 @@ function CourseStudent() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+            Authorization: `Bearer ${accesss}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -160,7 +170,6 @@ function CourseStudent() {
         alert(error);
       });
   };
-  console.log(toGregorianDate1(values.minTerm), "Asdasd");
 
   const modalOpen = () => {
     setState({ modal: true });
@@ -299,7 +308,7 @@ function CourseStudent() {
               }
             >
               {Object.entries(TIME).map(([i, v]) => (
-                <option value={i}>{v}</option>
+                <option value={i}>{toFarsiNumber(v)}</option>
               ))}
             </select>
           </div>
@@ -464,7 +473,7 @@ function CourseStudent() {
               }
             >
               {Object.entries(TIME).map(([i, v]) => (
-                <option value={i}>{v}</option>
+                <option value={i}>{toFarsiNumber(v)}</option>
               ))}
             </select>
           </div>
@@ -547,8 +556,15 @@ function CourseStudent() {
                 {location.pathname !== "/master" ? (
                   <td class="  !text-right  !w-1 !pr-2">
                     <button
+                      disabled={choosen.includes(id)}
                       onClick={(e) => {
-                        handleSubmit1(e);
+                        choosen.includes(id)
+                          ? alert("این درس قبلا انتخاب شده است.")
+                          : sumUnit >= 20
+                          ? alert(
+                              "جمع واحد های انتخابی بیش از 20 واحد شده است."
+                            )
+                          : handleSubmit1(e);
                         setsetId(row.id);
                       }}
                       type="button"

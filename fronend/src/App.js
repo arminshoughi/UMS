@@ -19,6 +19,7 @@ import MasterCourse from "./pages/masterCourse";
 import Welcome from "./pages/Welcome";
 import Callender from "./pages/Home";
 import CourseStudent from "./pages/CoursesStudent";
+import WelcomeMaster from "./pages/WelcomMaster";
 
 function App() {
   return (
@@ -28,21 +29,21 @@ function App() {
         <Routes>
           <Route path="/" element={<Callender />} />
           <Route path="/login" />
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/welcomemaster" element={<Welcome />} />
+          <Route path="/welcomeStudent" element={<Welcome />} />
+          <Route path="/welcomemaster" element={<WelcomeMaster />} />
 
           <Route path="/masterLogin" />
           <Route path="/units" element={<Units />} />
-          <Route path="/collages" element={<Collages />} />
+          <Route path="/AdminCollages" element={<Collages />} />
           <Route path="/profile" />
-          <Route path="/Amount" element={<Amount />} />
+          <Route path="/AmountStudent" element={<Amount />} />
           <Route path="/GetCourse" element={<GetCourses />} />
-          <Route path="/CourseChoose" element={<CourseChoose />} />
+          <Route path="/CourseChooseStudent" element={<CourseChoose />} />
           <Route path="/masterCourse" element={<MasterCourse />} />
-          <Route path="/AllCourses" element={<AllCourses />} />
+          <Route path="/AllCoursesStudent" element={<AllCourses />} />
           <Route path="/master" element={<Courses />} />
-          <Route path="/Course" element={<CourseStudent />} />
-          <Route path="/Products" element={<Product />} />
+          <Route path="/CourseStudent" element={<CourseStudent />} />
+          <Route path="/ProductsStudent" element={<Product />} />
         </Routes>
       </Router>
     </>

@@ -1,13 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-export function useMajors() {
-  const [majors, setData] = useState([]);
+export function useMasterCourses() {
+  const { t } = useTranslation();
+  // const { data: courses, ...rest } = useCollage();
+
+  const [courses, setData] = useState([]);
   const access = localStorage.getItem("access");
 
   const getData = () => {
     axios
-      .get("http://127.0.0.1:8000/api/share/majors/", {
+      .get("http://127.0.0.1:8000/api/master/student-grade/", {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
@@ -35,9 +39,10 @@ export function useMajors() {
     getData();
   }, []);
 
-  const data = React.useMemo(() => majors, [majors]);
+  const data = React.useMemo(() => courses, [courses]);
 
   return {
     data,
+    // ...rest,
   };
 }

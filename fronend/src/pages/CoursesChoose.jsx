@@ -12,6 +12,7 @@ function CourseChoose() {
 
   const { data } = useGetCourse(refresh);
   const access = localStorage.getItem("flag");
+  const accesss = localStorage.getItem("access");
 
   const handleSubmitRemove = (e) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ function CourseChoose() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+            Authorization: `Bearer ${accesss}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",

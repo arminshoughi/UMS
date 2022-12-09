@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Card from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
+import { toFarsiNumber } from "../constants/unit";
 import { useGetCourse } from "../hook/getCource";
 import { formatCreditCardNumber, formatExpirationDate } from "./util";
 
@@ -90,20 +91,20 @@ function Amount() {
                 <p className="grid grid-cols-2 mt-2 text-right">
                   <div className="mr-10">شهریه ثابت :</div>{" "}
                   <span className="mr-10">
-                    {(10000).toLocaleString()} تومان
+                    {toFarsiNumber((10000).toLocaleString())} تومان
                   </span>
                 </p>
                 <p className="grid grid-cols-2 text-right">
                   <div className="mr-10">شهریه متغیر :</div>{" "}
                   <span className="mr-10">
-                    تومان {sumPrice.toLocaleString()}{" "}
+                    تومان {toFarsiNumber(sumPrice.toLocaleString())}{" "}
                   </span>
                 </p>
 
                 <hr />
                 <p className="ml-8 text-right">
                   <b className="mr-10">
-                    تومان {(sumPrice + 10000).toLocaleString()}{" "}
+                    تومان {toFarsiNumber((sumPrice + 10000).toLocaleString())}{" "}
                   </b>
                   <span className="mr-16">: مجموع</span>
                 </p>

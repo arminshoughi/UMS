@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 
 const Login = () => {
   const [status, setStatus] = useState();
+  const [a, setA] = useState();
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -32,6 +33,8 @@ const Login = () => {
       )
       .then((result) => {
         setStatus(result.status.toString());
+        localStorage.setItem("access", result.data.access.toString());
+        setA(result.data.access.toString());
       })
       .catch((error) => {
         alert("نام کاربری و یا رمز عبور اشتباه است لطفا مجدد تلاش کنید.");
@@ -41,7 +44,7 @@ const Login = () => {
   const location = useLocation();
   useEffect(() => {
     if (status === "200" && location.pathname === "/login") {
-      window.open("/welcome", "_self");
+      window.open("/welcomeStudent", "_self");
     } else {
       if (status === "200" && location.pathname === "/masterlogin") {
         window.open("/welcomemaster", "_self");

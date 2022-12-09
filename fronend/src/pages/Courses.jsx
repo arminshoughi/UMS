@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Modal from "../components/modal";
+
 import {
   TIME,
   toFarsiNumber,
@@ -21,6 +22,7 @@ import { useSemesters } from "../hook/semester";
 
 function Courses() {
   const access = localStorage.getItem("flag");
+  const accesss = localStorage.getItem("access");
 
   const [refresh, setRefresh] = useState();
   const { data } = useCourses(refresh);
@@ -29,12 +31,11 @@ function Courses() {
   const { data: semesters } = useSemesters();
   const { data: currentUser } = useCurrentUser();
   const [rowId, setRowId] = useState();
-
   const handleSubmitRemove = (e) => {
     e.preventDefault();
 
     axios
-      .post(
+      .delete(
         "http://127.0.0.1:8000/api/share/courses",
         {
           id: rowId,
@@ -43,7 +44,7 @@ function Courses() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+            Authorization: `Bearer ${accesss}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -95,7 +96,7 @@ function Courses() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+            Authorization: `Bearer ${accesss}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -106,14 +107,58 @@ function Courses() {
         alert("درس با موفقیت انتخاب شد");
       })
       .catch((error) => {
-        alert("به مشکل برخوردیم");
+        alert(error);
       });
   };
   const [id, setsetId] = useState();
   const [name, setName] = useState();
   const [value, setValue] = useState(name?.major.id.toString());
-  console.log(name, "namedd");
   const location = useLocation();
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
+    axios
+      .patch(
+        "//127.0.0.1:8000/api/share/courses/",
+        {
+          id: rowId,
+          major_id: Number(values.major),
+          semester_id: Number(values.term),
+          name: values.className,
+          details: values.details,
+          unit: values.unitCount,
+          master_id: 2,
+
+          documents: [],
+          schedules: [
+            {
+              day: values.classToday,
+              time: values.classClock,
+            },
+          ],
+          midterm_exam_date: toGregorianDate1(values.minTerm),
+          final_exam_date: toGregorianDate1(values.endTerm),
+          price: values.price,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            Authorization: `Bearer ${accesss}`,
+
+            "X-CSRFToken":
+              "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
+          },
+        }
+      )
+      .then((result) => {
+        alert("با موفقیت ثبت شد");
+      })
+      .catch((error) => {
+        alert("به مشکل خوردیم");
+      });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -146,7 +191,7 @@ function Courses() {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2NTYxNjQ4LCJqdGkiOiIzNzkzNWM1MmQ4Mzg0NjQ2OTdlNmE0NWYwNGEwYzI4NyIsInVzZXJfaWQiOjN9.EJuZ4h5fwzNcl5A0swmhqUprfTvzHT1Ctv_BnJYLokg`,
+            Authorization: `Bearer ${accesss}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -161,7 +206,6 @@ function Courses() {
         alert(error);
       });
   };
-  console.log(toGregorianDate1(values.minTerm), "Asdasd");
 
   const modalOpen = () => {
     setState({ modal: true });
@@ -303,7 +347,7 @@ function Courses() {
               }
             >
               {Object.entries(TIME).map(([i, v]) => (
-                <option value={i}>{v}</option>
+                <option value={i}>{toFarsiNumber(v)}</option>
               ))}
             </select>
           </div>
@@ -475,7 +519,7 @@ function Courses() {
               }
             >
               {Object.entries(TIME).map(([i, v]) => (
-                <option value={i}>{v}</option>
+                <option value={i}>{toFarsiNumber(v)}</option>
               ))}
             </select>
           </div>
@@ -491,7 +535,7 @@ function Courses() {
             />
           </div>
           <div>
-            <label className="ml-52">قیمت</label>
+            <label className="ml-36">امتحان پایان ترم</label>
             <input
               defaultValue={name?.final_exam_date}
               type="date"
@@ -501,7 +545,8 @@ function Courses() {
             />
           </div>
           <div>
-            <label>قیمت</label>
+            <label className="ml-52">قیمت</label>
+
             <input
               defaultValue={name?.price}
               type="number"
@@ -514,7 +559,7 @@ function Courses() {
         <div className="form-group !ml-[70%] !mx-2">
           <button
             className="btn btn-success  w-24 ml-3 mb-3 mt-3"
-            onClick={(e) => handleSubmit(e)}
+            onClick={(e) => handleUpdate(e)}
             type="button"
           >
             ذخیره

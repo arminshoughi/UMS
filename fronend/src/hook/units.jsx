@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 export function useUnits() {
   const [units, setData] = useState([]);
+  const access = localStorage.getItem("access");
 
   const getData = () => {
     axios
@@ -10,7 +11,7 @@ export function useUnits() {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
-          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY2NDM4OTE1LCJqdGkiOiI5ODMxMzEzMjg1YmM0NDExYTQyOTNhMjE2ZDQ1MTQwOSIsInVzZXJfaWQiOjF9.xDZwsu8iZQJC33q02pDw8qXQG1z4mGhU9hXY2K_JGJU`,
+          Authorization: `Bearer ${access}`,
 
           "X-CSRFToken":
             "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
