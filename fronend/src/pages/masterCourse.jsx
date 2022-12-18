@@ -119,13 +119,12 @@ function MasterCourse() {
   const finalOpen = () => {
     setState({ final: true });
   };
-  const [name, setName] = useState();
   const [min, setMin] = useState(0);
   const [final, setFinal] = useState(0);
 
   const [id, setsetId] = useState();
-  const [course, setCourse] = useState();
-  const [studentSemesterId, setStudentSemesterId] = useState();
+  const [, setCourse] = useState();
+  const [, setStudentSemesterId] = useState();
 
   const modalClose = () => {
     setState({
@@ -255,7 +254,6 @@ function MasterCourse() {
                     <button
                       onClick={(e) => {
                         finalOpen(e);
-                        modalOpen(e);
                         setsetId(i.id);
                         setCourse(data.map(i.course.id));
                         setStudentSemesterId(i.student_semester.id);

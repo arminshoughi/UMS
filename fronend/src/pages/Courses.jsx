@@ -27,19 +27,19 @@ function Courses() {
   const [refresh, setRefresh] = useState();
   const { data } = useCourses(refresh);
   const { data: masters } = useMasters();
+
   const { data: majors } = useMajors();
   const { data: semesters } = useSemesters();
   const { data: currentUser } = useCurrentUser();
+  console.log(currentUser, masters, "useCurrentUser");
   const [rowId, setRowId] = useState();
   const handleSubmitRemove = (e) => {
     e.preventDefault();
 
     axios
       .delete(
-        "http://127.0.0.1:8000/api/share/courses",
-        {
-          id: rowId,
-        },
+        `http://127.0.0.1:8000/api/share/courses/${rowId}/`,
+
         {
           headers: {
             "Content-Type": "application/json",
@@ -80,14 +80,42 @@ function Courses() {
     classClock: "",
     minTerm: "",
     endTerm: "",
-    price: "",
+    price: 0,
   });
+  const [courses, setData] = useState([]);
+  console.log(values.unitCount, "asdasd");
+  const getData = () => {
+    axios
+      .get("http://127.0.0.1:8000/api/share/courses/18/", {
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc5NzUxNjE3LCJqdGkiOiJkMjNiNzNjOTZiNDM0YmI3OWNjYzIwOWRjY2FlNGJmYiIsInVzZXJfaWQiOjJ9.D21CLenM3F-hsJSIzavUKENNj9kn4u-KF7wgwkodbZM`,
+
+          "X-CSRFToken":
+            "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
+        },
+      })
+      .then(function (res) {
+        setData(res.data);
+      })
+      .catch(function (err) {
+        if (err.response) {
+          console.error("Res Error: ", err.response.status);
+        } else if (err.request) {
+          console.error("Req Error");
+        } else {
+          console.error("Error: ", err.message);
+        }
+      });
+  };
+  console.log(courses, "sadasdasd");
   const handleSubmit1 = (e) => {
     e.preventDefault();
 
     axios
       .post(
-        "http://127.0.0.1:8000/api/student/student/take_course/",
+        "/127.0.0.1:8000/api/student/student/take_course/",
         {
           student_semester_id: 1,
           course_id: id,
@@ -120,17 +148,15 @@ function Courses() {
 
     axios
       .patch(
-        "//127.0.0.1:8000/api/share/courses/",
+        `http://127.0.0.1:8000/api/share/courses/${rowId}/`,
         {
-          id: rowId,
           major_id: Number(values.major),
-          semester_id: Number(values.term),
+
           name: values.className,
           details: values.details,
           unit: values.unitCount,
           master_id: 2,
 
-          documents: [],
           schedules: [
             {
               day: values.classToday,
@@ -139,7 +165,7 @@ function Courses() {
           ],
           midterm_exam_date: toGregorianDate1(values.minTerm),
           final_exam_date: toGregorianDate1(values.endTerm),
-          price: values.price,
+          price: Number(values.price),
         },
         {
           headers: {
@@ -185,7 +211,7 @@ function Courses() {
           ],
           midterm_exam_date: toGregorianDate1(values.minTerm),
           final_exam_date: toGregorianDate1(values.endTerm),
-          price: values.price,
+          price: Number(values.price),
         },
         {
           headers: {
@@ -277,7 +303,7 @@ function Courses() {
               className="form-select form-select-lg  h-10"
               aria-label=".form-select-lg example"
               onChange={(e) => {
-                setValus({ ...values, masterName: 1 });
+                setValus({ ...values, masterName: e.target.value });
               }}
             >
               <option>انتخاب</option>
@@ -401,7 +427,12 @@ function Courses() {
       </Modal>
       <Modal show={state.update} handleClose={(e) => modalClose(e)}>
         <div className="ml-4 -mt-8 fixed ">
-          <HiX onClick={(e) => modalClose(e)} className="w-6 h-6" />
+          <HiX
+            onClick={(e) => {
+              modalClose(e);
+            }}
+            className="w-6 h-6"
+          />
         </div>
         <div class=" text-center mt-10  text-indigo-900 border border-indigo-800 pt-2  mx-3 h-10 ">
           ویرایش کردن درس
@@ -634,6 +665,7 @@ function Courses() {
                         onClick={(e) => {
                           setName(row);
                           modalOpenUpdate(e);
+                          setRowId(row.id);
                         }}
                         type="button"
                         class="btn  !w-28 !bg-slate-400 border  text-slate-900"

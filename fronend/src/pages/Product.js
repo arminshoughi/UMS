@@ -16,6 +16,7 @@ function Product() {
     }, 0);
   const sumGrade = data
     .map((i) => i.final_exam_grade)
+    .filter((i) => i !== 0)
     .map(function (elt) {
       return /^\d+$/.test(elt) ? parseInt(elt) : 0;
     })
@@ -24,6 +25,7 @@ function Product() {
     }, 0);
   const sumGradeMin = data
     .map((i) => i.midterm_exam_grade)
+    .filter((i) => i !== 0)
     .map(function (elt) {
       return /^\d+$/.test(elt) ? parseInt(elt) : 0;
     })
@@ -31,7 +33,14 @@ function Product() {
       return accumulator + value;
     }, 0);
   const access = localStorage.getItem("flag");
-
+  const addGrade =
+    data.map((i) => i.midterm_exam_grade).filter((i) => i !== 0).length +
+    data.map((i) => i.final_exam_grade).filter((i) => i !== 0).length;
+  console.log(
+    data.map((i) => i.midterm_exam_grade).filter((i) => i !== 0).length +
+      data.map((i) => i.final_exam_grade).filter((i) => i !== 0).length,
+    "asdasdas"
+  );
   return access === "true" ? (
     <>
       <table className="ml-[30%] mt-10 !w-[45%] ">
@@ -65,7 +74,7 @@ function Product() {
                   {toFarsiNumber(i.midterm_exam_grade)}
                 </td>
                 <td className="border-2 bg-gray-300 text-right">
-                  {toFarsiNumber(i.midterm_exam_grade)}
+                  {toFarsiNumber(i.final_exam_grade)}
                 </td>
               </tr>
             </>
@@ -91,7 +100,7 @@ function Product() {
             معدل نیمسال
           </td>
           <td colspan="3" className=" border-2 bg-slate-300 text-right">
-            {toFarsiNumber((sumGradeMin + sumGrade) / (data.length * 2))}
+            {toFarsiNumber((sumGradeMin + sumGrade) / addGrade)}
           </td>
         </tr>
       </table>

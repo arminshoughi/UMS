@@ -8,6 +8,9 @@ import {
 } from "react-router-dom";
 import Units from "./pages/Unit";
 import Collages from "./pages/Colleges";
+import Master from "./pages/adminMaster";
+import Majors from "./pages/Majors";
+
 import Product from "./pages/Product";
 import Amount from "./pages/Amount";
 import Courses from "./pages/Courses";
@@ -20,6 +23,7 @@ import Welcome from "./pages/Welcome";
 import Callender from "./pages/Home";
 import CourseStudent from "./pages/CoursesStudent";
 import WelcomeMaster from "./pages/WelcomMaster";
+import Student from "./pages/AdminStudent";
 
 function App() {
   return (
@@ -31,10 +35,13 @@ function App() {
           <Route path="/login" />
           <Route path="/welcomeStudent" element={<Welcome />} />
           <Route path="/welcomemaster" element={<WelcomeMaster />} />
-
           <Route path="/masterLogin" />
           <Route path="/units" element={<Units />} />
           <Route path="/AdminCollages" element={<Collages />} />
+          <Route path="/AdminMaster" element={<Master />} />
+          <Route path="/AdminMajors" element={<Majors />} />
+          <Route path="/AdminStudent" element={<Student />} />
+
           <Route path="/profile" />
           <Route path="/AmountStudent" element={<Amount />} />
           <Route path="/GetCourse" element={<GetCourses />} />

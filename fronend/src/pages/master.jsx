@@ -2,45 +2,21 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { HiX } from "react-icons/hi";
+import Modal from "../components/modal";
 import ModalAdd from "../components/modal";
 
 import { useCollage } from "../hook/collage";
-function Collages() {
+function Adminmaster() {
   const { data } = useCollage();
-  const [rowId, setRowId] = useState();
-
   const [state, setState] = useState({
     modal: false,
     name: "",
     modalInputName: "",
   });
-  const accesss = localStorage.getItem("access");
-
   const [value, setValue] = useState();
-  const handleSubmitRemove = (e) => {
-    e.preventDefault();
-
-    axios
-      .delete(
-        `http://127.0.0.1:8000/api/share/collages/${rowId}/`,
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json",
-            Authorization: `Bearer ${accesss}`,
-
-            "X-CSRFToken":
-              "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
-          },
-        }
-      )
-      .then((result) => {
-        alert("دانشگاه با موفقیت حذف شد");
-      })
-      .catch((error) => {
-        alert("دانشگاه انتخاب شده به دلایل نامشخص حذف نشد دوباره تکرار کنید");
-      });
+  const handleSubmit = (e) => {
+    setState({ name: state.modalInputName });
+    modalClose();
   };
 
   const modalOpen = () => {
@@ -53,21 +29,30 @@ function Collages() {
       modal: false,
     });
   };
+  const accesss = localStorage.getItem("access");
 
   const handleSubmit1 = (e) => {
     e.preventDefault();
 
     axios
       .post(
-        "http://127.0.0.1:8000/api/share/collages/",
+        "http://127.0.0.1:8000/api/master/",
         {
-          name: value,
+          username: "string",
+          password: "string",
+          first_name: "string",
+          last_name: "string",
+          collage: 0,
+          major: 0,
+          national_code: "string",
+          sex: "Male",
+          birthday: "2022-12-09",
         },
         {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc5ODQwNzkzLCJqdGkiOiIzNGY1MTlhZGRhODE0ZDIwOGI3NjE0NmE3NWVjODllOCIsInVzZXJfaWQiOjJ9.qRgJGffZ--O4YxCz8QI8LFo7xorKcoCLJR_3A4tw8D0`,
+            Authorization: `Bearer ${accesss}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -81,10 +66,6 @@ function Collages() {
         alert(" لطفا مجدد تلاش کنید.");
       });
   };
-  console.log(
-    data.map((i) => i.name),
-    "app"
-  );
   return (
     <>
       <button
@@ -93,7 +74,7 @@ function Collages() {
       >
         اضافه کردن دانشگاه
       </button>
-      <ModalAdd show={state.modal} handleClose={(e) => modalClose(e)}>
+      <Modal show={state.modal} handleClose={(e) => modalClose(e)}>
         <div className="ml-4 -mt-8 fixed ">
           <HiX onClick={(e) => modalClose(e)} className="w-6 h-6 mt-10" />
         </div>
@@ -127,34 +108,21 @@ function Collages() {
             انصراف
           </button>
         </div>
-      </ModalAdd>
+      </Modal>
 
-      <table class="table !text-right    mt-3">
+      <table class="table !text-right   mt-3">
         <thead className="bg-slate-500">
           <tr>
-            <th class="col !text-right   !pr-96">{" نام دانشگاه"}</th>
+            <th class="col !text-right   !pr-8">{" نام دانشگاه"}</th>
           </tr>
         </thead>
       </table>
-      <table class="table !text-right  !pr-96 table-striped table-dark ">
-        <tbody className="!pr-96">
+      <table class="table !text-right   table-striped table-dark ">
+        <tbody>
           {data.map((row, i) => (
             <>
-              <tr className="!pr-96">
-                <td class="  !text-right !pr-96">
-                  {" "}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      setRowId(row.id);
-                      handleSubmitRemove(e);
-                    }}
-                    class="btn !w-32 me-96 !bg-slate-400 border  text-slate-900"
-                  >
-                    <i>حذف دانشگاه</i>
-                  </button>
-                </td>
-                <td class="  !text-right !pr-96">{row.name}</td>
+              <tr>
+                <td class="  !text-right !pr-8">{row.name}</td>
               </tr>
             </>
           ))}
@@ -164,4 +132,4 @@ function Collages() {
   );
 }
 
-export default Collages;
+export default Adminmaster;

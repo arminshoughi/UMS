@@ -3,10 +3,11 @@ import React from "react";
 import { useState } from "react";
 import { HiX } from "react-icons/hi";
 import ModalAdd from "../components/modal";
+import { useMajors } from "../hook/AdminMajor";
 
 import { useCollage } from "../hook/collage";
-function Collages() {
-  const { data } = useCollage();
+function Majors() {
+  const { data } = useMajors();
   const [rowId, setRowId] = useState();
 
   const [state, setState] = useState({
@@ -14,15 +15,14 @@ function Collages() {
     name: "",
     modalInputName: "",
   });
-  const accesss = localStorage.getItem("access");
-
   const [value, setValue] = useState();
+
   const handleSubmitRemove = (e) => {
     e.preventDefault();
 
     axios
       .delete(
-        `http://127.0.0.1:8000/api/share/collages/${rowId}/`,
+        `http://127.0.0.1:8000/api/share/majors/${rowId}/`,
 
         {
           headers: {
@@ -36,10 +36,10 @@ function Collages() {
         }
       )
       .then((result) => {
-        alert("دانشگاه با موفقیت حذف شد");
+        alert("رشته با موفقیت حذف شد");
       })
       .catch((error) => {
-        alert("دانشگاه انتخاب شده به دلایل نامشخص حذف نشد دوباره تکرار کنید");
+        alert("رشته انتخاب شده به دلایل نامشخص حذف نشد دوباره تکرار کنید");
       });
   };
 
@@ -53,21 +53,24 @@ function Collages() {
       modal: false,
     });
   };
+  const accesss = localStorage.getItem("access");
 
   const handleSubmit1 = (e) => {
     e.preventDefault();
 
     axios
       .post(
-        "http://127.0.0.1:8000/api/share/collages/",
+        "http://127.0.0.1:8000/api/share/majors/",
         {
+          collage_id: 1,
+          degree: "BACHELOR",
           name: value,
         },
         {
           headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc5ODQwNzkzLCJqdGkiOiIzNGY1MTlhZGRhODE0ZDIwOGI3NjE0NmE3NWVjODllOCIsInVzZXJfaWQiOjJ9.qRgJGffZ--O4YxCz8QI8LFo7xorKcoCLJR_3A4tw8D0`,
+            Authorization: `Bearer ${accesss}`,
 
             "X-CSRFToken":
               "mv5bfbYlTG38dX0YQWAT4iCJEl1kFoBLexah2DkqWzMatZ0bEqIstNIH0gRfXc2g",
@@ -91,7 +94,7 @@ function Collages() {
         onClick={(e) => modalOpen(e)}
         className="w-32 h-16 !bg-slate-400 p-1  btn float-right m-2"
       >
-        اضافه کردن دانشگاه
+        اضافه کردن رشته
       </button>
       <ModalAdd show={state.modal} handleClose={(e) => modalClose(e)}>
         <div className="ml-4 -mt-8 fixed ">
@@ -99,7 +102,7 @@ function Collages() {
         </div>
         <div className="flex"></div>
         <div class=" text-center mt-10  text-indigo-900 border border-indigo-800 pt-2  mx-3 h-10 ">
-          اضافه کردن دانشگاه
+          اضافه کردن رشته
         </div>
         <div className=" mt-4 ml-36 mr-5 flex   ">
           <input
@@ -129,18 +132,18 @@ function Collages() {
         </div>
       </ModalAdd>
 
-      <table class="table !text-right    mt-3">
+      <table class="table !text-right   mt-3">
         <thead className="bg-slate-500">
           <tr>
-            <th class="col !text-right   !pr-96">{" نام دانشگاه"}</th>
+            <th class="col !text-right   !pr-8">{" نام دانشگاه"}</th>
           </tr>
         </thead>
       </table>
-      <table class="table !text-right  !pr-96 table-striped table-dark ">
-        <tbody className="!pr-96">
+      <table class="table !text-right   table-striped table-dark ">
+        <tbody>
           {data.map((row, i) => (
             <>
-              <tr className="!pr-96">
+              <tr>
                 <td class="  !text-right !pr-96">
                   {" "}
                   <button
@@ -151,10 +154,10 @@ function Collages() {
                     }}
                     class="btn !w-32 me-96 !bg-slate-400 border  text-slate-900"
                   >
-                    <i>حذف دانشگاه</i>
+                    <i>حذف رشته</i>
                   </button>
                 </td>
-                <td class="  !text-right !pr-96">{row.name}</td>
+                <td class="  !text-right !pr-8">{row.name}</td>
               </tr>
             </>
           ))}
@@ -164,4 +167,4 @@ function Collages() {
   );
 }
 
-export default Collages;
+export default Majors;

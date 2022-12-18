@@ -66,7 +66,7 @@ function Welcome() {
           localStorage.removeItem("refresh");
 
           window.open(
-            currentUser.typ === "STUDENT" ? "/masterlogin" : "/login",
+            currentUser.typ === "STUDENT" ? "/login" : "/masterlogin",
             "_self"
           );
         }}

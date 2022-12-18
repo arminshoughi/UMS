@@ -75,7 +75,7 @@ const Profile = () => {
   };
   const modalClose = () => {
     window.open(
-      currentUser.typ === "STUDENT" ? "welcome" : "welcomemaster",
+      currentUser.typ === "STUDENT" ? "welcomeStudent" : "welcomemaster",
       "_self"
     );
   };
@@ -121,7 +121,7 @@ const Profile = () => {
                   <label htmlFor="national_code">کد ملی</label>
                   <input
                     disabled
-                    type="text"
+                    type="number"
                     name="national_code"
                     className="form-control"
                     id="national_code"

@@ -22,14 +22,11 @@ import { useSemesters } from "../hook/semester";
 function CourseStudent() {
   const access = localStorage.getItem("flag");
   const accesss = localStorage.getItem("access");
-
   const [refresh, setRefresh] = useState();
   const { data } = useCourses(refresh);
   const { data: getCource } = useGetCourse(refresh);
-
   const { data: masters } = useMasters();
   const { data: choosen } = useGetCourse(refresh);
-
   const { data: majors } = useMajors();
   const { data: semesters } = useSemesters();
   const { data: currentUser } = useCurrentUser();
@@ -37,15 +34,11 @@ function CourseStudent() {
 
   const handleSubmitRemove = (e) => {
     e.preventDefault();
-    if ((sumUnit) => 20) {
-      alert("شما به علت پر شدن 20 واحد خود مجاز به انتخاب واحد نیستید.");
-    }
+
     axios
       .post(
-        "http://127.0.0.1:8000/api/share/courses",
-        {
-          id: rowId,
-        },
+        `http://127.0.0.1:8000/api/share/courses/${rowId}/`,
+
         {
           headers: {
             "Content-Type": "application/json",
