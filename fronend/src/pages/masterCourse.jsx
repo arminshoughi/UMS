@@ -123,6 +123,8 @@ function MasterCourse() {
   const [final, setFinal] = useState(0);
 
   const [id, setsetId] = useState();
+  const [name, setName] = useState();
+  console.log(name, "Asdasd");
   const [, setCourse] = useState();
   const [, setStudentSemesterId] = useState();
 
@@ -148,10 +150,8 @@ function MasterCourse() {
           نمره میانترم
         </div>
         <div className=" ml-5 mt-2 mr-5 float-right gap-10 ">
-          <label>
-            استاد عزیز جهت وارد کردن نمره میانترم این خره نمره را با دو رقم
-            اعشار وارد کنید
-          </label>
+          <label>{` نمره را با دو رقم
+            اعشار وارد کنید ${name}استاد عزیز جهت وارد کردن نمره میانترم  `}</label>
         </div>
         <div className="flex ml-40 mt-16">
           <input
@@ -189,10 +189,8 @@ function MasterCourse() {
           نمره میانترم
         </div>
         <div className=" ml-5 mt-2 mr-5 float-right gap-10 ">
-          <label>
-            استاد عزیز جهت وارد کردن نمره میانترم این خره نمره را با دو رقم
-            اعشار وارد کنید
-          </label>
+          <label>{` نمره را با دو رقم
+            اعشار وارد کنید ${name}استاد عزیز جهت وارد کردن نمره میانترم  `}</label>
         </div>
         <div className="flex ml-40 mt-16">
           <input
@@ -223,7 +221,7 @@ function MasterCourse() {
         </div>
       </ModalGrade>
       <table class="table !text-right  table-striped table-dark mt-3">
-        <thead>
+        <thead className="!bg-slate-500">
           <tr>
             <td>
               <button onClick={(e) => {}} type="button" class=" !w-28">
@@ -235,11 +233,15 @@ function MasterCourse() {
                 <i class=""></i>
               </button>
             </td>
-            <th class="col !text-right ">{"نمره پایان ترم"}</th>
-            <th class="col !text-right !w-[11rem] ">{"نمره میانترم"}</th>
-            <th class="col !text-right !w-[13.5rem] ">{"امتحان پایان ترم"}</th>
-            <th class="col !text-right !w-[14rem] ">{"امتحان میانترم"}</th>
-            <th class="col !text-right  !w-[11rem]">{"نام دانشجو"}</th>
+            <th class="col !text-right !pr-16">{"نمره پایان ترم"}</th>
+            <th class="col !text-right !w-[20rem] !pr-44 ">{"نمره میانترم"}</th>
+            <th class="col !text-right !w-[15rem] !pr-36">
+              {"امتحان پایان ترم"}
+            </th>
+            <th class="col !text-right !w-[14rem] !pr-24 ">
+              {"امتحان میانترم"}
+            </th>
+            <th class="col !text-right  !w-[11rem] ">{"نام دانشجو"}</th>
             <th class="col  !text-right !pr-8 !w-[16rem]">{"نام کلاس"}</th>
           </tr>
         </thead>
@@ -268,6 +270,7 @@ function MasterCourse() {
                       onClick={(e) => {
                         modalOpen(e);
                         setsetId(i.id);
+                        setName(i.student_semester.student.first_name);
                         setCourse(data.map(i.course.id));
                         setStudentSemesterId(i.student_semester.id);
                       }}

@@ -16,11 +16,10 @@ import Amount from "./pages/Amount";
 import Courses from "./pages/Courses";
 import GetCourses from "./pages/GetCources";
 import CourseChoose from "./pages/CoursesChoose";
-import Login from "./components/Login";
 import AllCourses from "./pages/AllCourses";
 import MasterCourse from "./pages/masterCourse";
 import Welcome from "./pages/Welcome";
-import Callender from "./pages/Home";
+import Home from "./pages/Home";
 import CourseStudent from "./pages/CoursesStudent";
 import WelcomeMaster from "./pages/WelcomMaster";
 import Student from "./pages/AdminStudent";
@@ -31,7 +30,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Callender />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" />
           <Route path="/welcomeStudent" element={<Welcome />} />
           <Route path="/welcomemaster" element={<WelcomeMaster />} />

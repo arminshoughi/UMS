@@ -15,6 +15,7 @@ import {
 import { useCourses } from "../hook/course";
 import { useCurrentUser } from "../hook/currentUser";
 import { useGetCourse } from "../hook/getCource";
+import { useSemesterr } from "../hook/getSemester";
 import { useMajors } from "../hook/major";
 import { useMasters } from "../hook/masters";
 import { useSemesters } from "../hook/semester";
@@ -30,8 +31,10 @@ function CourseStudent() {
   const { data: majors } = useMajors();
   const { data: semesters } = useSemesters();
   const { data: currentUser } = useCurrentUser();
-  const [rowId, setRowId] = useState();
+  const { data: getSemester } = useSemesterr();
 
+  const [rowId, setRowId] = useState();
+  console.log("sadasdasd", currentUser, Number(getSemester.map((i) => i.id)));
   const handleSubmitRemove = (e) => {
     e.preventDefault();
 
@@ -91,7 +94,7 @@ function CourseStudent() {
       .post(
         "http://127.0.0.1:8000/api/student/student/take_course/",
         {
-          student_semester_id: 1,
+          student_semester_id: Number(getSemester.map((i) => i.id)),
           course_id: id,
         },
         {
@@ -354,9 +357,9 @@ function CourseStudent() {
         </div>
       </Modal>
       <Modal show={state.update} handleClose={(e) => modalClose(e)}>
-        <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10 ">
+        {/* <div class=" text-center text-indigo-900 border border-indigo-800 mt-3 mx-3 h-10 ">
           ویرایش کردن درس
-        </div>
+        </div> */}
         <div className=" ml-5 mr-5 grid grid-cols-3 gap-10 ">
           <div>
             <label>رشته</label>
@@ -527,16 +530,16 @@ function CourseStudent() {
               ""
             )}
             <th class="col  !text-right  ">{"قیمت"}</th>
-            <th class="col !text-right !w-[8.8rem]">{"امتحان پایان ترم"}</th>
-            <th class="col !text-right !w-[8.8em]">{"امتحان میانترم"}</th>
-            <th class="col !text-right !w-[9rem]">{"ساعت کلاس"}</th>
-            <th class="col !text-right !w-[8.5rem] ">{"روز کلاس"}</th>
-            <th class="col !text-right !w-[9rem] ">{"اتمام کلاس"}</th>
-            <th class="col !text-right !w-[8.9rem] ">{"شروع کلاس"}</th>
-            <th class="col !text-right !w-[5.5rem]">{"ترم"}</th>
-            <th class="col !text-right !w-[6.5rem]">{"دوره"}</th>
-            <th class="col !text-right !w-[7.2rem] ">{"تعداد واحد"}</th>
-            <th class="col !text-right !w-20  ">{"نام استاد"}</th>
+            <th class="col !text-right !w-[11.5rem]">{"امتحان پایان ترم"}</th>
+            <th class="col !text-right !w-[11.2em]">{"امتحان میانترم"}</th>
+            <th class="col !text-right !w-[10rem]">{"ساعت کلاس"}</th>
+            <th class="col !text-right !w-[10rem] ">{"روز کلاس"}</th>
+            <th class="col !text-right !w-[11rem] ">{"اتمام کلاس"}</th>
+            <th class="col !text-right !w-[11rem] ">{"شروع کلاس"}</th>
+            <th class="col !text-right !w-[6.5rem]">{"ترم"}</th>
+            <th class="col !text-right !w-[11rem] !pr-16">{"دوره"}</th>
+            <th class="col !text-right !w-[7.2rem] !pr-7">{"تعداد واحد"}</th>
+            <th class="col !text-right !w-24 !pr-8  ">{"نام استاد"}</th>
             <th class="col !pr-8 !w-36 !text-right ">{"نام کلاس"}</th>
           </tr>
         </thead>
@@ -580,7 +583,7 @@ function CourseStudent() {
                         <i class="">حذف درس</i>
                       </button>
 
-                      <button
+                      {/* <button
                         onClick={(e) => {
                           setName(row);
                           modalOpenUpdate(e);
@@ -589,7 +592,7 @@ function CourseStudent() {
                         class="btn  !w-28 !bg-slate-400 border  text-slate-900"
                       >
                         <i class="">ویرایش درس</i>
-                      </button>
+                      </button> */}
                     </div>
                   </td>
                 )}

@@ -135,7 +135,7 @@ function Majors() {
       <table class="table !text-right   mt-3">
         <thead className="bg-slate-500">
           <tr>
-            <th class="col !text-right   !pr-8">{" نام دانشگاه"}</th>
+            <th class="col !text-right   !pr-96">{" نام دانشگاه"}</th>
           </tr>
         </thead>
       </table>
@@ -157,7 +157,7 @@ function Majors() {
                     <i>حذف رشته</i>
                   </button>
                 </td>
-                <td class="  !text-right !pr-8">{row.name}</td>
+                <td class="  !text-right !pr-96">{row.name}</td>
               </tr>
             </>
           ))}

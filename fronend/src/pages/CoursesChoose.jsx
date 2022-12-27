@@ -69,16 +69,16 @@ function CourseChoose() {
             )}
 
             <th class="col  !text-right ">{"قیمت"}</th>
-            <th class="col !text-right !w-[10rem] ">{"امتحان پایان ترم"}</th>
-            <th class="col !text-right !w-[9rem]">{"امتحان میانترم"}</th>
-            <th class="col !text-right !w-[8rem] ">{"ساعت کلاس"}</th>
-            <th class="col !text-right !w-[7.5rem] ">{"روز کلاس"}</th>
-            <th class="col !text-right !w-[9.5rem] ">{"اتمام کلاس"}</th>
-            <th class="col !text-right !w-[9rem] ">{"شروع کلاس"}</th>
-            <th class="col !text-right !w-[6rem]">{"ترم"}</th>
-            <th class="col !text-right !w-[6.5rem]">{"دوره"}</th>
-            <th class="col !text-right  !w-[8rem]">{"تعداد واحد"}</th>
-            <th class="col !text-right !w-[5rem] ">{"نام استاد"}</th>
+            <th class="col !text-right !w-[11.5rem] ">{"امتحان پایان ترم"}</th>
+            <th class="col !text-right !w-[12rem]">{"امتحان میانترم"}</th>
+            <th class="col !text-right !w-[9rem] ">{"ساعت کلاس"}</th>
+            <th class="col !text-right !w-[10rem] ">{"روز کلاس"}</th>
+            <th class="col !text-right !w-[11rem] ">{"اتمام کلاس"}</th>
+            <th class="col !text-right !w-[11rem] ">{"شروع کلاس"}</th>
+            <th class="col !text-right !w-[7rem]">{"ترم"}</th>
+            <th class="col !text-right !w-[8rem]">{"دوره"}</th>
+            <th class="col !text-right  !w-[10rem]">{"تعداد واحد"}</th>
+            <th class="col !text-right !w-[6rem] ">{"نام استاد"}</th>
             <th class="col  !text-right !pr-8 !w-[9rem]">{"نام کلاس"}</th>
           </tr>
         </thead>

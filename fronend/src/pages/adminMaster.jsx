@@ -98,114 +98,121 @@ function Master() {
         <div class=" text-center mt-10  text-indigo-900 border border-indigo-800 pt-2  mx-3 h-10 ">
           اضافه کردن دانشجو
         </div>
-        <div className=" mt-4 ml-36 mr-5 flex   ">
-          <input
-            type="text"
-            value={state.modalInputName}
-            name="modalInputName"
-            className="form-control !w-80"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <label className="ml-[1rem] mt-1.5">userName</label>
-        </div>
-        <div className=" mt-4 ml-36 mr-5 flex   ">
-          <input
-            type="text"
-            value={state.modalInputName}
-            name="modalInputName"
-            className="form-control !w-80"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <label className="ml-[1rem] mt-1.5">password</label>
-        </div>
-        <div className=" mt-4 ml-36 mr-5 flex   ">
-          <input
-            type="text"
-            value={state.modalInputName}
-            name="modalInputName"
-            className="form-control !w-80"
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-          <label className="ml-[1rem] mt-1.5">نام</label>
-        </div>
-        <div className=" mt-4 ml-36 mr-5 flex   ">
-          <input
-            type="text"
-            value={state.modalInputName}
-            name="modalInputName"
-            className="form-control !w-80"
-            onChange={(e) => setLastName(e.target.value)}
-          />
-          <label className="ml-[1rem] mt-1.5">فامیل</label>
-        </div>
-        <div className="mt-4 ml-36 mr-5 flex">
-          <input
-            type="text"
-            name="national_code"
-            className="form-control !w-80"
-            onChange={(e) => setCollage(e.target.value)}
-            id="national_code"
-          />
-          <label htmlFor="national_code" className="ml-[1rem] mt-1.5">
-            دانشگاه
-          </label>
-        </div>
-
-        <div className="mt-4 ml-36 mr-5 flex">
-          <input
-            type="text"
-            name="national_code"
-            className="form-control !w-80"
-            id="national_code"
-            onChange={(e) => setMajor(e.target.value)}
-          />
-          <label htmlFor="national_code" className="ml-[1rem] mt-1.5">
-            رشته
-          </label>
-        </div>
-        <div className="mt-4 ml-36 mr-5 flex">
-          <input
-            id="birthday"
-            name="birthday"
-            className="!w-80"
-            onChange={(e) => setBirthday(e.target.value)}
-          />
-          <label htmlFor="birthday" className="ml-[1rem] mt-1.5">
-            تاریخ تولد{" "}
-          </label>
-        </div>
-
-        <div className="mt-4 ml-36 mr-5 flex">
-          <div className="ml-10" dir="ltr">
-            <label>
-              زن
-              <input type="radio" id="sex" name="sex" className="mr-10 ml-2" />
-            </label>
-
-            <label>
-              مرد
-              <input
-                type="radio"
-                id="sex"
-                name="sex"
-                value="Mel"
-                className="mr-16 ml-2"
-              />
-            </label>
-            <label htmlFor="sex">جنسیت</label>
+        <div className="grid grid-cols-2">
+          <div className=" mt-4 ml-36 mr-5 flex   ">
+            <input
+              type="text"
+              value={state.modalInputName}
+              name="modalInputName"
+              className="form-control !w-64"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <label className="ml-[1rem] mt-1.5">نام کاربری</label>
           </div>
-        </div>
-        <div className="mt-4 ml-36 mr-5 flex">
-          <input
-            type="number"
-            name="national_code"
-            className="form-control !w-80"
-            id="national_code"
-            onChange={(e) => setNationalCode(e.target.value)}
-          />
-          <label htmlFor="national_code" className="ml-[1rem] mt-1.5">
-            کد ملی
-          </label>
+          <div className=" mt-4 ml-36 mr-5 flex   ">
+            <input
+              type="text"
+              value={state.modalInputName}
+              name="modalInputName"
+              className="form-control !w-64 h-10"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <label className="ml-[1rem] mt-1.5">password</label>
+          </div>
+          <div className=" mt-4 ml-36 mr-5 flex   ">
+            <input
+              type="text"
+              value={state.modalInputName}
+              name="modalInputName"
+              className="form-control !w-64 h-10"
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <label className="ml-[1rem] mt-1.5">نام</label>
+          </div>
+          <div className=" mt-4 ml-36 mr-5 flex   ">
+            <input
+              type="text"
+              value={state.modalInputName}
+              name="modalInputName"
+              className="form-control !w-64 h-10"
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            <label className="ml-[1rem] mt-1.5">فامیل</label>
+          </div>
+          <div className="mt-4 ml-36 mr-5 flex">
+            <input
+              type="text"
+              name="national_code"
+              className="form-control !w-64 h-10"
+              onChange={(e) => setCollage(e.target.value)}
+              id="national_code"
+            />
+            <label htmlFor="national_code" className="ml-[1rem] mt-1.5">
+              دانشگاه
+            </label>
+          </div>
+
+          <div className="mt-4 ml-36 mr-5 flex">
+            <input
+              type="text"
+              name="national_code"
+              className="form-control !w-64 h-10"
+              id="national_code"
+              onChange={(e) => setMajor(e.target.value)}
+            />
+            <label htmlFor="national_code" className="ml-[1rem] mt-1.5">
+              رشته
+            </label>
+          </div>
+          <div className="mt-4 ml-36 mr-5 flex">
+            <input
+              id="birthday"
+              name="birthday"
+              className="!w-64 h-10"
+              onChange={(e) => setBirthday(e.target.value)}
+            />
+            <label htmlFor="birthday" className="ml-[1rem] mt-1.5">
+              تاریخ تولد{" "}
+            </label>
+          </div>
+
+          <div className="mt-4 ml-36 mr-5 flex">
+            <div className="ml-10" dir="ltr">
+              <label>
+                زن
+                <input
+                  type="radio"
+                  id="sex"
+                  name="sex"
+                  className="mr-10 ml-2"
+                />
+              </label>
+
+              <label>
+                مرد
+                <input
+                  type="radio"
+                  id="sex"
+                  name="sex"
+                  value="Mel"
+                  className="mr-16 ml-2"
+                />
+              </label>
+              <label htmlFor="sex">جنسیت</label>
+            </div>
+          </div>
+          <div className="mt-4 ml-36 mr-5 flex">
+            <input
+              type="number"
+              name="national_code"
+              className="form-control !w-64 h-10"
+              id="national_code"
+              onChange={(e) => setNationalCode(e.target.value)}
+            />
+            <label htmlFor="national_code" className="ml-[1rem] mt-1.5">
+              کد ملی
+            </label>
+          </div>
         </div>
 
         <div className="form-group flex mt-4 !mx-2">
@@ -229,7 +236,7 @@ function Master() {
       <table class="table !text-right   mt-3">
         <thead className="bg-slate-500">
           <tr>
-            <th class="col !text-right   !pr-8">{" نام دانشگاه"}</th>
+            <th class="col !text-right   !pr-96">{" نام دانشگاه"}</th>
           </tr>
         </thead>
       </table>
@@ -238,7 +245,7 @@ function Master() {
           {data.map((row, i) => (
             <>
               <tr>
-                <td class="  !text-right !pr-8">{row.first_name}</td>
+                <td class="  !text-right !pr-96">{row.first_name}</td>
               </tr>
             </>
           ))}

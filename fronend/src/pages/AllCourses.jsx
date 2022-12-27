@@ -108,17 +108,17 @@ function AllCourses() {
         <thead className="bg-slate-500">
           <tr>
             <th class="col  !text-right  ">{"قیمت"}</th>
-            <th class="col !text-right !w-[10rem]">{"امتحان پایان ترم"}</th>
-            <th class="col !text-right !w-[10.8rem]">{"امتحان میانترم"}</th>
-            <th class="col !text-right !w-[8rem]">{"ساعت کلاس"}</th>
-            <th class="col !text-right !w-[9rem]">{"روز کلاس"}</th>
-            <th class="col !text-right  !w-[11rem]">{"اتمام کلاس"}</th>
-            <th class="col !text-right !w-[10rem]">{"شروع کلاس"}</th>
-            <th class="col !text-right !w-[6.5rem]">{"ترم"}</th>
-            <th class="col !text-right !w-[7rem]">{"دوره"}</th>
-            <th class="col !text-right !w-[9rem] ">{"تعداد واحد"}</th>
-            <th class="col !text-right !w-[5.5rem] ">{"نام استاد"}</th>
-            <th class="col  !text-right !pr-8 !w-[10rem] ">{"نام کلاس"}</th>
+            <th class="col !text-right !w-[13rem]">{"امتحان پایان ترم"}</th>
+            <th class="col !text-right !w-[12.5rem]">{"امتحان میانترم"}</th>
+            <th class="col !text-right !w-[9.5rem]">{"ساعت کلاس"}</th>
+            <th class="col !text-right !w-[11.5rem]">{"روز کلاس"}</th>
+            <th class="col !text-right  !w-[13rem]">{"اتمام کلاس"}</th>
+            <th class="col !text-right !w-[12.5rem]">{"شروع کلاس"}</th>
+            <th class="col !text-right !w-[7rem]">{"ترم"}</th>
+            <th class="col !text-right !w-[9rem]">{"دوره"}</th>
+            <th class="col !text-right !w-[10rem] ">{"تعداد واحد"}</th>
+            <th class="col !text-right !w-[7rem] ">{"نام استاد"}</th>
+            <th class="col  !text-right !pr-8 !w-[12rem] ">{"نام کلاس"}</th>
           </tr>
         </thead>
       </table>

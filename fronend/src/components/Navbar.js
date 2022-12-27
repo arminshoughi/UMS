@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IconContext } from "react-icons";
 import ctl from "@netlify/classnames-template-literals";
 import { useTranslation } from "react-i18next";
 
 import {
-  HiOutlineLockClosed,
-  HiChartBar,
   HiOutlineMenu,
   HiOutlineX,
   HiOutlineSearch,
@@ -19,6 +17,7 @@ import { useLocation } from "react-router-dom";
 import Login from "./Login";
 import Profile from "./Profile";
 import { useCurrentUser } from "../hook/currentUser";
+import Home from "../pages/Home";
 
 function Navbar() {
   const [search, setSearch] = useState("");
@@ -40,6 +39,8 @@ function Navbar() {
     <Login />
   ) : location.pathname === "/profile" ? (
     <Profile />
+  ) : location.pathname === "/" ? (
+    <Home />
   ) : location.pathname === "/masterlogin" ? (
     <Login />
   ) : access === "true" ? (

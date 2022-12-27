@@ -155,7 +155,7 @@ function Courses() {
           name: values.className,
           details: values.details,
           unit: values.unitCount,
-          master_id: 2,
+          master_id: 3,
 
           schedules: [
             {
@@ -226,7 +226,7 @@ function Courses() {
       )
       .then((result) => {
         setRefresh(!refresh);
-        alert("درس اتخاب شد");
+        alert("درس اضافه شد");
       })
       .catch((error) => {
         alert(error);
@@ -434,9 +434,9 @@ function Courses() {
             className="w-6 h-6"
           />
         </div>
-        <div class=" text-center mt-10  text-indigo-900 border border-indigo-800 pt-2  mx-3 h-10 ">
+        {/* <div class=" text-center mt-10  text-indigo-900 border border-indigo-800 pt-2  mx-3 h-10 ">
           ویرایش کردن درس
-        </div>
+        </div> */}
         <div className=" mt-2 ml-5 mr-5 grid grid-cols-3 gap-10 ">
           <div>
             <label className="ml-[12.8rem]">رشته</label>
@@ -614,17 +614,19 @@ function Courses() {
             )}
             <th class="col   !text-right !pr-8 !w-20"></th>
             <th class="col  !text-right !pr-8 !w-20"></th>
-            <th class="col  !text-right  ">{"قیمت"}</th>
-            <th class="col !text-right !w-[8rem]">{"امتحان پایان ترم"}</th>
+            <th class="col  !text-right    ">{"قیمت"}</th>
+            <th class="col !text-right !w-[13rem] !pr-14">
+              {"امتحان پایان ترم"}
+            </th>
             <th class="col !text-right !w-[8rem]">{"امتحان میانترم"}</th>
-            <th class="col !text-right !w-[7.8rem]">{"ساعت کلاس"}</th>
-            <th class="col !text-right !w-[6.4rem] ">{"روز کلاس"}</th>
-            <th class="col !text-right !w-[8.3rem] ">{"اتمام کلاس"}</th>
-            <th class="col !text-right !w-[8.3rem] ">{"شروع کلاس"}</th>
-            <th class="col !text-right !w-[5rem]">{"ترم"}</th>
-            <th class="col !text-right !w-[5.5rem]">{"دوره"}</th>
-            <th class="col !text-right !w-[6.4rem] ">{"تعداد واحد"}</th>
-            <th class="col !text-right !w-20  ">{"نام استاد"}</th>
+            <th class="col !text-right !w-[15rem] !pr-24">{"ساعت کلاس"}</th>
+            <th class="col !text-right !w-[10rem] !pr-20">{"روز کلاس"}</th>
+            <th class="col !text-right !w-[8.3rem] !pr-12 ">{"اتمام کلاس"}</th>
+            <th class="col !text-right !w-[8.3rem] !pr-3">{"شروع کلاس"}</th>
+            <th class="col !text-right !w-[8rem] !pr-12">{"ترم"}</th>
+            <th class="col !text-right !w-[10rem] !pr-20">{"دوره"}</th>
+            <th class="col !text-right !w-[6.4rem] !pr-10">{"تعداد واحد"}</th>
+            <th class="col !text-right !w-24 !pr-10 "> {"نام استاد"}</th>
             <th class="col !pr-8 !w-32 !text-right ">{"نام کلاس"}</th>
           </tr>
         </thead>
@@ -661,7 +663,7 @@ function Courses() {
                         <i class="">حذف درس</i>
                       </button>
 
-                      <button
+                      {/* <button
                         onClick={(e) => {
                           setName(row);
                           modalOpenUpdate(e);
@@ -671,7 +673,7 @@ function Courses() {
                         class="btn  !w-28 !bg-slate-400 border  text-slate-900"
                       >
                         <i class="">ویرایش درس</i>
-                      </button>
+                      </button> */}
                     </div>
                   </td>
                 )}

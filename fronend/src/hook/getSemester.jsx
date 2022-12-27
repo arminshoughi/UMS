@@ -1,15 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-export function useMaster() {
-
+export function useSemesterr() {
+  const { t } = useTranslation();
+  // const { data: collages, ...rest } = useCollage();
 
   const [collages, setData] = useState([]);
   const access = localStorage.getItem("access");
 
   const getData = () => {
     axios
-      .get("http://127.0.0.1:8000/api/master/", {
+      .get("http://127.0.0.1:8000/api/student/student/get_semesters/", {
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",

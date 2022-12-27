@@ -57,8 +57,8 @@ const Login = () => {
     }
   }, [location.pathname]);
   return (
-    <div className="Login">
-      <div className=" align-center p-4 w-[30%]  ml-[35%]  ">
+    <div className="Login  ">
+      <div className=" align-center p-4 w-[30%]   ml-[35%]  ">
         <div className="!bg-red-800 ">
           <div className="card ">
             <HiOutlineUserCircle className="w-40 h-40 ml-[32%]" />
