@@ -17,7 +17,7 @@ class StudentModelBaseSerializer(DynamicFieldsModelSerializer):
 class StudentModelSerializer(StudentModelBaseSerializer):
     class Meta(StudentModelBaseSerializer.Meta):
         fields = [
-            'first_name', 'last_name', 'collage', 'major', 'national_code', 'sex', 'birthday', 'typ'
+            'id', 'first_name', 'last_name', 'collage', 'major', 'national_code', 'sex', 'birthday', 'typ'
         ]
 
 
