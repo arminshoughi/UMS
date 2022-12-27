@@ -9,7 +9,7 @@ class CollageModelSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = models.CollageModel
         service = services.CollageService
-        exclude = ['created_at', 'updated_at', 'deleted_at', 'is_deleted']
+        exclude = ['id','created_at', 'updated_at', 'deleted_at', 'is_deleted']
 
 
 class MajorModelBaseSerializer(DynamicFieldsModelSerializer):
