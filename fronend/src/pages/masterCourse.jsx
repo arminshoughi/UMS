@@ -186,11 +186,11 @@ function MasterCourse() {
           <HiX onClick={(e) => modalClose(e)} className="w-6 h-6" />
         </div>
         <div class=" text-center mt-10 text-indigo-900 border border-indigo-800  mx-3 h-10 ">
-          نمره میانترم
+          نمره پایانترم
         </div>
         <div className=" ml-5 mt-2 mr-5 float-right gap-10 ">
           <label>{` نمره را با دو رقم
-            اعشار وارد کنید ${name}استاد عزیز جهت وارد کردن نمره میانترم  `}</label>
+            اعشار وارد کنید ${name}استاد عزیز جهت وارد کردن نمره پایانترم  `}</label>
         </div>
         <div className="flex ml-40 mt-16">
           <input
@@ -252,7 +252,7 @@ function MasterCourse() {
             <>
               <tr>
                 <td>
-                  <div className="!text-right  !w-60 gap-3  flex">
+                  <div className="!text-right  !ml-32 gap-3  flex">
                     <button
                       onClick={(e) => {
                         finalOpen(e);
@@ -261,9 +261,9 @@ function MasterCourse() {
                         setStudentSemesterId(i.student_semester.id);
                       }}
                       type="button"
-                      class="btn !w-28 btn-primary"
+                      class="btn !w-28  btn-primary"
                     >
-                      <i class="">نمره پایانترم</i>
+                      <i className="!mt-10">نمره پایانترم</i>
                     </button>
 
                     <button
@@ -287,7 +287,7 @@ function MasterCourse() {
                     i.final_exam_grade === 0 ? "وارد نشده" : i.final_exam_grade
                   )}
                 </td>
-                <td class="  !text-right  !pl-10 ">
+                <td class="  !text-right  !pl-10 !w-[13rem]">
                   {toFarsiNumber(
                     i.midterm_exam_grade === 0
                       ? "وارد نشده"
@@ -295,21 +295,21 @@ function MasterCourse() {
                   )}
                 </td>
 
-                <td class="  !text-right !pl-10">
+                <td class="  !text-right !pl-10 !w-[19rem]">
                   {toJalaali(i.course?.final_exam_date)}
                 </td>
-                <td class="  !text-right !pl-10 ">
+                <td class="  !text-right !pl-10 !w-[17.5rem] ">
                   {toJalaali(i.course?.midterm_exam_date)}
                 </td>
 
-                <td class="  !text-right !pl-8 ">
+                <td class="  !text-right !pl-8 !w-[11.5rem] ">
                   {i.student_semester.student.last_name}
                 </td>
 
                 <td class="  !text-right  ">
                   {i.student_semester.student.first_name}
                 </td>
-                <td class="  !text-right !pr-8 ">{i.course.name}</td>
+                <td class="  !text-right !pr-8 !w-[13rem] ">{i.course.name}</td>
               </tr>
             </>
           ))}

@@ -1,11 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 export function useCollage() {
-  const { t } = useTranslation();
-  // const { data: collages, ...rest } = useCollage();
-
   const [collages, setData] = useState([]);
   const access = localStorage.getItem("access");
 

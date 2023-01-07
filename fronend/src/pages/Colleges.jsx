@@ -81,10 +81,7 @@ function Collages() {
         alert(" لطفا مجدد تلاش کنید.");
       });
   };
-  console.log(
-    data.map((i) => i.name),
-    "app"
-  );
+  
   return (
     <>
       <button

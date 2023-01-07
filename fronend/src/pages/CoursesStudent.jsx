@@ -222,7 +222,7 @@ function CourseStudent() {
               value={state.modalInputName}
               name="modalInputName"
               className="form-control  "
-              onChange={(e) =>
+              ognChange={(e) =>
                 setValus({ ...values, className: e.target.value })
               }
             />

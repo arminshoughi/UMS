@@ -31,7 +31,7 @@ function Courses() {
   const { data: majors } = useMajors();
   const { data: semesters } = useSemesters();
   const { data: currentUser } = useCurrentUser();
-  console.log(currentUser, masters, "useCurrentUser");
+  console.log(currentUser, "useCurrentUser");
   const [rowId, setRowId] = useState();
   const handleSubmitRemove = (e) => {
     e.preventDefault();
@@ -155,7 +155,7 @@ function Courses() {
           name: values.className,
           details: values.details,
           unit: values.unitCount,
-          master_id: 3,
+          master_id: currentUser.id,
 
           schedules: [
             {
@@ -200,7 +200,7 @@ function Courses() {
           name: values.className,
           details: values.details,
           unit: values.unitCount,
-          master_id: 2,
+          master_id: currentUser.id,
 
           documents: [],
           schedules: [
@@ -298,19 +298,13 @@ function Courses() {
           </div>
           <div>
             <label className="ml-[12rem]">نام استاد</label>
-            <select
+            <input
+              disabled
               // defaultValue={currentUser.collage}
-              className="form-select form-select-lg  h-10"
+              value={currentUser.first_name}
+              className="form-control "
               aria-label=".form-select-lg example"
-              onChange={(e) => {
-                setValus({ ...values, masterName: e.target.value });
-              }}
-            >
-              <option>انتخاب</option>
-              {masters?.map((i, b) => (
-                <option value={1}>{i?.first_name}</option>
-              ))}
-            </select>
+            ></input>
           </div>
           <div>
             <label className="ml-48">جزئیات</label>

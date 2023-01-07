@@ -1,11 +1,6 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Units from "./pages/Unit";
 import Collages from "./pages/Colleges";
 import Master from "./pages/adminMaster";
@@ -40,7 +35,6 @@ function App() {
           <Route path="/AdminMaster" element={<Master />} />
           <Route path="/AdminMajors" element={<Majors />} />
           <Route path="/AdminStudent" element={<Student />} />
-
           <Route path="/profile" />
           <Route path="/AmountStudent" element={<Amount />} />
           <Route path="/GetCourse" element={<GetCourses />} />

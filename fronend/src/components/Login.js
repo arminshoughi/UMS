@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 
 const Login = () => {
   const [status, setStatus] = useState();
-  const [a, setA] = useState();
+  const [, setA] = useState();
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -61,14 +61,12 @@ const Login = () => {
       <div className=" align-center p-4 w-[30%]   ml-[35%]  ">
         <div className="!bg-red-800 ">
           <div className="card ">
-            <HiOutlineUserCircle className="w-40 h-40 ml-[32%]" />
+            <HiOutlineUserCircle className="w-40 h-40 ml-[36%]" />
             <div className="card-body">
               <h1 className="text-3xl text-center">
-                "
                 {location.pathname === "/login"
                   ? "ورود دانشجو "
                   : "ورود اساتید"}
-                "
               </h1>
               <form onSubmit={handleSubmit} dir="rtl">
                 <div className="form-group mt-5">
@@ -99,6 +97,12 @@ const Login = () => {
                   ورود
                 </button>
               </form>
+              <button
+                className="btn mt-5 !bg-slate-800  text-white w-36 ml-2 rounded-full float-left "
+                onClick={() => window.open("/", "_self")}
+              >
+                رفتن به صفحه اصلی
+              </button>
             </div>
           </div>
         </div>
